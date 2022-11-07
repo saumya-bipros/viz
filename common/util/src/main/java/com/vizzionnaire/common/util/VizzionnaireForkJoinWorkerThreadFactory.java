@@ -8,11 +8,11 @@ import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.atomic.AtomicLong;
 
 @ToString
-public class ThingsBoardForkJoinWorkerThreadFactory implements ForkJoinPool.ForkJoinWorkerThreadFactory {
+public class VizzionnaireForkJoinWorkerThreadFactory implements ForkJoinPool.ForkJoinWorkerThreadFactory {
     private final String namePrefix;
     private final AtomicLong threadNumber = new AtomicLong(1);
 
-    public ThingsBoardForkJoinWorkerThreadFactory(@NonNull String namePrefix) {
+    public VizzionnaireForkJoinWorkerThreadFactory(@NonNull String namePrefix) {
         this.namePrefix = namePrefix;
     }
 

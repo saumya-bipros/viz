@@ -2,7 +2,7 @@ package com.vizzionnaire.server.service.edge.rpc;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.ResourceUtils;
 import com.vizzionnaire.server.common.data.edge.Edge;
@@ -115,8 +115,8 @@ public class EdgeGrpcService extends EdgeRpcServiceGrpc.EdgeRpcServiceImplBase i
             log.error("Failed to start Edge RPC server!", e);
             throw new RuntimeException("Failed to start Edge RPC server!");
         }
-        this.edgeEventProcessingExecutorService = Executors.newScheduledThreadPool(schedulerPoolSize, ThingsBoardThreadFactory.forName("edge-scheduler"));
-        this.sendDownlinkExecutorService = Executors.newScheduledThreadPool(sendSchedulerPoolSize, ThingsBoardThreadFactory.forName("edge-send-scheduler"));
+        this.edgeEventProcessingExecutorService = Executors.newScheduledThreadPool(schedulerPoolSize, VizzionnaireThreadFactory.forName("edge-scheduler"));
+        this.sendDownlinkExecutorService = Executors.newScheduledThreadPool(sendSchedulerPoolSize, VizzionnaireThreadFactory.forName("edge-send-scheduler"));
         log.info("Edge RPC service initialized!");
     }
 

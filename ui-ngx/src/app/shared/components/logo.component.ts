@@ -9,8 +9,8 @@ export class LogoComponent {
 
   logo = 'assets/logo_title_white.svg';
 
-  gotoThingsboard(): void {
-    window.open('https://thingsboard.io', '_blank');
+  gotoVizzionnaire(): void {
+    window.open('https://vizzionnaire.io', '_blank');
   }
 
 }

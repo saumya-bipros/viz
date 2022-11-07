@@ -92,10 +92,10 @@ public class SqlTsDatabaseUpgradeService extends AbstractSqlTsDatabaseUpgradeSer
                             if (SystemUtils.IS_OS_WINDOWS) {
                                 log.info("Lookup for environment variable: {} ...", THINGSBOARD_WINDOWS_UPGRADE_DIR);
                                 Path pathToDir;
-                                String thingsboardWindowsUpgradeDir = System.getenv("THINGSBOARD_WINDOWS_UPGRADE_DIR");
-                                if (StringUtils.isNotEmpty(thingsboardWindowsUpgradeDir)) {
+                                String vizzionnaireWindowsUpgradeDir = System.getenv("THINGSBOARD_WINDOWS_UPGRADE_DIR");
+                                if (StringUtils.isNotEmpty(vizzionnaireWindowsUpgradeDir)) {
                                     log.info("Environment variable: {} was found!", THINGSBOARD_WINDOWS_UPGRADE_DIR);
-                                    pathToDir = Paths.get(thingsboardWindowsUpgradeDir);
+                                    pathToDir = Paths.get(vizzionnaireWindowsUpgradeDir);
                                 } else {
                                     log.info("Failed to lookup environment variable: {}", THINGSBOARD_WINDOWS_UPGRADE_DIR);
                                     pathToDir = Paths.get(PATH_TO_USERS_PUBLIC_FOLDER);

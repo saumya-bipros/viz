@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.data.ApiUsageRecordKey;
 import com.vizzionnaire.server.common.data.EntityType;
@@ -85,7 +85,7 @@ public class DefaultTelemetrySubscriptionService extends AbstractSubscriptionSer
     @PostConstruct
     public void initExecutor() {
         super.initExecutor();
-        tsCallBackExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("ts-service-ts-callback"));
+        tsCallBackExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("ts-service-ts-callback"));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.vizzionnaire.server.queue.discovery;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.gen.transport.TransportProtos;
 import com.vizzionnaire.server.queue.discovery.event.ServiceListChangedEvent;
 import com.vizzionnaire.server.queue.util.AfterStartUp;
@@ -79,7 +79,7 @@ public class ZkDiscoveryService implements DiscoveryService, PathChildrenCacheLi
         Assert.notNull(zkConnectionTimeout, missingProperty("zk.connection_timeout_ms"));
         Assert.notNull(zkSessionTimeout, missingProperty("zk.session_timeout_ms"));
 
-        reconnectExecutorService = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("zk-discovery"));
+        reconnectExecutorService = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("zk-discovery"));
 
         log.info("Initializing discovery service using ZK connect string: {}", zkUrl);
 

@@ -3,7 +3,7 @@ server:
   address: "HTTP_BIND_ADDRESS"
   # Server bind port
   port: "HTTP_BIND_PORT"
-thingsboard:
+vizzionnaire:
   enableProxy: "TB_ENABLE_PROXY"
   # Vizzionnaire node host
   host: "TB_HOST"

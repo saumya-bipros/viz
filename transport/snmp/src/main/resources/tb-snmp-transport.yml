@@ -24,7 +24,7 @@ zk:
   # Zookeeper session timeout in milliseconds
   session_timeout_ms: "${ZOOKEEPER_SESSION_TIMEOUT_MS:3000}"
   # Name of the directory in zookeeper 'filesystem'
-  zk_dir: "${ZOOKEEPER_NODES_DIR:/thingsboard}"
+  zk_dir: "${ZOOKEEPER_NODES_DIR:/vizzionnaire}"
 
 cache:
   type: "${CACHE_TYPE:redis}"

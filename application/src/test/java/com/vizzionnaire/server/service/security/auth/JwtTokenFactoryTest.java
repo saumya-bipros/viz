@@ -43,7 +43,7 @@ public class JwtTokenFactoryTest {
     public void testCreateAndParseAccessJwtToken() {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setId(new UserId(UUID.randomUUID()));
-        securityUser.setEmail("tenant@thingsboard.org");
+        securityUser.setEmail("tenant@vizzionnaire.org");
         securityUser.setAuthority(Authority.TENANT_ADMIN);
         securityUser.setTenantId(new TenantId(UUID.randomUUID()));
         securityUser.setEnabled(true);
@@ -85,7 +85,7 @@ public class JwtTokenFactoryTest {
     public void testCreateAndParseRefreshJwtToken() {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setId(new UserId(UUID.randomUUID()));
-        securityUser.setEmail("tenant@thingsboard.org");
+        securityUser.setEmail("tenant@vizzionnaire.org");
         securityUser.setAuthority(Authority.TENANT_ADMIN);
         securityUser.setUserPrincipal(new UserPrincipal(UserPrincipal.Type.USER_NAME, securityUser.getEmail()));
         securityUser.setEnabled(true);
@@ -108,7 +108,7 @@ public class JwtTokenFactoryTest {
     public void testCreateAndParsePreVerificationJwtToken() {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setId(new UserId(UUID.randomUUID()));
-        securityUser.setEmail("tenant@thingsboard.org");
+        securityUser.setEmail("tenant@vizzionnaire.org");
         securityUser.setAuthority(Authority.TENANT_ADMIN);
         securityUser.setUserPrincipal(new UserPrincipal(UserPrincipal.Type.USER_NAME, securityUser.getEmail()));
         securityUser.setEnabled(true);

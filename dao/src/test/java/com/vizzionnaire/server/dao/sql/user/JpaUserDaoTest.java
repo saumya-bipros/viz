@@ -64,7 +64,7 @@ public class JpaUserDaoTest extends AbstractJpaDaoTest {
         user.setId(new UserId(UUID.randomUUID()));
         user.setTenantId(TenantId.fromUUID(UUID.randomUUID()));
         user.setCustomerId(new CustomerId(UUID.randomUUID()));
-        user.setEmail("user@thingsboard.org");
+        user.setEmail("user@vizzionnaire.org");
         user.setFirstName("Jackson");
         user.setLastName("Roberts");
         ObjectMapper mapper = new ObjectMapper();
@@ -73,7 +73,7 @@ public class JpaUserDaoTest extends AbstractJpaDaoTest {
         user.setAdditionalInfo(jsonNode);
         userDao.save(AbstractServiceTest.SYSTEM_TENANT_ID, user);
         assertEquals(1 + COUNT_SYSADMIN_USER + COUNT_CREATED_USER, userDao.find(AbstractServiceTest.SYSTEM_TENANT_ID).size());
-        User savedUser = userDao.findByEmail(AbstractServiceTest.SYSTEM_TENANT_ID, "user@thingsboard.org");
+        User savedUser = userDao.findByEmail(AbstractServiceTest.SYSTEM_TENANT_ID, "user@vizzionnaire.org");
         assertNotNull(savedUser);
         assertEquals(additionalInfo, savedUser.getAdditionalInfo().toString());
     }
@@ -129,7 +129,7 @@ public class JpaUserDaoTest extends AbstractJpaDaoTest {
             user.setAuthority(Authority.CUSTOMER_USER);
         }
         String idString = id.toString();
-        String email = idString.substring(0, idString.indexOf('-')) + "@thingsboard.org";
+        String email = idString.substring(0, idString.indexOf('-')) + "@vizzionnaire.org";
         user.setEmail(email);
         userDao.save(AbstractServiceTest.SYSTEM_TENANT_ID, user);
     }

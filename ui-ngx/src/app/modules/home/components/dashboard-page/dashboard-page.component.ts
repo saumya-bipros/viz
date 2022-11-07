@@ -204,7 +204,7 @@ export class DashboardPageComponent extends PageComponent implements IDashboardC
   editingWidgetSubtitle: string = null;
   editingLayoutCtx: DashboardPageLayoutContext = null;
 
-  thingsboardVersion: string = env.tbVersion;
+  vizzionnaireVersion: string = env.tbVersion;
 
   translatedDashboardTitle: string;
 

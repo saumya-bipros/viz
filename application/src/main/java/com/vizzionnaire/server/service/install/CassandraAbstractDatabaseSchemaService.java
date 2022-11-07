@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class CassandraAbstractDatabaseSchemaService implements DatabaseSchemaService {
 
     private static final String CASSANDRA_DIR = "cassandra";
-    private static final String CASSANDRA_STANDARD_KEYSPACE = "thingsboard";
+    private static final String CASSANDRA_STANDARD_KEYSPACE = "vizzionnaire";
 
     @Autowired
     @Qualifier("CassandraInstallCluster")

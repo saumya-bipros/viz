@@ -103,15 +103,15 @@ public class MqttSslHandlerProvider {
                 break;
             }
         }
-        return new ThingsboardMqttX509TrustManager(x509Tm, transportService);
+        return new VizzionnaireMqttX509TrustManager(x509Tm, transportService);
     }
 
-    static class ThingsboardMqttX509TrustManager implements X509TrustManager {
+    static class VizzionnaireMqttX509TrustManager implements X509TrustManager {
 
         private final X509TrustManager trustManager;
         private TransportService transportService;
 
-        ThingsboardMqttX509TrustManager(X509TrustManager trustManager, TransportService transportService) {
+        VizzionnaireMqttX509TrustManager(X509TrustManager trustManager, TransportService transportService) {
             this.trustManager = trustManager;
             this.transportService = transportService;
         }

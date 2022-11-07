@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.rule.engine.api.RuleEngineDeviceRpcRequest;
 import com.vizzionnaire.rule.engine.api.RuleEngineDeviceRpcResponse;
 import com.vizzionnaire.server.cluster.TbClusterService;
@@ -60,7 +60,7 @@ public class DefaultTbRuleEngineRpcService implements TbRuleEngineDeviceRpcServi
 
     @PostConstruct
     public void initExecutor() {
-        scheduler = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("rule-engine-rpc-scheduler"));
+        scheduler = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("rule-engine-rpc-scheduler"));
         serviceId = serviceInfoProvider.getServiceId();
     }
 

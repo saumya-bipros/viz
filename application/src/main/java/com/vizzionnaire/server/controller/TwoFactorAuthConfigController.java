@@ -47,8 +47,8 @@ public class TwoFactorAuthConfigController extends BaseController {
             notes = "Get user's account 2FA configuration. Configuration contains configs for different 2FA providers." + NEW_LINE +
                     "Example:\n" +
                     "```\n{\n  \"configs\": {\n" +
-                    "    \"EMAIL\": {\n      \"providerType\": \"EMAIL\",\n      \"useByDefault\": true,\n      \"email\": \"tenant@thingsboard.org\"\n    },\n" +
-                    "    \"TOTP\": {\n      \"providerType\": \"TOTP\",\n      \"useByDefault\": false,\n      \"authUrl\": \"otpauth://totp/TB%202FA:tenant@thingsboard.org?issuer=TB+2FA&secret=P6Z2TLYTASOGP6LCJZAD24ETT5DACNNX\"\n    },\n" +
+                    "    \"EMAIL\": {\n      \"providerType\": \"EMAIL\",\n      \"useByDefault\": true,\n      \"email\": \"tenant@vizzionnaire.org\"\n    },\n" +
+                    "    \"TOTP\": {\n      \"providerType\": \"TOTP\",\n      \"useByDefault\": false,\n      \"authUrl\": \"otpauth://totp/TB%202FA:tenant@vizzionnaire.org?issuer=TB+2FA&secret=P6Z2TLYTASOGP6LCJZAD24ETT5DACNNX\"\n    },\n" +
                     "    \"SMS\": {\n      \"providerType\": \"SMS\",\n      \"useByDefault\": false,\n      \"phoneNumber\": \"+380501253652\"\n    }\n" +
                     "  }\n}\n```" +
                     ControllerConstants.AVAILABLE_FOR_ANY_AUTHORIZED_USER)
@@ -68,13 +68,13 @@ public class TwoFactorAuthConfigController extends BaseController {
                     "```\n{\n" +
                     "  \"providerType\": \"TOTP\",\n" +
                     "  \"useByDefault\": false,\n" +
-                    "  \"authUrl\": \"otpauth://totp/TB%202FA:tenant@thingsboard.org?issuer=TB+2FA&secret=PNJDNWJVAK4ZTUYT7RFGPQLXA7XGU7PX\"\n" +
+                    "  \"authUrl\": \"otpauth://totp/TB%202FA:tenant@vizzionnaire.org?issuer=TB+2FA&secret=PNJDNWJVAK4ZTUYT7RFGPQLXA7XGU7PX\"\n" +
                     "}\n```" + NEW_LINE +
                     "For EMAIL, the generated config will contain email from user's account:\n" +
                     "```\n{\n" +
                     "  \"providerType\": \"EMAIL\",\n" +
                     "  \"useByDefault\": false,\n" +
-                    "  \"email\": \"tenant@thingsboard.org\"\n" +
+                    "  \"email\": \"tenant@vizzionnaire.org\"\n" +
                     "}\n```" + NEW_LINE +
                     "For SMS 2FA this method will just return a config with empty/default values as there is nothing to generate/preset:\n" +
                     "```\n{\n" +
@@ -100,7 +100,7 @@ public class TwoFactorAuthConfigController extends BaseController {
                     "```\n{\n" +
                     "  \"providerType\": \"EMAIL\",\n" +
                     "  \"useByDefault\": true,\n" +
-                    "  \"email\": \"separate-email-for-2fa@thingsboard.org\"\n" +
+                    "  \"email\": \"separate-email-for-2fa@vizzionnaire.org\"\n" +
                     "}\n```" + NEW_LINE +
                     "Example of SMS 2FA account config:\n" +
                     "```\n{\n" +

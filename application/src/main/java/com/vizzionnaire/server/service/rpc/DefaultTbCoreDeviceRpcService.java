@@ -3,7 +3,7 @@ package com.vizzionnaire.server.service.rpc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.actors.ActorSystemContext;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.data.DataConstants;
@@ -72,7 +72,7 @@ public class DefaultTbCoreDeviceRpcService implements TbCoreDeviceRpcService {
 
     @PostConstruct
     public void initExecutor() {
-        scheduler = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("tb-core-rpc-scheduler"));
+        scheduler = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("tb-core-rpc-scheduler"));
         serviceId = serviceInfoProvider.getServiceId();
     }
 

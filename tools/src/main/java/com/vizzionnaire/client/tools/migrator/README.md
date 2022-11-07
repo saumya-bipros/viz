@@ -23,11 +23,11 @@ It will generate single jar file with all required dependencies inside `target d
 
 1. Dump related tables that need to correct save telemetry
    
-   `pg_dump -h localhost -U postgres -d thingsboard -T admin_settings -T attribute_kv -T audit_log -T component_discriptor -T device_credentials -T event -T oauth2_client_registration -T oauth2_client_registration_info -T oauth2_client_registration_template -T relation -T rule_node_state tb_schema_settings -T user_credentials > related_entities.dmp`
+   `pg_dump -h localhost -U postgres -d vizzionnaire -T admin_settings -T attribute_kv -T audit_log -T component_discriptor -T device_credentials -T event -T oauth2_client_registration -T oauth2_client_registration_info -T oauth2_client_registration_template -T relation -T rule_node_state tb_schema_settings -T user_credentials > related_entities.dmp`
    
 2. Dump `ts_kv` and child:
    
-   `pg_dump -h localhost -U postgres -d thingsboard --load-via-partition-root --data-only -t ts_kv* > ts_kv_all.dmp`
+   `pg_dump -h localhost -U postgres -d vizzionnaire --load-via-partition-root --data-only -t ts_kv* > ts_kv_all.dmp`
 
 3. [Optional] Move table dumps to the instance where cassandra will be hosted
 
@@ -63,20 +63,20 @@ Tool execution time depends on DB size, CPU resources and Disk throughput
 * Note that this this part works only for single node Cassandra Cluster. If you have more nodes - it is better to use `sstableloader` tool.
 
 1. [Optional] install Cassandra on the instance
-2. [Optional] Using `cqlsh` create `thingsboard` keyspace and requred tables from this files `schema-ts.cql` and `schema-ts-latest.cql` using `source` command
+2. [Optional] Using `cqlsh` create `vizzionnaire` keyspace and requred tables from this files `schema-ts.cql` and `schema-ts-latest.cql` using `source` command
 3. Stop Cassandra
-4. Look at `/var/lib/cassandra/data/thingsboard` and check for names of data folders
+4. Look at `/var/lib/cassandra/data/vizzionnaire` and check for names of data folders
 5. Copy generated SSTable files into cassandra data dir using next command:
 
 ```
-    sudo find /home/user/migration/ts -name '*.*' -exec mv {} /var/lib/cassandra/data/thingsboard/ts_kv_cf-0e9aaf00ee5511e9a5fa7d6f489ffd13/ \;
-    sudo find /home/user/migration/ts_latest -name '*.*' -exec mv {} /var/lib/cassandra/data/thingsboard/ts_kv_latest_cf-161449d0ee5511e9a5fa7d6f489ffd13/ \;
-    sudo find /home/user/migration/ts_partition -name '*.*' -exec mv {} /var/lib/cassandra/data/thingsboard/ts_kv_partitions_cf-12e8fa80ee5511e9a5fa7d6f489ffd13/ \;
+    sudo find /home/user/migration/ts -name '*.*' -exec mv {} /var/lib/cassandra/data/vizzionnaire/ts_kv_cf-0e9aaf00ee5511e9a5fa7d6f489ffd13/ \;
+    sudo find /home/user/migration/ts_latest -name '*.*' -exec mv {} /var/lib/cassandra/data/vizzionnaire/ts_kv_latest_cf-161449d0ee5511e9a5fa7d6f489ffd13/ \;
+    sudo find /home/user/migration/ts_partition -name '*.*' -exec mv {} /var/lib/cassandra/data/vizzionnaire/ts_kv_partitions_cf-12e8fa80ee5511e9a5fa7d6f489ffd13/ \;
 ```   
   *Pay attention! Data folders have similar name  `ts_kv_cf-0e9aaf00ee5511e9a5fa7d6f489ffd13`, but you have to use own*  
 6. Start Cassandra service and trigger compaction
 
-    Trigger compactions: `nodetool compact thingsboard`
+    Trigger compactions: `nodetool compact vizzionnaire`
    
     Check compaction status: `nodetool compactionstats`
 

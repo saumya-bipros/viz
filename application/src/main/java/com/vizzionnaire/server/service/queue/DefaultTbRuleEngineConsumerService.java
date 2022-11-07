@@ -1,7 +1,7 @@
 package com.vizzionnaire.server.service.queue;
 
 import com.google.protobuf.ProtocolStringList;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.actors.ActorSystemContext;
 import com.vizzionnaire.server.common.data.id.QueueId;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -95,8 +95,8 @@ public class DefaultTbRuleEngineConsumerService extends AbstractConsumerService<
     private final ConcurrentMap<QueueKey, Queue> consumerConfigurations = new ConcurrentHashMap<>();
     private final ConcurrentMap<QueueKey, TbRuleEngineConsumerStats> consumerStats = new ConcurrentHashMap<>();
     private final ConcurrentMap<QueueKey, TbTopicWithConsumerPerPartition> topicsConsumerPerPartition = new ConcurrentHashMap<>();
-    final ExecutorService submitExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("tb-rule-engine-consumer-submit"));
-    final ScheduledExecutorService repartitionExecutor = Executors.newScheduledThreadPool(1, ThingsBoardThreadFactory.forName("tb-rule-engine-consumer-repartition"));
+    final ExecutorService submitExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("tb-rule-engine-consumer-submit"));
+    final ScheduledExecutorService repartitionExecutor = Executors.newScheduledThreadPool(1, VizzionnaireThreadFactory.forName("tb-rule-engine-consumer-repartition"));
 
     public DefaultTbRuleEngineConsumerService(TbRuleEngineProcessingStrategyFactory processingStrategyFactory,
                                               TbRuleEngineSubmitStrategyFactory submitStrategyFactory,

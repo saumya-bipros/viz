@@ -1,7 +1,7 @@
 package com.vizzionnaire.server.util;
 
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.utils.EventDeduplicationExecutor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 @RunWith(MockitoJUnitRunner.class)
 public class EventDeduplicationExecutorTest {
 
-    ThingsBoardThreadFactory threadFactory = ThingsBoardThreadFactory.forName(getClass().getSimpleName());
+    VizzionnaireThreadFactory threadFactory = VizzionnaireThreadFactory.forName(getClass().getSimpleName());
     ExecutorService executor;
 
     @After

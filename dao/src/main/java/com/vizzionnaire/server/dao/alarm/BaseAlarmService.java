@@ -6,7 +6,7 @@ import com.google.common.base.Function;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.alarm.Alarm;
 import com.vizzionnaire.server.common.data.alarm.AlarmInfo;
 import com.vizzionnaire.server.common.data.alarm.AlarmQuery;
@@ -75,7 +75,7 @@ public class BaseAlarmService extends AbstractEntityService implements AlarmServ
 
     @PostConstruct
     public void startExecutor() {
-        readResultsProcessingExecutor = Executors.newCachedThreadPool(ThingsBoardThreadFactory.forName("alarm-service"));
+        readResultsProcessingExecutor = Executors.newCachedThreadPool(VizzionnaireThreadFactory.forName("alarm-service"));
     }
 
     @PreDestroy

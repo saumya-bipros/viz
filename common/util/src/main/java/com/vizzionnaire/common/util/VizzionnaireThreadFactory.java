@@ -6,17 +6,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Copy of Executors.DefaultThreadFactory but with ability to set name of the pool
  */
-public class ThingsBoardThreadFactory implements ThreadFactory {
+public class VizzionnaireThreadFactory implements ThreadFactory {
     private static final AtomicInteger poolNumber = new AtomicInteger(1);
     private final ThreadGroup group;
     private final AtomicInteger threadNumber = new AtomicInteger(1);
     private final String namePrefix;
 
-    public static ThingsBoardThreadFactory forName(String name) {
-        return new ThingsBoardThreadFactory(name);
+    public static VizzionnaireThreadFactory forName(String name) {
+        return new VizzionnaireThreadFactory(name);
     }
 
-    private ThingsBoardThreadFactory(String name) {
+    private VizzionnaireThreadFactory(String name) {
         SecurityManager s = System.getSecurityManager();
         group = (s != null) ? s.getThreadGroup() :
                 Thread.currentThread().getThreadGroup();

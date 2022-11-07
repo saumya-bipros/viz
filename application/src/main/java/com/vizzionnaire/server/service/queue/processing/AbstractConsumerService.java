@@ -1,7 +1,7 @@
 package com.vizzionnaire.server.service.queue.processing;
 
 import com.google.protobuf.ByteString;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.actors.ActorSystemContext;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.id.CustomerId;
@@ -75,8 +75,8 @@ public abstract class AbstractConsumerService<N extends com.google.protobuf.Gene
     }
 
     public void init(String mainConsumerThreadName, String nfConsumerThreadName) {
-        this.consumersExecutor = Executors.newCachedThreadPool(ThingsBoardThreadFactory.forName(mainConsumerThreadName));
-        this.notificationsConsumerExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName(nfConsumerThreadName));
+        this.consumersExecutor = Executors.newCachedThreadPool(VizzionnaireThreadFactory.forName(mainConsumerThreadName));
+        this.notificationsConsumerExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName(nfConsumerThreadName));
     }
 
     @AfterStartUp(order = AfterStartUp.REGULAR_SERVICE)

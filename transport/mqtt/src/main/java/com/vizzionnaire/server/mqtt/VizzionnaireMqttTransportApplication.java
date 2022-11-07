@@ -1,4 +1,4 @@
-package com.vizzionnaire.server.coap;
+package com.vizzionnaire.server.mqtt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
@@ -13,14 +13,14 @@ import java.util.Arrays;
 @EnableAsync
 @EnableScheduling
 @EnableAutoConfiguration
-@ComponentScan({"com.vizzionnaire.server.coap", "com.vizzionnaire.server.common", "com.vizzionnaire.server.coapserver", "com.vizzionnaire.server.transport.coap", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
-public class ThingsboardCoapTransportApplication {
+@ComponentScan({"com.vizzionnaire.server.mqtt", "com.vizzionnaire.server.common", "com.vizzionnaire.server.transport.mqtt", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
+public class VizzionnaireMqttTransportApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
-    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-coap-transport";
+    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-mqtt-transport";
 
     public static void main(String[] args) {
-        SpringApplication.run(ThingsboardCoapTransportApplication.class, updateArguments(args));
+        SpringApplication.run(VizzionnaireMqttTransportApplication.class, updateArguments(args));
     }
 
     private static String[] updateArguments(String[] args) {

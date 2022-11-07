@@ -1,8 +1,8 @@
 import * as React from 'react';
-import ThingsboardAceEditor from './json-form-ace-editor';
+import VizzionnaireAceEditor from './json-form-ace-editor';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-class ThingsboardMarkdown extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
+class VizzionnaireMarkdown extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
 
   constructor(props) {
     super(props);
@@ -10,9 +10,9 @@ class ThingsboardMarkdown extends React.Component<JsonFormFieldProps, JsonFormFi
 
   render() {
     return (
-      <ThingsboardAceEditor {...this.props} mode='markdown' {...this.state}></ThingsboardAceEditor>
+      <VizzionnaireAceEditor {...this.props} mode='markdown' {...this.state}></VizzionnaireAceEditor>
     );
   }
 }
 
-export default ThingsboardMarkdown;
+export default VizzionnaireMarkdown;

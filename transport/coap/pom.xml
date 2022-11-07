@@ -24,7 +24,7 @@
         <pkg.copyInstallScripts>false</pkg.copyInstallScripts>
         <pkg.win.dist>${project.build.directory}/windows</pkg.win.dist>
         <pkg.implementationTitle>Vizzionnaire CoAP Transport Service</pkg.implementationTitle>
-        <pkg.mainClass>com.vizzionnaire.server.coap.ThingsboardCoapTransportApplication</pkg.mainClass>
+        <pkg.mainClass>com.vizzionnaire.server.coap.VizzionnaireCoapTransportApplication</pkg.mainClass>
     </properties>
 
     <dependencies>

@@ -3,7 +3,7 @@ package com.vizzionnaire.server.service.update;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.UpdateMessage;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
 
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class DefaultUpdateService implements UpdateService {
 
     private static final String INSTANCE_ID_FILE = ".instance_id";
-    private static final String UPDATE_SERVER_BASE_URL = "https://updates.thingsboard.io";
+    private static final String UPDATE_SERVER_BASE_URL = "https://updates.vizzionnaire.io";
 
     private static final String PLATFORM_PARAM = "platform";
     private static final String VERSION_PARAM = "version";
@@ -39,7 +39,7 @@ public class DefaultUpdateService implements UpdateService {
     @Value("${updates.enabled}")
     private boolean updatesEnabled;
 
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, ThingsBoardThreadFactory.forName("tb-update-service"));
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, VizzionnaireThreadFactory.forName("tb-update-service"));
 
     private ScheduledFuture checkUpdatesFuture = null;
     private RestTemplate restClient = new RestTemplate();
@@ -107,7 +107,7 @@ public class DefaultUpdateService implements UpdateService {
             request.put(PLATFORM_PARAM, platform);
             request.put(VERSION_PARAM, version);
             request.put(INSTANCE_ID_PARAM, instanceId.toString());
-            JsonNode response = restClient.postForObject(UPDATE_SERVER_BASE_URL+"/api/thingsboard/updates", request, JsonNode.class);
+            JsonNode response = restClient.postForObject(UPDATE_SERVER_BASE_URL+"/api/vizzionnaire/updates", request, JsonNode.class);
             updateMessage = new UpdateMessage(
                     response.get("message").asText(),
                     response.get("updateAvailable").asBoolean()

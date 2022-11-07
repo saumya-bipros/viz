@@ -14,13 +14,13 @@ import java.util.Arrays;
 @EnableScheduling
 @EnableAutoConfiguration
 @ComponentScan({"com.vizzionnaire.server.snmp", "com.vizzionnaire.server.common", "com.vizzionnaire.server.transport.snmp", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
-public class ThingsboardSnmpTransportApplication {
+public class VizzionnaireSnmpTransportApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
     private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-snmp-transport";
 
     public static void main(String[] args) {
-        SpringApplication.run(ThingsboardSnmpTransportApplication.class, updateArguments(args));
+        SpringApplication.run(VizzionnaireSnmpTransportApplication.class, updateArguments(args));
     }
 
     private static String[] updateArguments(String[] args) {

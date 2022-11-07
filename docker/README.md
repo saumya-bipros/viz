@@ -54,12 +54,12 @@ You should see Vizzionnaire login page.
 
 Use the following default credentials:
 
-- **System Administrator**: sysadmin@thingsboard.org / sysadmin
+- **System Administrator**: sysadmin@vizzionnaire.org / sysadmin
 
 If you installed DataBase with demo data (using `--loadDemo` flag) you can also use the following credentials:
 
-- **Tenant Administrator**: tenant@thingsboard.org / tenant
-- **Customer User**: customer@thingsboard.org / customer
+- **Tenant Administrator**: tenant@vizzionnaire.org / tenant
+- **Customer User**: customer@vizzionnaire.org / customer
 
 In case of any issues you can examine service logs for errors.
 For example to see Vizzionnaire node logs execute the following command:
@@ -106,7 +106,7 @@ $ ./docker-start-services.sh
 
 Where:
 
-- `FROM_VERSION` - from which version upgrade should be started. See [Upgrade Instructions](https://thingsboard.io/docs/user-guide/install/upgrade-instructions) for valid `fromVersion` values.
+- `FROM_VERSION` - from which version upgrade should be started. See [Upgrade Instructions](https://vizzionnaire.io/docs/user-guide/install/upgrade-instructions) for valid `fromVersion` values.
 
 
 ## Monitoring

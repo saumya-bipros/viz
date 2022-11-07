@@ -100,7 +100,7 @@ type Connector = {
 }
 
 interface GatewaySetting extends Connector{
-  thingsboard: GatewayMainSetting;
+  vizzionnaire: GatewayMainSetting;
 }
 
 interface ConnectorConfig {
@@ -109,13 +109,13 @@ interface ConnectorConfig {
 }
 
 interface GatewayMainSetting {
-  thingsboard: GatewayMainThingsboardSetting;
+  vizzionnaire: GatewayMainVizzionnaireSetting;
   connectors: Array<GatewayMainConnector>,
   logs: string,
   storage: GatewayStorage
 }
 
-interface GatewayMainThingsboardSetting {
+interface GatewayMainVizzionnaireSetting {
   host: string,
   remoteConfiguration: boolean,
   port: number,
@@ -167,7 +167,7 @@ const TEMPLATE_LOGS_CONFIG = '[loggers]}}keys=root, service, connector, converte
 
 export function generateYAMLConfigFile(gatewaySetting: GatewayFormModels): string {
   let config;
-  config = 'thingsboard:\n';
+  config = 'vizzionnaire:\n';
   config += '  host: ' + gatewaySetting.host + '\n';
   config += '  remoteConfiguration: ' + gatewaySetting.remoteConfiguration + '\n';
   config += '  port: ' + gatewaySetting.port + '\n';
@@ -237,18 +237,18 @@ export function getEntityId(gatewayId: string): EntityId {
 
 export function createFormConfig(keyValue: GatewayMainSetting): GatewayFormModels {
   const formSetting: GatewayFormModels = {};
-  if (Object.prototype.hasOwnProperty.call(keyValue, 'thingsboard')) {
-    formSetting.host = keyValue.thingsboard.host;
-    formSetting.port = keyValue.thingsboard.port;
-    formSetting.remoteConfiguration = keyValue.thingsboard.remoteConfiguration;
-    if (Object.prototype.hasOwnProperty.call(keyValue.thingsboard.security, SecurityType.accessToken)) {
+  if (Object.prototype.hasOwnProperty.call(keyValue, 'vizzionnaire')) {
+    formSetting.host = keyValue.vizzionnaire.host;
+    formSetting.port = keyValue.vizzionnaire.port;
+    formSetting.remoteConfiguration = keyValue.vizzionnaire.remoteConfiguration;
+    if (Object.prototype.hasOwnProperty.call(keyValue.vizzionnaire.security, SecurityType.accessToken)) {
       formSetting.securityType = SecurityType.accessToken;
-      formSetting.accessToken = (keyValue.thingsboard.security as SecurityToken).accessToken;
+      formSetting.accessToken = (keyValue.vizzionnaire.security as SecurityToken).accessToken;
     } else {
       formSetting.securityType = SecurityType.tls;
-      formSetting.caCertPath = (keyValue.thingsboard.security as SecurityCertificate).caCert;
-      formSetting.privateKeyPath = (keyValue.thingsboard.security as SecurityCertificate).privateKey;
-      formSetting.certPath = (keyValue.thingsboard.security as SecurityCertificate).cert;
+      formSetting.caCertPath = (keyValue.vizzionnaire.security as SecurityCertificate).caCert;
+      formSetting.privateKeyPath = (keyValue.vizzionnaire.security as SecurityCertificate).privateKey;
+      formSetting.certPath = (keyValue.vizzionnaire.security as SecurityCertificate).cert;
     }
   }
 
@@ -283,7 +283,7 @@ export function getDraftConnectorsJSON(currentConnectors: Array<GatewayFormConne
 
 export function gatewayConfigJSON(gatewayConfiguration: GatewayFormModels): GatewaySetting {
   const gatewayConfig = {
-    thingsboard: gatewayMainConfigJSON(gatewayConfiguration)
+    vizzionnaire: gatewayMainConfigJSON(gatewayConfiguration)
   };
   gatewayConnectorJSON(gatewayConfig, gatewayConfiguration.connectors);
   return gatewayConfig;
@@ -302,7 +302,7 @@ function gatewayMainConfigJSON(gatewayConfiguration: GatewayFormModels): Gateway
       cert: gatewayConfiguration.certPath
     }
   }
-  const thingsboard: GatewayMainThingsboardSetting = {
+  const vizzionnaire: GatewayMainVizzionnaireSetting = {
     host: gatewayConfiguration.host,
     remoteConfiguration: gatewayConfiguration.remoteConfiguration,
     port: gatewayConfiguration.port,
@@ -339,7 +339,7 @@ function gatewayMainConfigJSON(gatewayConfiguration: GatewayFormModels): Gateway
   }
 
   return {
-    thingsboard,
+    vizzionnaire,
     connectors,
     storage,
     logs: window.btoa(getLogsConfig(gatewayConfiguration.remoteLoggingLevel, gatewayConfiguration.remoteLoggingPathToLogs))

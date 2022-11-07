@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.gen.transport.TransportProtos;
 import com.vizzionnaire.server.queue.common.TbProtoQueueMsg;
 import com.vizzionnaire.server.service.queue.TbMsgPackProcessingContext;
@@ -47,7 +47,7 @@ public class TbMsgPackProcessingContextTest {
         //log.warn("preparing the test...");
         int msgCount = 1000;
         int parallelCount = 5;
-        executorService = Executors.newFixedThreadPool(parallelCount, ThingsBoardThreadFactory.forName(getClass().getSimpleName() + "-test-scope"));
+        executorService = Executors.newFixedThreadPool(parallelCount, VizzionnaireThreadFactory.forName(getClass().getSimpleName() + "-test-scope"));
 
         ConcurrentMap<UUID, TbProtoQueueMsg<TransportProtos.ToRuleEngineMsg>> messages = new ConcurrentHashMap<>(msgCount);
         for (int i = 0; i < msgCount; i++) {

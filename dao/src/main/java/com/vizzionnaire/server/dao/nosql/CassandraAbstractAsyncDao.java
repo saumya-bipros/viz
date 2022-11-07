@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.util.concurrent.AsyncFunction;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.dao.nosql.TbResultSet;
 import com.vizzionnaire.server.dao.nosql.TbResultSetFuture;
 
@@ -23,7 +23,7 @@ public abstract class CassandraAbstractAsyncDao extends CassandraAbstractDao {
 
     @PostConstruct
     public void startExecutor() {
-        readResultsProcessingExecutor = Executors.newCachedThreadPool(ThingsBoardThreadFactory.forName("cassandra-callback"));
+        readResultsProcessingExecutor = Executors.newCachedThreadPool(VizzionnaireThreadFactory.forName("cassandra-callback"));
     }
 
     @PreDestroy

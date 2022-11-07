@@ -3,7 +3,7 @@ package com.vizzionnaire.server.service.script;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.gen.js.JsInvokeProtos;
 import com.vizzionnaire.server.queue.TbQueueRequestTemplate;
 import com.vizzionnaire.server.queue.common.TbProtoJsQueueMsg;
@@ -62,7 +62,7 @@ public class RemoteJsInvokeService extends AbstractJsInvokeService {
     private final AtomicInteger queueFailedMsgs = new AtomicInteger(0);
     private final AtomicInteger queueTimeoutMsgs = new AtomicInteger(0);
     private final ExecutorService callbackExecutor = Executors.newFixedThreadPool(
-            Runtime.getRuntime().availableProcessors(), ThingsBoardThreadFactory.forName("js-executor-remote-callback"));
+            Runtime.getRuntime().availableProcessors(), VizzionnaireThreadFactory.forName("js-executor-remote-callback"));
 
     public RemoteJsInvokeService(TbApiUsageStateService apiUsageStateService, TbApiUsageClient apiUsageClient) {
         super(apiUsageStateService, apiUsageClient);

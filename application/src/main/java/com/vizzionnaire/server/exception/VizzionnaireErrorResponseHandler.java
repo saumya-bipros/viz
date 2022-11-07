@@ -101,8 +101,8 @@ public class VizzionnaireErrorResponseHandler extends ResponseEntityExceptionHan
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
                 if (exception instanceof VizzionnaireException) {
-                    VizzionnaireException thingsboardException = (VizzionnaireException) exception;
-                    if (thingsboardException.getErrorCode() == VizzionnaireErrorCode.SUBSCRIPTION_VIOLATION) {
+                    VizzionnaireException vizzionnaireException = (VizzionnaireException) exception;
+                    if (vizzionnaireException.getErrorCode() == VizzionnaireErrorCode.SUBSCRIPTION_VIOLATION) {
                         handleSubscriptionException((VizzionnaireException) exception, response);
                     } else {
                         handleVizzionnaireException((VizzionnaireException) exception, response);
@@ -136,11 +136,11 @@ public class VizzionnaireErrorResponseHandler extends ResponseEntityExceptionHan
         return new ResponseEntity<>(VizzionnaireErrorResponse.of(ex.getMessage(), errorCode, status), headers, status);
     }
 
-    private void handleVizzionnaireException(VizzionnaireException thingsboardException, HttpServletResponse response) throws IOException {
-        VizzionnaireErrorCode errorCode = thingsboardException.getErrorCode();
+    private void handleVizzionnaireException(VizzionnaireException vizzionnaireException, HttpServletResponse response) throws IOException {
+        VizzionnaireErrorCode errorCode = vizzionnaireException.getErrorCode();
         HttpStatus status = errorCodeToStatus(errorCode);
         response.setStatus(status.value());
-        mapper.writeValue(response.getWriter(), VizzionnaireErrorResponse.of(thingsboardException.getMessage(), errorCode, status));
+        mapper.writeValue(response.getWriter(), VizzionnaireErrorResponse.of(vizzionnaireException.getMessage(), errorCode, status));
     }
 
     private void handleRateLimitException(HttpServletResponse response, TbRateLimitsException exception) throws IOException {

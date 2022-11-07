@@ -39,7 +39,7 @@ public abstract class AbstractSqlTsDatabaseUpgradeService {
 
     protected void loadFunctions(Path sqlFile, Connection conn) throws Exception {
         String sql = new String(Files.readAllBytes(sqlFile), StandardCharsets.UTF_8);
-        conn.createStatement().execute(sql); //NOSONAR, ignoring because method used to execute thingsboard database upgrade script
+        conn.createStatement().execute(sql); //NOSONAR, ignoring because method used to execute vizzionnaire database upgrade script
     }
 
     protected boolean checkVersion(Connection conn) {
@@ -81,7 +81,7 @@ public abstract class AbstractSqlTsDatabaseUpgradeService {
     protected void executeQuery(Connection conn, String query) {
         try {
             Statement statement = conn.createStatement();
-            statement.execute(query); //NOSONAR, ignoring because method used to execute thingsboard database upgrade script
+            statement.execute(query); //NOSONAR, ignoring because method used to execute vizzionnaire database upgrade script
             SQLWarning warnings = statement.getWarnings();
             if (warnings != null) {
                 log.info("{}", warnings.getMessage());

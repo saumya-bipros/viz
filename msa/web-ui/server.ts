@@ -20,18 +20,18 @@ let connections: Socket[] = [];
         const bindAddress: string = config.get('server.address');
         const bindPort = Number(config.get('server.port'));
 
-        const thingsboardEnableProxy: string = config.get('thingsboard.enableProxy');
+        const vizzionnaireEnableProxy: string = config.get('vizzionnaire.enableProxy');
 
-        const thingsboardHost: string = config.get('thingsboard.host');
-        const thingsboardPort = Number(config.get('thingsboard.port'));
+        const vizzionnaireHost: string = config.get('vizzionnaire.host');
+        const vizzionnairePort = Number(config.get('vizzionnaire.port'));
 
         logger.info('Bind address: %s', bindAddress);
         logger.info('Bind port: %s', bindPort);
-        logger.info('Vizzionnaire Enable Proxy: %s', thingsboardEnableProxy);
-        logger.info('Vizzionnaire host: %s', thingsboardHost);
-        logger.info('Vizzionnaire port: %s', thingsboardPort);
+        logger.info('Vizzionnaire Enable Proxy: %s', vizzionnaireEnableProxy);
+        logger.info('Vizzionnaire host: %s', vizzionnaireHost);
+        logger.info('Vizzionnaire port: %s', vizzionnairePort);
 
-        const useApiProxy = thingsboardEnableProxy === "true";
+        const useApiProxy = vizzionnaireEnableProxy === "true";
 
         let webDir = path.join(__dirname, 'web');
 
@@ -47,8 +47,8 @@ let connections: Socket[] = [];
         if (useApiProxy) {
             apiProxy = httpProxy.createProxyServer({
                 target: {
-                    host: thingsboardHost,
-                    port: thingsboardPort
+                    host: vizzionnaireHost,
+                    port: vizzionnairePort
                 }
             });
 

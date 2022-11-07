@@ -15,7 +15,7 @@ import org.eclipse.californium.scandium.dtls.CertificateType;
 import org.eclipse.californium.scandium.dtls.x509.SingleCertificateProvider;
 import org.eclipse.californium.scandium.dtls.x509.StaticNewAdvancedCertificateVerifier;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 public class SecureClientNoAuth {
 
     private final DTLSConnector dtlsConnector;
-    private ExecutorService executor = Executors.newFixedThreadPool(1, ThingsBoardThreadFactory.forName(getClass().getSimpleName()));
+    private ExecutorService executor = Executors.newFixedThreadPool(1, VizzionnaireThreadFactory.forName(getClass().getSimpleName()));
     private CoapClient coapClient;
 
     public SecureClientNoAuth(DTLSConnector dtlsConnector, String host, int port, String accessToken, String clientKeys, String sharedKeys) throws URISyntaxException {

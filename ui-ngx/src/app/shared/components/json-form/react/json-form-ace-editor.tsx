@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VizzionnaireBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import Button from '@material-ui/core/Button';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
@@ -21,12 +21,12 @@ const ReactAce = React.lazy(() => {
   ).toPromise();
 });
 
-interface ThingsboardAceEditorProps extends JsonFormFieldProps {
+interface VizzionnaireAceEditorProps extends JsonFormFieldProps {
   mode: string;
   onTidy: (value: string) => Observable<string>;
 }
 
-interface ThingsboardAceEditorState extends JsonFormFieldState {
+interface VizzionnaireAceEditorState extends JsonFormFieldState {
   isFull: boolean;
   fullscreenContainerElement: Element;
   helpVisible: boolean;
@@ -34,7 +34,7 @@ interface ThingsboardAceEditorState extends JsonFormFieldState {
   focused: boolean;
 }
 
-class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, ThingsboardAceEditorState> {
+class VizzionnaireAceEditor extends React.Component<VizzionnaireAceEditorProps, VizzionnaireAceEditorState> {
 
     private aceEditor: IEditorProps;
 
@@ -218,4 +218,4 @@ class ThingsboardAceEditor extends React.Component<ThingsboardAceEditorProps, Th
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardAceEditor);
+export default VizzionnaireBaseComponent(VizzionnaireAceEditor);

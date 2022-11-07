@@ -102,9 +102,9 @@
 
     <!-- <distributionManagement>
         <repository>
-            <id>thingsboard-repo-deploy</id>
+            <id>vizzionnaire-repo-deploy</id>
             <name>Vizzionnaire Repo Deployment</name>
-            <url>https://repo.thingsboard.io/artifactory/libs-release-public</url>
+            <url>https://repo.vizzionnaire.io/artifactory/libs-release-public</url>
         </repository>
     </distributionManagement> -->
 

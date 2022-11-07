@@ -11,7 +11,7 @@ echo "Starting '${project.name}' ..."
 
 cd ${pkg.installFolder}/bin
 
-exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.http.ThingsboardHttpTransportApplication \
+exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.http.VizzionnaireHttpTransportApplication \
                     -Dspring.jpa.hibernate.ddl-auto=none \
                     -Dlogging.config=/config/logback.xml \
                     org.springframework.boot.loader.PropertiesLauncher

@@ -2,7 +2,7 @@ package com.vizzionnaire.server.queue.common;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.queue.TbQueueMsg;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public abstract class AbstractParallelTbQueueConsumerTemplate<R, T extends TbQue
                 log.trace("Interrupted while waiting for consumer executor to stop");
             }
         }
-        consumerExecutor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(threadPoolSize, ThingsBoardThreadFactory.forName(getClass().getSimpleName())));
+        consumerExecutor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(threadPoolSize, VizzionnaireThreadFactory.forName(getClass().getSimpleName())));
     }
 
     protected void shutdownExecutor() {

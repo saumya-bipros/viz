@@ -1,7 +1,7 @@
 package com.vizzionnaire.server.common.transport;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.cache.ota.OtaPackageDataCache;
 import com.vizzionnaire.server.common.transport.limits.TransportRateLimitService;
 import com.vizzionnaire.server.queue.discovery.TbServiceInfoProvider;
@@ -49,7 +49,7 @@ public abstract class TransportContext {
 
     @PostConstruct
     public void init() {
-        executor = ThingsBoardExecutors.newWorkStealingPool(50, getClass());
+        executor = VizzionnaireExecutors.newWorkStealingPool(50, getClass());
     }
 
     @PreDestroy

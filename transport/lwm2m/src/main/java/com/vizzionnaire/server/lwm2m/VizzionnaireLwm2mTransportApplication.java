@@ -1,25 +1,26 @@
-package com.vizzionnaire.server.http;
+package com.vizzionnaire.server.lwm2m;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
-@SpringBootApplication
+@SpringBootConfiguration
 @EnableAsync
 @EnableScheduling
-@ComponentScan({"com.vizzionnaire.server.http", "com.vizzionnaire.server.common", "com.vizzionnaire.server.transport.http", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
-public class ThingsboardHttpTransportApplication {
+@EnableAutoConfiguration
+@ComponentScan({"com.vizzionnaire.server.lwm2m", "com.vizzionnaire.server.common", "com.vizzionnaire.server.transport.lwm2m", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
+public class VizzionnaireLwm2mTransportApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
-    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-http-transport";
+    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-lwm2m-transport";
 
     public static void main(String[] args) {
-        SpringApplication.run(ThingsboardHttpTransportApplication.class, updateArguments(args));
+        SpringApplication.run(VizzionnaireLwm2mTransportApplication.class, updateArguments(args));
     }
 
     private static String[] updateArguments(String[] args) {

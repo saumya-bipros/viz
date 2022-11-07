@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.ApiUsageState;
 import com.vizzionnaire.server.common.data.Customer;
 import com.vizzionnaire.server.common.data.Device;
@@ -133,7 +133,7 @@ public class AccessValidator {
 
     @PostConstruct
     public void initExecutor() {
-        executor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("access-validator"));
+        executor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("access-validator"));
     }
 
     @PreDestroy

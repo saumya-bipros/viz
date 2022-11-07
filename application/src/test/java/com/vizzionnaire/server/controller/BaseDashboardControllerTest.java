@@ -48,7 +48,7 @@ public abstract class BaseDashboardControllerTest extends AbstractControllerTest
         tenantAdmin = new User();
         tenantAdmin.setAuthority(Authority.TENANT_ADMIN);
         tenantAdmin.setTenantId(savedTenant.getId());
-        tenantAdmin.setEmail("tenant2@thingsboard.org");
+        tenantAdmin.setEmail("tenant2@vizzionnaire.org");
         tenantAdmin.setFirstName("Joe");
         tenantAdmin.setLastName("Downs");
 
@@ -242,7 +242,7 @@ public abstract class BaseDashboardControllerTest extends AbstractControllerTest
         User tenantAdmin2 = new User();
         tenantAdmin2.setAuthority(Authority.TENANT_ADMIN);
         tenantAdmin2.setTenantId(savedTenant2.getId());
-        tenantAdmin2.setEmail("tenant3@thingsboard.org");
+        tenantAdmin2.setEmail("tenant3@vizzionnaire.org");
         tenantAdmin2.setFirstName("Joe");
         tenantAdmin2.setLastName("Downs");
 

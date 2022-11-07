@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.common.data.Customer;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.Tenant;
@@ -43,7 +43,7 @@ public abstract class BaseCustomerControllerTest extends AbstractControllerTest 
 
     @Before
     public void beforeTest() throws Exception {
-        executor = MoreExecutors.listeningDecorator(ThingsBoardExecutors.newWorkStealingPool(8, getClass()));
+        executor = MoreExecutors.listeningDecorator(VizzionnaireExecutors.newWorkStealingPool(8, getClass()));
 
         loginSysAdmin();
 
@@ -55,7 +55,7 @@ public abstract class BaseCustomerControllerTest extends AbstractControllerTest 
         tenantAdmin = new User();
         tenantAdmin.setAuthority(Authority.TENANT_ADMIN);
         tenantAdmin.setTenantId(savedTenant.getId());
-        tenantAdmin.setEmail("tenant2@thingsboard.org");
+        tenantAdmin.setEmail("tenant2@vizzionnaire.org");
         tenantAdmin.setFirstName("Joe");
         tenantAdmin.setLastName("Downs");
 

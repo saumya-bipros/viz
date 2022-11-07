@@ -15,7 +15,7 @@ const tbIndigo = mergeDeep<any>({}, indigo, {
   A100: HUE3_COLOR
 });
 
-const thingsboardPalette: PaletteOptions = {
+const vizzionnairePalette: PaletteOptions = {
   primary: tbIndigo,
   secondary: deeepOrange,
   background: {
@@ -27,5 +27,5 @@ export default {
   typography: {
     fontFamily: 'Roboto, \'Helvetica Neue\', sans-serif'
   },
-  palette: thingsboardPalette,
+  palette: vizzionnairePalette,
 } as ThemeOptions;

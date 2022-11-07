@@ -12,7 +12,7 @@
 
     <name>Vizzionnaire Black Box Tests</name>
     <url>https://vizzionnaire.io</url>
-    <description>Project for Thingsboard black box testing with using Docker</description>
+    <description>Project for Vizzionnaire black box testing with using Docker</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

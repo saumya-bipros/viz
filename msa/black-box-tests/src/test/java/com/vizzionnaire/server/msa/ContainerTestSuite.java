@@ -46,7 +46,7 @@ public class ContainerTestSuite {
     private static DockerComposeContainer<?> testContainer;
 
     @ClassRule
-    public static ThingsBoardDbInstaller installTb = new ThingsBoardDbInstaller();
+    public static VizzionnaireDbInstaller installTb = new VizzionnaireDbInstaller();
 
     @ClassRule
     public static DockerComposeContainer getTestContainer() {

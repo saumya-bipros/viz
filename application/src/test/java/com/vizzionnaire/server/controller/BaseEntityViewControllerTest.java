@@ -6,7 +6,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.common.data.Customer;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.EntityView;
@@ -81,7 +81,7 @@ public abstract class BaseEntityViewControllerTest extends AbstractControllerTes
 
     @Before
     public void beforeTest() throws Exception {
-        executor = MoreExecutors.listeningDecorator(ThingsBoardExecutors.newWorkStealingPool(8, getClass()));
+        executor = MoreExecutors.listeningDecorator(VizzionnaireExecutors.newWorkStealingPool(8, getClass()));
 
         loginTenantAdmin();
 
@@ -306,7 +306,7 @@ public abstract class BaseEntityViewControllerTest extends AbstractControllerTes
         User tenantAdmin2 = new User();
         tenantAdmin2.setAuthority(Authority.TENANT_ADMIN);
         tenantAdmin2.setTenantId(savedTenant2.getId());
-        tenantAdmin2.setEmail("tenant3@thingsboard.org");
+        tenantAdmin2.setEmail("tenant3@vizzionnaire.org");
         tenantAdmin2.setFirstName("Joe");
         tenantAdmin2.setLastName("Downs");
         createUserAndLogin(tenantAdmin2, "testPassword1");

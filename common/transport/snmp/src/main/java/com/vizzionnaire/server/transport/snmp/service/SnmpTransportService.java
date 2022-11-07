@@ -2,8 +2,8 @@ package com.vizzionnaire.server.transport.snmp.service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.TbTransportService;
 import com.vizzionnaire.server.common.data.kv.DataType;
@@ -76,8 +76,8 @@ public class SnmpTransportService implements TbTransportService {
 
     @PostConstruct
     private void init() throws IOException {
-        queryingExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors(), ThingsBoardThreadFactory.forName("snmp-querying"));
-        responseProcessingExecutor = ThingsBoardExecutors.newWorkStealingPool(responseProcessingParallelismLevel, "snmp-response-processing");
+        queryingExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors(), VizzionnaireThreadFactory.forName("snmp-querying"));
+        responseProcessingExecutor = VizzionnaireExecutors.newWorkStealingPool(responseProcessingParallelismLevel, "snmp-response-processing");
 
         initializeSnmp();
         configureResponseDataMappers();

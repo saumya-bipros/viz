@@ -99,10 +99,10 @@ public class SwaggerConfiguration {
     private String appVersion;
 
     @Bean
-    public Docket thingsboardApi() {
+    public Docket vizzionnaireApi() {
         TypeResolver typeResolver = new TypeResolver();
         return new Docket(DocumentationType.OAS_30)
-                .groupName("thingsboard")
+                .groupName("vizzionnaire")
                 .apiInfo(apiInfo())
                 .additionalModels(
                         typeResolver.resolve(VizzionnaireErrorResponse.class),

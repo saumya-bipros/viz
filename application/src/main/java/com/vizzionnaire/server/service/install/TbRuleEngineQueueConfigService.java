@@ -26,7 +26,7 @@ public class TbRuleEngineQueueConfigService {
     @PostConstruct
     public void validate() {
         queues.stream().filter(queue -> queue.getName().equals("Main")).findFirst().orElseThrow(() -> {
-            log.error("Main queue is not configured in thingsboard.yml");
+            log.error("Main queue is not configured in vizzionnaire.yml");
             return new RuntimeException("No \"Main\" queue configured!");
         });
     }

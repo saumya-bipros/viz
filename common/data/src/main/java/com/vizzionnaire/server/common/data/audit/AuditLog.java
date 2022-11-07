@@ -24,7 +24,7 @@ public class AuditLog extends BaseData<AuditLogId> {
     private String entityName;
     @ApiModelProperty(position = 7, value = "JSON object with User id.", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private UserId userId;
-    @ApiModelProperty(position = 8, value = "Unique user name(email) of the user that performed some action on logged entity", example = "tenant@thingsboard.org", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(position = 8, value = "Unique user name(email) of the user that performed some action on logged entity", example = "tenant@vizzionnaire.org", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private String userName;
     @ApiModelProperty(position = 9, value = "String represented Action type", example = "ADDED", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private ActionType actionType;

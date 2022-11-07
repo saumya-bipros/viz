@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.DeviceProfile;
 import com.vizzionnaire.server.common.data.DeviceProfileInfo;
@@ -147,7 +147,7 @@ public abstract class BaseDeviceProfileServiceTest extends AbstractServiceTest {
 
     @Test
     public void testFindOrCreateDeviceProfile() throws ExecutionException, InterruptedException {
-        ListeningExecutorService testExecutor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(100, ThingsBoardThreadFactory.forName(getClass().getSimpleName() + "-test-scope")));
+        ListeningExecutorService testExecutor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(100, VizzionnaireThreadFactory.forName(getClass().getSimpleName() + "-test-scope")));
         try {
             List<ListenableFuture<DeviceProfile>> futures = new ArrayList<>();
             for (int i = 0; i < 50; i++) {

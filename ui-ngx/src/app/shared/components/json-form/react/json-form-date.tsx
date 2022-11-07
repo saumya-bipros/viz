@@ -1,14 +1,14 @@
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VizzionnaireBaseComponent from './json-form-base-component';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-interface ThingsboardDateState extends JsonFormFieldState {
+interface VizzionnaireDateState extends JsonFormFieldState {
   currentValue: Date | null;
 }
 
-class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDateState> {
+class VizzionnaireDate extends React.Component<JsonFormFieldProps, VizzionnaireDateState> {
 
     constructor(props) {
         super(props);
@@ -61,4 +61,4 @@ class ThingsboardDate extends React.Component<JsonFormFieldProps, ThingsboardDat
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardDate);
+export default VizzionnaireBaseComponent(VizzionnaireDate);

@@ -168,7 +168,7 @@ public class LwM2MTransportUtil {
         }
     }
 
-    public static List<LwM2MBootstrapServerCredential> getBootstrapParametersFromThingsboard(DeviceProfile deviceProfile) {
+    public static List<LwM2MBootstrapServerCredential> getBootstrapParametersFromVizzionnaire(DeviceProfile deviceProfile) {
         return toLwM2MClientProfile(deviceProfile).getBootstrap();
     }
 

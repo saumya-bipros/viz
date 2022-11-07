@@ -3,7 +3,7 @@ server:
   address: "0.0.0.0"
   # Server bind port
   port: "8090"
-thingsboard:
+vizzionnaire:
   enableProxy: "false"
   # Vizzionnaire node host
   host: "localhost"

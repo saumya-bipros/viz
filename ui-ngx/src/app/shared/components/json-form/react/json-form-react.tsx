@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import thingsboardTheme from './styles/thingsboardTheme';
-import ThingsboardSchemaForm from './json-form-schema-form';
+import vizzionnaireTheme from './styles/vizzionnaireTheme';
+import VizzionnaireSchemaForm from './json-form-schema-form';
 import { JsonFormProps } from './json-form.models';
 
-const tbTheme = createTheme(thingsboardTheme);
+const tbTheme = createTheme(vizzionnaireTheme);
 
 class ReactSchemaForm extends React.Component<JsonFormProps, {}> {
 
@@ -16,7 +16,7 @@ class ReactSchemaForm extends React.Component<JsonFormProps, {}> {
 
   render() {
     if (this.props.form.length > 0) {
-      return <ThemeProvider theme={tbTheme}><ThingsboardSchemaForm {...this.props} /></ThemeProvider>;
+      return <ThemeProvider theme={tbTheme}><VizzionnaireSchemaForm {...this.props} /></ThemeProvider>;
     } else {
       return <div></div>;
     }

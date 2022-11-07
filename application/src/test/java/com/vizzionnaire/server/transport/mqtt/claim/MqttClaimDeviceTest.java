@@ -54,7 +54,7 @@ public class MqttClaimDeviceTest extends AbstractMqttIntegrationTest {
         user.setAuthority(Authority.CUSTOMER_USER);
         user.setTenantId(tenantId);
         user.setCustomerId(savedCustomer.getId());
-        user.setEmail("customer@thingsboard.org");
+        user.setEmail("customer@vizzionnaire.org");
 
         customerAdmin = createUser(user, CUSTOMER_USER_PASSWORD);
         assertNotNull(customerAdmin);

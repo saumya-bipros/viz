@@ -295,7 +295,7 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
     }
 
     /**
-     * Sending observe value to thingsboard from ObservationListener.onResponse: object, instance, SingleResource or MultipleResource
+     * Sending observe value to vizzionnaire from ObservationListener.onResponse: object, instance, SingleResource or MultipleResource
      *
      * @param registration - Registration LwM2M Client
      * @param path         - observe
@@ -346,7 +346,7 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
     }
 
     /**
-     * Sending updated value to thingsboard from SendListener.dataReceived: object, instance, SingleResource or MultipleResource
+     * Sending updated value to vizzionnaire from SendListener.dataReceived: object, instance, SingleResource or MultipleResource
      *
      * @param registration - Registration LwM2M Client
      * @param sendRequest  - sendRequest
@@ -560,7 +560,7 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
     }
 
     /**
-     * Sending observe value of resources to thingsboard
+     * Sending observe value of resources to vizzionnaire
      * #1 Return old Value Resource from LwM2MClient
      * #2 Update new Resources (replace old Resource Value on new Resource Value)
      * #3 If fr_update -> UpdateFirmware
@@ -606,7 +606,7 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
 
 
     /**
-     * send Attribute and Telemetry to Thingsboard
+     * send Attribute and Telemetry to Vizzionnaire
      * #1 - get AttrName/TelemetryName with value from LwM2MClient:
      * -- resourceId == path from LwM2MClientProfile.postAttributeProfile/postTelemetryProfile/postObserveProfile
      * -- AttrName/TelemetryName == resourceName from ModelObject.objectModel, value from ModelObject.instance.resource(resourceId)
@@ -620,10 +620,10 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
             SessionInfoProto sessionInfo = this.getSessionInfoOrCloseSession(registration);
             if (results != null && sessionInfo != null) {
                 if (results.getResultAttributes().size() > 0) {
-                    this.helper.sendParametersOnThingsboardAttribute(results.getResultAttributes(), sessionInfo);
+                    this.helper.sendParametersOnVizzionnaireAttribute(results.getResultAttributes(), sessionInfo);
                 }
                 if (results.getResultTelemetries().size() > 0) {
-                    this.helper.sendParametersOnThingsboardTelemetry(results.getResultTelemetries(), sessionInfo);
+                    this.helper.sendParametersOnVizzionnaireTelemetry(results.getResultTelemetries(), sessionInfo);
                 }
             }
         } catch (Exception e) {
@@ -730,7 +730,7 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
                         LwM2mOtaConvert lwM2mOtaConvert = convertOtaUpdateValueToString(pathIdVer, valueKvProto, currentType);
                         valueKvProto = lwM2mOtaConvert.getValue();
                         currentType = lwM2mOtaConvert.getCurrentType();
-                        return valueKvProto != null ? this.helper.getKvAttrTelemetryToThingsboard(currentType, resourceName, valueKvProto, resourceValue.isMultiInstances()) : null;
+                        return valueKvProto != null ? this.helper.getKvAttrTelemetryToVizzionnaire(currentType, resourceName, valueKvProto, resourceValue.isMultiInstances()) : null;
                     }
                 } catch (Exception e) {
                     log.error("Failed to add parameters.", e);
@@ -936,7 +936,7 @@ public class DefaultLwM2mUplinkMsgHandler extends LwM2MExecutorAwareService impl
      * - If there is a difference in values between the current resource values and the shared attribute values
      * - when the client connects to the server
      * #1.1 get attributes name from profile include name resources in ModelObject if resource  isWritable
-     * #1.2 #1 size > 0 => send Request getAttributes to thingsboard
+     * #1.2 #1 size > 0 => send Request getAttributes to vizzionnaire
      * #2. FirmwareAttribute subscribe:
      *
      * @param lwM2MClient - LwM2M Client

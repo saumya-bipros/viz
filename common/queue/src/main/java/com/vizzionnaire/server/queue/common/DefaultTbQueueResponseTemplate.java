@@ -3,7 +3,7 @@ package com.vizzionnaire.server.queue.common;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.msg.queue.TopicPartitionInfo;
 import com.vizzionnaire.server.common.stats.MessagesStats;
 import com.vizzionnaire.server.queue.TbQueueConsumer;
@@ -57,8 +57,8 @@ public class DefaultTbQueueResponseTemplate<Request extends TbQueueMsg, Response
         this.requestTimeout = requestTimeout;
         this.callbackExecutor = executor;
         this.stats = stats;
-        this.timeoutExecutor = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("tb-queue-response-template-timeout-" + requestTemplate.getTopic()));
-        this.loopExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("tb-queue-response-template-loop-" + requestTemplate.getTopic()));
+        this.timeoutExecutor = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("tb-queue-response-template-timeout-" + requestTemplate.getTopic()));
+        this.loopExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("tb-queue-response-template-loop-" + requestTemplate.getTopic()));
     }
 
     @Override

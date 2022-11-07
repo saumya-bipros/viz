@@ -6,7 +6,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.common.data.Customer;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.DeviceProfile;
@@ -70,7 +70,7 @@ public abstract class BaseDeviceControllerTest extends AbstractControllerTest {
 
     @Before
     public void beforeTest() throws Exception {
-        executor = MoreExecutors.listeningDecorator(ThingsBoardExecutors.newWorkStealingPool(8, getClass()));
+        executor = MoreExecutors.listeningDecorator(VizzionnaireExecutors.newWorkStealingPool(8, getClass()));
 
         loginSysAdmin();
 
@@ -82,7 +82,7 @@ public abstract class BaseDeviceControllerTest extends AbstractControllerTest {
         tenantAdmin = new User();
         tenantAdmin.setAuthority(Authority.TENANT_ADMIN);
         tenantAdmin.setTenantId(savedTenant.getId());
-        tenantAdmin.setEmail("tenant2@thingsboard.org");
+        tenantAdmin.setEmail("tenant2@vizzionnaire.org");
         tenantAdmin.setFirstName("Joe");
         tenantAdmin.setLastName("Downs");
 
@@ -463,7 +463,7 @@ public abstract class BaseDeviceControllerTest extends AbstractControllerTest {
         User tenantAdmin2 = new User();
         tenantAdmin2.setAuthority(Authority.TENANT_ADMIN);
         tenantAdmin2.setTenantId(savedTenant2.getId());
-        tenantAdmin2.setEmail("tenant3@thingsboard.org");
+        tenantAdmin2.setEmail("tenant3@vizzionnaire.org");
         tenantAdmin2.setFirstName("Joe");
         tenantAdmin2.setLastName("Downs");
 
@@ -1095,13 +1095,13 @@ public abstract class BaseDeviceControllerTest extends AbstractControllerTest {
         User user = new User();
         user.setAuthority(Authority.TENANT_ADMIN);
         user.setTenantId(savedDifferentTenant.getId());
-        user.setEmail("tenant9@thingsboard.org");
+        user.setEmail("tenant9@vizzionnaire.org");
         user.setFirstName("Sam");
         user.setLastName("Downs");
 
         createUserAndLogin(user, "testPassword1");
 
-        login("tenant2@thingsboard.org", "testPassword1");
+        login("tenant2@vizzionnaire.org", "testPassword1");
 
         Mockito.reset(tbClusterService, auditLogService, gatewayNotificationsService);
 
@@ -1117,7 +1117,7 @@ public abstract class BaseDeviceControllerTest extends AbstractControllerTest {
                 ActionType.ASSIGNED_TO_TENANT, savedDifferentTenant.getId().getId().toString(), savedDifferentTenant.getTitle());
         testNotificationUpdateGatewayNever();
 
-        login("tenant9@thingsboard.org", "testPassword1");
+        login("tenant9@vizzionnaire.org", "testPassword1");
 
         Device foundDevice1 = doGet("/api/device/" + assignedDevice.getId().getId(), Device.class);
         Assert.assertNotNull(foundDevice1);

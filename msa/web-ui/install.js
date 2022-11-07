@@ -6,10 +6,10 @@ let _projectRoot = null;
 
 
 (async() => {
-    await fse.move(path.join(projectRoot(), 'target', 'thingsboard-web-ui-linux'),
+    await fse.move(path.join(projectRoot(), 'target', 'vizzionnaire-web-ui-linux'),
                    path.join(targetPackageDir('linux'), 'bin', 'tb-web-ui'),
                    {overwrite: true});
-    await fse.move(path.join(projectRoot(), 'target', 'thingsboard-web-ui-win.exe'),
+    await fse.move(path.join(projectRoot(), 'target', 'vizzionnaire-web-ui-win.exe'),
                    path.join(targetPackageDir('windows'), 'bin', 'tb-web-ui.exe'),
                    {overwrite: true});
 })();

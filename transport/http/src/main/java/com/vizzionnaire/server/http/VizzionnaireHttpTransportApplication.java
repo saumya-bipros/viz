@@ -1,6 +1,7 @@
-package com.vizzionnaire.server.vc;
+package com.vizzionnaire.server.http;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -11,14 +12,14 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
-@ComponentScan({"com.vizzionnaire.server", "com.vizzionnaire.server.common", "com.vizzionnaire.server.service.sync.vc"})
-public class ThingsboardVersionControlExecutorApplication {
+@ComponentScan({"com.vizzionnaire.server.http", "com.vizzionnaire.server.common", "com.vizzionnaire.server.transport.http", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
+public class VizzionnaireHttpTransportApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
-    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-vc-executor";
+    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-http-transport";
 
     public static void main(String[] args) {
-        SpringApplication.run(ThingsboardVersionControlExecutorApplication.class, updateArguments(args));
+        SpringApplication.run(VizzionnaireHttpTransportApplication.class, updateArguments(args));
     }
 
     private static String[] updateArguments(String[] args) {

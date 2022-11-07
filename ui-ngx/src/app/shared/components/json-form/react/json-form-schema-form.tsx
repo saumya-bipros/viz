@@ -1,23 +1,23 @@
 import * as React from 'react';
 import JsonFormUtils from './json-form-utils';
 
-import ThingsboardArray from './json-form-array';
-import ThingsboardJavaScript from './json-form-javascript';
-import ThingsboardJson from './json-form-json';
-import ThingsboardHtml from './json-form-html';
-import ThingsboardCss from './json-form-css';
-import ThingsboardColor from './json-form-color';
-import ThingsboardRcSelect from './json-form-rc-select';
-import ThingsboardNumber from './json-form-number';
-import ThingsboardText from './json-form-text';
-import ThingsboardSelect from './json-form-select';
-import ThingsboardRadios from './json-form-radios';
-import ThingsboardDate from './json-form-date';
-import ThingsboardImage from './json-form-image';
-import ThingsboardCheckbox from './json-form-checkbox';
-import ThingsboardHelp from './json-form-help';
-import ThingsboardFieldSet from './json-form-fieldset';
-import ThingsboardIcon from './json-form-icon';
+import VizzionnaireArray from './json-form-array';
+import VizzionnaireJavaScript from './json-form-javascript';
+import VizzionnaireJson from './json-form-json';
+import VizzionnaireHtml from './json-form-html';
+import VizzionnaireCss from './json-form-css';
+import VizzionnaireColor from './json-form-color';
+import VizzionnaireRcSelect from './json-form-rc-select';
+import VizzionnaireNumber from './json-form-number';
+import VizzionnaireText from './json-form-text';
+import VizzionnaireSelect from './json-form-select';
+import VizzionnaireRadios from './json-form-radios';
+import VizzionnaireDate from './json-form-date';
+import VizzionnaireImage from './json-form-image';
+import VizzionnaireCheckbox from './json-form-checkbox';
+import VizzionnaireHelp from './json-form-help';
+import VizzionnaireFieldSet from './json-form-fieldset';
+import VizzionnaireIcon from './json-form-icon';
 import {
   JsonFormData,
   JsonFormProps,
@@ -30,12 +30,12 @@ import {
 import _ from 'lodash';
 import * as tinycolor_ from 'tinycolor2';
 import { GroupInfo } from '@shared/models/widget.models';
-import ThingsboardMarkdown from '@shared/components/json-form/react/json-form-markdown';
+import VizzionnaireMarkdown from '@shared/components/json-form/react/json-form-markdown';
 import { MouseEvent } from 'react';
 
 const tinycolor = tinycolor_;
 
-class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
+class VizzionnaireSchemaForm extends React.Component<JsonFormProps, any> {
 
   private hasConditions: boolean;
   private readonly mapper: {[type: string]: any};
@@ -44,26 +44,26 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
     super(props);
 
     this.mapper = {
-      number: ThingsboardNumber,
-      text: ThingsboardText,
-      password: ThingsboardText,
-      textarea: ThingsboardText,
-      select: ThingsboardSelect,
-      radios: ThingsboardRadios,
-      date: ThingsboardDate,
-      image: ThingsboardImage,
-      checkbox: ThingsboardCheckbox,
-      help: ThingsboardHelp,
-      array: ThingsboardArray,
-      javascript: ThingsboardJavaScript,
-      json: ThingsboardJson,
-      html: ThingsboardHtml,
-      css: ThingsboardCss,
-      markdown: ThingsboardMarkdown,
-      color: ThingsboardColor,
-      'rc-select': ThingsboardRcSelect,
-      fieldset: ThingsboardFieldSet,
-      icon: ThingsboardIcon
+      number: VizzionnaireNumber,
+      text: VizzionnaireText,
+      password: VizzionnaireText,
+      textarea: VizzionnaireText,
+      select: VizzionnaireSelect,
+      radios: VizzionnaireRadios,
+      date: VizzionnaireDate,
+      image: VizzionnaireImage,
+      checkbox: VizzionnaireCheckbox,
+      help: VizzionnaireHelp,
+      array: VizzionnaireArray,
+      javascript: VizzionnaireJavaScript,
+      json: VizzionnaireJson,
+      html: VizzionnaireHtml,
+      css: VizzionnaireCss,
+      markdown: VizzionnaireMarkdown,
+      color: VizzionnaireColor,
+      'rc-select': VizzionnaireRcSelect,
+      fieldset: VizzionnaireFieldSet,
+      icon: VizzionnaireIcon
     };
 
     this.onChange = this.onChange.bind(this);
@@ -156,7 +156,7 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
       const content: JSX.Element[] = [];
       for (const info of this.props.groupInfoes) {
         const forms = this.createSchema(this.props.form[info.formIndex]);
-        const item = <ThingsboardSchemaGroup key={content.length} forms={forms} info={info}></ThingsboardSchemaGroup>;
+        const item = <VizzionnaireSchemaGroup key={content.length} forms={forms} info={info}></VizzionnaireSchemaGroup>;
         content.push(item);
       }
       return (<div>{content}</div>);
@@ -165,18 +165,18 @@ class ThingsboardSchemaForm extends React.Component<JsonFormProps, any> {
     }
   }
 }
-export default ThingsboardSchemaForm;
+export default VizzionnaireSchemaForm;
 
-interface ThingsboardSchemaGroupProps {
+interface VizzionnaireSchemaGroupProps {
   info: GroupInfo;
   forms: JSX.Element;
 }
 
-interface ThingsboardSchemaGroupState {
+interface VizzionnaireSchemaGroupState {
   showGroup: boolean;
 }
 
-class ThingsboardSchemaGroup extends React.Component<ThingsboardSchemaGroupProps, ThingsboardSchemaGroupState> {
+class VizzionnaireSchemaGroup extends React.Component<VizzionnaireSchemaGroupProps, VizzionnaireSchemaGroupState> {
   constructor(props) {
     super(props);
     this.state = {

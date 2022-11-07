@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.data.EdgeUtils;
 import com.vizzionnaire.server.common.data.edge.Edge;
@@ -70,7 +70,7 @@ public class DefaultEdgeNotificationService implements EdgeNotificationService {
 
     @PostConstruct
     public void initExecutor() {
-        dbCallBackExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("edge-notifications"));
+        dbCallBackExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("edge-notifications"));
     }
 
     @PreDestroy

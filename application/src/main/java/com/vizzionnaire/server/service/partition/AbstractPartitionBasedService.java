@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.vizzionnaire.common.util.DonAsynchron;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.msg.queue.ServiceType;
 import com.vizzionnaire.server.common.msg.queue.TopicPartitionInfo;
@@ -50,7 +50,7 @@ public abstract class AbstractPartitionBasedService<T extends EntityId> extends 
 
     protected void init() {
         // Should be always single threaded due to absence of locks.
-        scheduledExecutor = MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName(getSchedulerExecutorName())));
+        scheduledExecutor = MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName(getSchedulerExecutorName())));
     }
 
     protected ServiceType getServiceType() {

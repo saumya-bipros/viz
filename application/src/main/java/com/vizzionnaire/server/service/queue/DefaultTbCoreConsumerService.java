@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.common.util.JacksonUtil;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.actors.ActorSystemContext;
 import com.vizzionnaire.server.common.data.alarm.Alarm;
 import com.vizzionnaire.server.common.data.id.DeviceId;
@@ -149,8 +149,8 @@ public class DefaultTbCoreConsumerService extends AbstractConsumerService<ToCore
     @PostConstruct
     public void init() {
         super.init("tb-core-consumer", "tb-core-notifications-consumer");
-        this.usageStatsExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("tb-core-usage-stats-consumer"));
-        this.firmwareStatesExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("tb-core-firmware-notifications-consumer"));
+        this.usageStatsExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("tb-core-usage-stats-consumer"));
+        this.firmwareStatesExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("tb-core-firmware-notifications-consumer"));
     }
 
     @PreDestroy

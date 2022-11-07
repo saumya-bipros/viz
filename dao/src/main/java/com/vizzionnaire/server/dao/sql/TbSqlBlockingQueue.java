@@ -2,7 +2,7 @@ package com.vizzionnaire.server.dao.sql;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.stats.MessagesStats;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class TbSqlBlockingQueue<E> implements TbSqlQueue<E> {
 
     @Override
     public void init(ScheduledLogExecutorComponent logExecutor, Consumer<List<E>> saveFunction, Comparator<E> batchUpdateComparator, int index) {
-        executor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("sql-queue-" + index + "-" + params.getLogName().toLowerCase()));
+        executor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("sql-queue-" + index + "-" + params.getLogName().toLowerCase()));
         executor.submit(() -> {
             String logName = params.getLogName();
             int batchSize = params.getBatchSize();

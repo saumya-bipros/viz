@@ -3,7 +3,7 @@ import JsonFormUtils from './json-form-utils';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import { isDefinedAndNotNull } from '@core/utils';
 
-export default ThingsboardBaseComponent => class<P extends JsonFormFieldProps>
+export default VizzionnaireBaseComponent => class<P extends JsonFormFieldProps>
   extends React.Component<P, JsonFormFieldState> {
 
     constructor(props) {
@@ -97,7 +97,7 @@ export default ThingsboardBaseComponent => class<P extends JsonFormFieldProps>
 
     render() {
         if (this.props.form && this.props.form.schema) {
-            return <ThingsboardBaseComponent {...this.props} {...this.state} onChangeValidate={this.onChangeValidate}/>;
+            return <VizzionnaireBaseComponent {...this.props} {...this.state} onChangeValidate={this.onChangeValidate}/>;
         } else {
             return <div></div>;
         }

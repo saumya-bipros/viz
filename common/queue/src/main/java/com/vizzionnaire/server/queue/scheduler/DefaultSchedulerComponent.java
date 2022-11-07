@@ -2,7 +2,7 @@ package com.vizzionnaire.server.queue.scheduler;
 
 import org.springframework.stereotype.Component;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -19,7 +19,7 @@ public class DefaultSchedulerComponent implements SchedulerComponent{
 
     @PostConstruct
     public void init(){
-        this.schedulerExecutor = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("queue-scheduler"));
+        this.schedulerExecutor = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("queue-scheduler"));
     }
 
     @PreDestroy

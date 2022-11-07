@@ -9,7 +9,7 @@ import org.eclipse.leshan.core.response.ExecuteResponse;
 import org.eclipse.leshan.core.response.ReadResponse;
 import org.eclipse.leshan.core.response.WriteResponse;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 
 import javax.security.auth.Destroyable;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class FwLwM2MDevice extends BaseInstanceEnabler implements Destroyable {
 
     private static final List<Integer> supportedResources = Arrays.asList(0, 1, 2, 3, 5, 6, 7, 9);
 
-    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName(getClass().getSimpleName() + "-test-scope"));
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName(getClass().getSimpleName() + "-test-scope"));
 
     private final AtomicInteger state = new AtomicInteger(0);
 

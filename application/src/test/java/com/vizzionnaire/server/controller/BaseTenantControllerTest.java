@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.Tenant;
 import com.vizzionnaire.server.common.data.TenantInfo;
@@ -65,7 +65,7 @@ public abstract class BaseTenantControllerTest extends AbstractControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        executor = MoreExecutors.listeningDecorator(ThingsBoardExecutors.newWorkStealingPool(8, getClass()));
+        executor = MoreExecutors.listeningDecorator(VizzionnaireExecutors.newWorkStealingPool(8, getClass()));
     }
 
     @After
@@ -376,7 +376,7 @@ public abstract class BaseTenantControllerTest extends AbstractControllerTest {
     @Test
     public void testUpdateQueueConfigForIsolatedTenant() throws Exception {
         Comparator<Queue> queueComparator = Comparator.comparing(Queue::getName);
-        final String username = "isolatedtenant@thingsboard.org";
+        final String username = "isolatedtenant@vizzionnaire.org";
         final String password = "123456";
         loginSysAdmin();
 

@@ -9,7 +9,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.vizzionnaire.common.util.JacksonUtil;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.Device;
@@ -182,7 +182,7 @@ public class DefaultDeviceStateService extends AbstractPartitionBasedService<Dev
     @PostConstruct
     public void init() {
         super.init();
-        deviceStateExecutor = MoreExecutors.listeningDecorator(ThingsBoardExecutors.newWorkStealingPool(
+        deviceStateExecutor = MoreExecutors.listeningDecorator(VizzionnaireExecutors.newWorkStealingPool(
                 Math.max(4, Runtime.getRuntime().availableProcessors()), "device-state"));
         scheduledExecutor.scheduleAtFixedRate(this::updateInactivityStateIfExpired, new Random().nextInt(defaultStateCheckIntervalInSec), defaultStateCheckIntervalInSec, TimeUnit.SECONDS);
     }

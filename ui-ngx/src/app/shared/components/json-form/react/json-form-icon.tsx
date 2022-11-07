@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VizzionnaireBaseComponent from './json-form-base-component';
 import reactCSS from 'reactcss';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,12 +9,12 @@ import Clear from '@material-ui/icons/Clear';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 
-interface ThingsboardIconState extends JsonFormFieldState {
+interface VizzionnaireIconState extends JsonFormFieldState {
   icon: string | null;
   focused: boolean;
 }
 
-class ThingsboardIcon extends React.Component<JsonFormFieldProps, ThingsboardIconState> {
+class VizzionnaireIcon extends React.Component<JsonFormFieldProps, VizzionnaireIconState> {
 
     constructor(props) {
         super(props);
@@ -141,4 +141,4 @@ class ThingsboardIcon extends React.Component<JsonFormFieldProps, ThingsboardIco
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardIcon);
+export default VizzionnaireBaseComponent(VizzionnaireIcon);

@@ -213,7 +213,7 @@ public class CassandraTsLatestToSqlMigrateService implements TsLatestMigrateServ
 
     private void loadSql(Path sqlFile, Connection conn) throws Exception {
         String sql = new String(Files.readAllBytes(sqlFile), Charset.forName("UTF-8"));
-        conn.createStatement().execute(sql); //NOSONAR, ignoring because method used to execute thingsboard database upgrade script
+        conn.createStatement().execute(sql); //NOSONAR, ignoring because method used to execute vizzionnaire database upgrade script
         Thread.sleep(5000);
     }
 }

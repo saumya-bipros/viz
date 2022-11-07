@@ -3,7 +3,7 @@ package com.vizzionnaire.server.transport.lwm2m;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vizzionnaire.common.util.JacksonUtil;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.DeviceProfile;
 import com.vizzionnaire.server.common.data.DeviceProfileProvisionType;
@@ -183,7 +183,7 @@ public abstract class AbstractLwM2MIntegrationTest extends AbstractControllerTes
     }
 
     private void init() throws Exception {
-        executor = Executors.newScheduledThreadPool(10, ThingsBoardThreadFactory.forName("test-lwm2m-scheduled"));
+        executor = Executors.newScheduledThreadPool(10, VizzionnaireThreadFactory.forName("test-lwm2m-scheduled"));
         loginTenantAdmin();
         for (String resourceName : this.resources) {
             TbResource lwModel = new TbResource();

@@ -5,7 +5,7 @@ import {
   JsonFormFieldState
 } from '@shared/components/json-form/react/json-form.models';
 
-class ThingsboardFieldSet extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
+class VizzionnaireFieldSet extends React.Component<JsonFormFieldProps, JsonFormFieldState> {
 
     render() {
         const forms = (this.props.form.items as JsonFormData[]).map((form: JsonFormData, index) => {
@@ -26,4 +26,4 @@ class ThingsboardFieldSet extends React.Component<JsonFormFieldProps, JsonFormFi
     }
 }
 
-export default ThingsboardFieldSet;
+export default VizzionnaireFieldSet;

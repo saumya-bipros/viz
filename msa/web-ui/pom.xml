@@ -12,7 +12,7 @@
 
     <name>Vizzionnaire Web UI Microservice</name>
     <url>https://vizzionnaire.io</url>
-    <description>Service for hosting Thingsboard Web UI</description>
+    <description>Service for hosting Vizzionnaire Web UI</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

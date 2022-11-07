@@ -36,7 +36,7 @@ java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.Vizzionnair
                     -Dinstall.load_demo=${loadDemo} \
                     -Dspring.jpa.hibernate.ddl-auto=none \
                     -Dinstall.upgrade=false \
-                    -Dlogging.config=/usr/share/thingsboard/bin/install/logback.xml \
+                    -Dlogging.config=/usr/share/vizzionnaire/bin/install/logback.xml \
                     org.springframework.boot.loader.PropertiesLauncher
 
 echo "${pkg.upgradeVersion}" > ${upgradeversion}

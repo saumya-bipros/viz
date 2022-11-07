@@ -2,7 +2,7 @@ package com.vizzionnaire.server.service.script;
 
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.ApiUsageRecordKey;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -38,7 +38,7 @@ public abstract class AbstractJsInvokeService implements JsInvokeService {
 
     public void init(long maxRequestsTimeout) {
         if (maxRequestsTimeout > 0) {
-            timeoutExecutorService = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("nashorn-js-timeout"));
+            timeoutExecutorService = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("nashorn-js-timeout"));
         }
     }
 

@@ -1,4 +1,4 @@
-FROM thingsboard/openjdk11:bullseye-slim
+FROM vizzionnaire/openjdk11:bullseye-slim
 
 COPY start-tb-http-transport.sh ${pkg.name}.deb /tmp/
 

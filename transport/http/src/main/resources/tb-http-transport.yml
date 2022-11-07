@@ -28,11 +28,11 @@ server:
         # Path to the key store that holds the SSL certificate
         store_file: "${SSL_KEY_STORE:classpath:keystore/keystore.p12}"
         # Password used to access the key store
-        store_password: "${SSL_KEY_STORE_PASSWORD:thingsboard}"
+        store_password: "${SSL_KEY_STORE_PASSWORD:vizzionnaire}"
         # Key alias
         key_alias: "${SSL_KEY_ALIAS:tomcat}"
         # Password used to access the key
-        key_password: "${SSL_KEY_PASSWORD:thingsboard}"
+        key_password: "${SSL_KEY_PASSWORD:vizzionnaire}"
   # HTTP/2 support (takes effect only if server SSL is enabled)
   http2:
     # Enable/disable HTTP/2 support
@@ -51,7 +51,7 @@ zk:
   # Zookeeper session timeout in milliseconds
   session_timeout_ms: "${ZOOKEEPER_SESSION_TIMEOUT_MS:3000}"
   # Name of the directory in zookeeper 'filesystem'
-  zk_dir: "${ZOOKEEPER_NODES_DIR:/thingsboard}"
+  zk_dir: "${ZOOKEEPER_NODES_DIR:/vizzionnaire}"
 
 cache:
   type: "${CACHE_TYPE:redis}"

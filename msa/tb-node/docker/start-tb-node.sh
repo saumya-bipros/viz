@@ -24,7 +24,7 @@ if [ "$INSTALL_TB" == "true" ]; then
                         -Dinstall.load_demo=${loadDemo} \
                         -Dspring.jpa.hibernate.ddl-auto=none \
                         -Dinstall.upgrade=false \
-                        -Dlogging.config=/usr/share/thingsboard/bin/install/logback.xml \
+                        -Dlogging.config=/usr/share/vizzionnaire/bin/install/logback.xml \
                         org.springframework.boot.loader.PropertiesLauncher
 
 elif [ "$UPGRADE_TB" == "true" ]; then
@@ -42,7 +42,7 @@ elif [ "$UPGRADE_TB" == "true" ]; then
                     -Dspring.jpa.hibernate.ddl-auto=none \
                     -Dinstall.upgrade=true \
                     -Dinstall.upgrade.from_version=${fromVersion} \
-                    -Dlogging.config=/usr/share/thingsboard/bin/install/logback.xml \
+                    -Dlogging.config=/usr/share/vizzionnaire/bin/install/logback.xml \
                     org.springframework.boot.loader.PropertiesLauncher
 
 else

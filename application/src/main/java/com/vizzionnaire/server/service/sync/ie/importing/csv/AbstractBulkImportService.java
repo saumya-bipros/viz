@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.vizzionnaire.common.util.DonAsynchron;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.HasTenantId;
 import com.vizzionnaire.server.common.data.StringUtils;
@@ -77,7 +77,7 @@ public abstract class AbstractBulkImportService<E extends HasId<? extends Entity
         if (executor == null) {
             executor = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(), Runtime.getRuntime().availableProcessors(),
                     60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(150_000),
-                    ThingsBoardThreadFactory.forName("bulk-import"), new ThreadPoolExecutor.CallerRunsPolicy());
+                    VizzionnaireThreadFactory.forName("bulk-import"), new ThreadPoolExecutor.CallerRunsPolicy());
             executor.allowCoreThreadTimeOut(true);
         }
     }

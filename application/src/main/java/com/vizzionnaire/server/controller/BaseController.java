@@ -279,12 +279,12 @@ public abstract class BaseController {
 
     @ExceptionHandler(Exception.class)
     public void handleControllerException(Exception e, HttpServletResponse response) {
-        VizzionnaireException thingsboardException = handleException(e);
-        if (thingsboardException.getErrorCode() == VizzionnaireErrorCode.GENERAL && thingsboardException.getCause() instanceof Exception
-                && StringUtils.equals(thingsboardException.getCause().getMessage(), thingsboardException.getMessage())) {
-            e = (Exception) thingsboardException.getCause();
+        VizzionnaireException vizzionnaireException = handleException(e);
+        if (vizzionnaireException.getErrorCode() == VizzionnaireErrorCode.GENERAL && vizzionnaireException.getCause() instanceof Exception
+                && StringUtils.equals(vizzionnaireException.getCause().getMessage(), vizzionnaireException.getMessage())) {
+            e = (Exception) vizzionnaireException.getCause();
         } else {
-            e = thingsboardException;
+            e = vizzionnaireException;
         }
         errorResponseHandler.handle(e, response);
     }
@@ -344,8 +344,8 @@ public abstract class BaseController {
         String errorMessage = "Validation error: " + e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(", "));
-        VizzionnaireException thingsboardException = new VizzionnaireException(errorMessage, VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
-        handleVizzionnaireException(thingsboardException, response);
+        VizzionnaireException vizzionnaireException = new VizzionnaireException(errorMessage, VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
+        handleVizzionnaireException(vizzionnaireException, response);
     }
 
     <T> T checkNotNull(T reference) throws VizzionnaireException {

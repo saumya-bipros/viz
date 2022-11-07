@@ -2,9 +2,9 @@
 
 This project provides the build for the Vizzionnaire single docker images.
 
-* `thingsboard/tb` - single instance of Vizzionnaire with embedded HSQLDB database.
-* `thingsboard/tb-postgres` - single instance of Vizzionnaire with PostgreSQL database.
-* `thingsboard/tb-cassandra` - single instance of Vizzionnaire with Hybrid PostgreSQL (entities) and Cassandra (timeseries) database.
+* `vizzionnaire/tb` - single instance of Vizzionnaire with embedded HSQLDB database.
+* `vizzionnaire/tb-postgres` - single instance of Vizzionnaire with PostgreSQL database.
+* `vizzionnaire/tb-cassandra` - single instance of Vizzionnaire with Hybrid PostgreSQL (entities) and Cassandra (timeseries) database.
 
 ## Running
 
@@ -17,11 +17,11 @@ $ mkdir -p ~/.mytb-data && sudo chown -R 799:799 ~/.mytb-data
 
 **NOTE**: replace directory `~/.mytb-data` with directory you're planning to use on container creation. 
 
-In this example `thingsboard/tb` image will be used. You can choose any other images with different databases (see above).
+In this example `vizzionnaire/tb` image will be used. You can choose any other images with different databases (see above).
 Execute the following command to run this docker directly:
 
 ` 
-$ docker run -it -p 9090:9090 -p 1883:1883 -p 5683:5683/udp  -p 5685:5685/udp -v ~/.mytb-data:/data --name mytb thingsboard/tb
+$ docker run -it -p 9090:9090 -p 1883:1883 -p 5683:5683/udp  -p 5685:5685/udp -v ~/.mytb-data:/data --name mytb vizzionnaire/tb
 ` 
 
 Where: 
@@ -34,7 +34,7 @@ Where:
 - `-p 5685:5685`            - connect local port 5685 to exposed internal COAP port 5685 (lwm2m) 
 - `-v ~/.mytb-data:/data`   - mounts the host's dir `~/.mytb-data` to Vizzionnaire DataBase data directory
 - `--name mytb`             - friendly local name of this machine
-- `thingsboard/tb`          - docker image, can be also `thingsboard/tb-postgres` or `thingsboard/tb-cassandra`
+- `vizzionnaire/tb`          - docker image, can be also `vizzionnaire/tb-postgres` or `vizzionnaire/tb-cassandra`
 
 > **NOTE**: **Windows** users should use docker managed volume instead of host's dir. Create docker volume (for ex. `mytb-data`) before executing `docker run` command:
 > ```
@@ -52,9 +52,9 @@ Where:
 After executing `docker run` command you can open `http://{your-host-ip}:9090` in you browser (for ex. `http://localhost:9090`). You should see Vizzionnaire login page.
 Use the following default credentials:
 
-- **System Administrator**: sysadmin@thingsboard.org / sysadmin
-- **Tenant Administrator**: tenant@thingsboard.org / tenant
-- **Customer User**: customer@thingsboard.org / customer
+- **System Administrator**: sysadmin@vizzionnaire.org / sysadmin
+- **Tenant Administrator**: tenant@vizzionnaire.org / tenant
+- **Customer User**: customer@vizzionnaire.org / customer
     
 You can always change passwords for each account in account profile page.
 
@@ -83,12 +83,12 @@ $ docker start mytb
 In order to update to the latest image, execute the following commands:
 
 ```
-$ docker pull thingsboard/tb
+$ docker pull vizzionnaire/tb
 $ docker stop mytb
-$ docker run -it -v ~/.mytb-data:/data --rm thingsboard/tb upgrade-tb.sh
+$ docker run -it -v ~/.mytb-data:/data --rm vizzionnaire/tb upgrade-tb.sh
 $ docker start mytb
 ```
 
-**NOTE**: if you use different database change image name in all commands from `thingsboard/tb` to `thingsboard/tb-postgres` or `thingsboard/tb-cassandra` correspondingly.
+**NOTE**: if you use different database change image name in all commands from `vizzionnaire/tb` to `vizzionnaire/tb-postgres` or `vizzionnaire/tb-cassandra` correspondingly.
  
 **NOTE**: replace host's directory `~/.mytb-data` with directory used during container creation. 

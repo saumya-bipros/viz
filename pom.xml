@@ -75,8 +75,8 @@
         <bouncycastle.version>1.67</bouncycastle.version>
         <winsw.version>2.0.1</winsw.version>
         <postgresql.driver.version>42.2.20</postgresql.driver.version>
-        <sonar.exclusions>org/thingsboard/server/gen/**/*,
-            org/thingsboard/server/extensions/core/plugin/telemetry/gen/**/*
+        <sonar.exclusions>com/vizzionnaire/server/gen/**/*,
+            com/vizzionnaire/server/extensions/core/plugin/telemetry/gen/**/*
         </sonar.exclusions>
         <elasticsearch.version>5.0.2</elasticsearch.version>
         <delight-nashorn-sandbox.version>0.2.1</delight-nashorn-sandbox.version>
@@ -1828,9 +1828,9 @@
 
     <!-- <distributionManagement>
         <repository>
-            <id>thingsboard-repo-deploy</id>
+            <id>vizzionnaire-repo-deploy</id>
             <name>Vizzionnaire Repo Deployment</name>
-            <url>https://repo.thingsboard.io/artifactory/libs-release-public</url>
+            <url>https://repo.vizzionnaire.io/artifactory/libs-release-public</url>
         </repository>
     </distributionManagement> -->
 

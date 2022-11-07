@@ -12,7 +12,7 @@ if %jver% NEQ 110 GOTO JAVA_NOT_INSTALLED
 :JAVA_INSTALLED
 
 @ECHO Java 11 found!
-@ECHO Installing thingsboard ...
+@ECHO Installing vizzionnaire ...
 
 SET loadDemo=false
 
@@ -23,7 +23,7 @@ if "%1" == "--loadDemo" (
 SET BASE=%~dp0
 SET LOADER_PATH=%BASE%\conf,%BASE%\extensions
 SET SQL_DATA_FOLDER=%BASE%\data\sql
-SET jarfile=%BASE%\lib\thingsboard.jar
+SET jarfile=%BASE%\lib\vizzionnaire.jar
 SET installDir=%BASE%\data
 
 PUSHD "%BASE%\conf"
@@ -43,7 +43,7 @@ if errorlevel 1 (
 )
 POPD
 
-"%BASE%"thingsboard.exe install
+"%BASE%"vizzionnaire.exe install
 
 @ECHO Vizzionnaire installed successfully!
 

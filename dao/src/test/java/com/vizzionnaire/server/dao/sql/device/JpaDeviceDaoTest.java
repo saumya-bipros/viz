@@ -4,7 +4,7 @@ import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.DeviceProfile;
 import com.vizzionnaire.server.common.data.DeviceProfileType;
@@ -112,7 +112,7 @@ public class JpaDeviceDaoTest extends AbstractJpaDaoTest {
         assertNotNull(entity);
         assertEquals(uuid, entity.getId().getId());
 
-        executor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10, ThingsBoardThreadFactory.forName(getClass().getSimpleName() + "-test-scope")));
+        executor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10, VizzionnaireThreadFactory.forName(getClass().getSimpleName() + "-test-scope")));
         ListenableFuture<Device> future = executor.submit(() -> deviceDao.findById(TenantId.fromUUID(tenantId), uuid));
         Device asyncDevice = future.get(30, TimeUnit.SECONDS);
         assertNotNull("Async device expected to be not null", asyncDevice);

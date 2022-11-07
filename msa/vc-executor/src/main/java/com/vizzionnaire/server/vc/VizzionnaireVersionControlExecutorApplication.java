@@ -1,26 +1,24 @@
-package com.vizzionnaire.server.lwm2m;
+package com.vizzionnaire.server.vc;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
-@SpringBootConfiguration
+@SpringBootApplication
 @EnableAsync
 @EnableScheduling
-@EnableAutoConfiguration
-@ComponentScan({"com.vizzionnaire.server.lwm2m", "com.vizzionnaire.server.common", "com.vizzionnaire.server.transport.lwm2m", "com.vizzionnaire.server.queue", "com.vizzionnaire.server.cache"})
-public class ThingsboardLwm2mTransportApplication {
+@ComponentScan({"com.vizzionnaire.server", "com.vizzionnaire.server.common", "com.vizzionnaire.server.service.sync.vc"})
+public class VizzionnaireVersionControlExecutorApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
-    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-lwm2m-transport";
+    private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "tb-vc-executor";
 
     public static void main(String[] args) {
-        SpringApplication.run(ThingsboardLwm2mTransportApplication.class, updateArguments(args));
+        SpringApplication.run(VizzionnaireVersionControlExecutorApplication.class, updateArguments(args));
     }
 
     private static String[] updateArguments(String[] args) {

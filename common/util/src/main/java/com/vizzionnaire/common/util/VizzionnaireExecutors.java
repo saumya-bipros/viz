@@ -3,7 +3,7 @@ package com.vizzionnaire.common.util;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 
-public class ThingsBoardExecutors {
+public class VizzionnaireExecutors {
 
     /**
      * Method forked from ExecutorService to provide thread poll name
@@ -25,7 +25,7 @@ public class ThingsBoardExecutors {
      */
     public static ExecutorService newWorkStealingPool(int parallelism, String namePrefix) {
         return new ForkJoinPool(parallelism,
-                new ThingsBoardForkJoinWorkerThreadFactory(namePrefix),
+                new VizzionnaireForkJoinWorkerThreadFactory(namePrefix),
                 null, true);
     }
 

@@ -10,7 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.vizzionnaire.common.util.JacksonUtil;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.rule.engine.api.msg.DeviceAttributesEventNotificationMsg;
 import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.EntityType;
@@ -148,7 +148,7 @@ public class TelemetryController extends BaseController {
 
     @PostConstruct
     public void initExecutor() {
-        executor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("telemetry-controller"));
+        executor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("telemetry-controller"));
     }
 
     @PreDestroy

@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.queue.usagestats.TbApiUsageClient;
 import com.vizzionnaire.server.service.apiusage.TbApiUsageStateService;
 
@@ -80,7 +80,7 @@ public abstract class AbstractNashornJsInvokeService extends AbstractJsInvokeSer
         super.init(maxRequestsTimeout);
         if (useJsSandbox()) {
             sandbox = NashornSandboxes.create();
-            monitorExecutorService = ThingsBoardExecutors.newWorkStealingPool(getMonitorThreadPoolSize(), "nashorn-js-monitor");
+            monitorExecutorService = VizzionnaireExecutors.newWorkStealingPool(getMonitorThreadPoolSize(), "nashorn-js-monitor");
             sandbox.setExecutor(monitorExecutorService);
             sandbox.setMaxCPUTime(getMaxCpuTime());
             sandbox.allowNoBraces(false);

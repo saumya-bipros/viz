@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.msg.TbActorMsg;
 
 import java.util.Collections;
@@ -37,7 +37,7 @@ public class DefaultTbActorSystem implements TbActorSystem {
 
     public DefaultTbActorSystem(TbActorSystemSettings settings) {
         this.settings = settings;
-        this.scheduler = Executors.newScheduledThreadPool(settings.getSchedulerPoolSize(), ThingsBoardThreadFactory.forName("actor-system-scheduler"));
+        this.scheduler = Executors.newScheduledThreadPool(settings.getSchedulerPoolSize(), VizzionnaireThreadFactory.forName("actor-system-scheduler"));
     }
 
     @Override

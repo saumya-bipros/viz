@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.msg.queue.ServiceType;
@@ -58,7 +58,7 @@ public class TbKafkaConsumerStatsService {
             return;
         }
         this.adminClient = AdminClient.create(kafkaSettings.toAdminProps());
-        this.statsPrintScheduler = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("kafka-consumer-stats"));
+        this.statsPrintScheduler = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("kafka-consumer-stats"));
 
         Properties consumerProps = kafkaSettings.toConsumerProps(null);
         consumerProps.put(ConsumerConfig.CLIENT_ID_CONFIG, "consumer-stats-loader-client");

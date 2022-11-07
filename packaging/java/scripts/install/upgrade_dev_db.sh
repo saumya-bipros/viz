@@ -22,7 +22,7 @@ fi
 
 BASE=${project.basedir}/target
 CONF_FOLDER=${BASE}/conf
-jarfile="${BASE}/thingsboard-${project.version}-boot.jar"
+jarfile="${BASE}/vizzionnaire-${project.version}-boot.jar"
 installDir=${BASE}/data
 loadDemo=true
 

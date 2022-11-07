@@ -3,7 +3,7 @@ package com.vizzionnaire.rest.client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.rest.client.utils.RestJsonConverter;
 import com.vizzionnaire.server.common.data.AdminSettings;
 import com.vizzionnaire.server.common.data.ClaimRequest;
@@ -165,7 +165,7 @@ public class RestClient implements ClientHttpRequestInterceptor, Closeable {
     private String token;
     private String refreshToken;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private ExecutorService service = ThingsBoardExecutors.newWorkStealingPool(10, getClass());
+    private ExecutorService service = VizzionnaireExecutors.newWorkStealingPool(10, getClass());
 
     protected static final String ACTIVATE_TOKEN_REGEX = "/api/noauth/activate?activateToken=";
 

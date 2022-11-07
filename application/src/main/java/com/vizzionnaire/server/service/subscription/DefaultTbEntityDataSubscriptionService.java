@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.kv.BaseReadTsKvQuery;
@@ -126,9 +126,9 @@ public class DefaultTbEntityDataSubscriptionService implements TbEntityDataSubsc
     @PostConstruct
     public void initExecutor() {
         serviceId = serviceInfoProvider.getServiceId();
-        wsCallBackExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("ws-entity-sub-callback"));
+        wsCallBackExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("ws-entity-sub-callback"));
         tsInSqlDB = databaseTsType.equalsIgnoreCase("sql") || databaseTsType.equalsIgnoreCase("timescale");
-        ThreadFactory tbThreadFactory = ThingsBoardThreadFactory.forName("ws-entity-sub-scheduler");
+        ThreadFactory tbThreadFactory = VizzionnaireThreadFactory.forName("ws-entity-sub-scheduler");
         if (dynamicPageLinkRefreshPoolSize == 1) {
             scheduler = Executors.newSingleThreadScheduledExecutor(tbThreadFactory);
         } else {

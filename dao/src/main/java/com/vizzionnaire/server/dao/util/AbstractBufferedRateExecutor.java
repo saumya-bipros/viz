@@ -12,8 +12,8 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.msg.tools.TbRateLimits;
@@ -81,9 +81,9 @@ public abstract class AbstractBufferedRateExecutor<T extends AsyncTask, F extend
         this.concurrencyLimit = concurrencyLimit;
         this.printQueriesFreq = printQueriesFreq;
         this.queue = new LinkedBlockingDeque<>(queueLimit);
-        this.dispatcherExecutor = Executors.newFixedThreadPool(dispatcherThreads, ThingsBoardThreadFactory.forName("nosql-" + getBufferName() + "-dispatcher"));
-        this.callbackExecutor = ThingsBoardExecutors.newWorkStealingPool(callbackThreads, "nosql-" + getBufferName() + "-callback");
-        this.timeoutExecutor = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("nosql-" + getBufferName() + "-timeout"));
+        this.dispatcherExecutor = Executors.newFixedThreadPool(dispatcherThreads, VizzionnaireThreadFactory.forName("nosql-" + getBufferName() + "-dispatcher"));
+        this.callbackExecutor = VizzionnaireExecutors.newWorkStealingPool(callbackThreads, "nosql-" + getBufferName() + "-callback");
+        this.timeoutExecutor = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("nosql-" + getBufferName() + "-timeout"));
         this.stats = new BufferedRateExecutorStats(statsFactory);
         String concurrencyLevelKey = StatsType.RATE_EXECUTOR.getName() + "." + CONCURRENCY_LEVEL + getBufferName(); //metric name may change with buffer name suffix
         this.concurrencyLevel = statsFactory.createGauge(concurrencyLevelKey, new AtomicInteger(0));

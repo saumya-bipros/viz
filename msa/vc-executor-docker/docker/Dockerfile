@@ -1,9 +1,9 @@
-FROM thingsboard/openjdk11:bullseye-slim
+FROM vizzionnaire/openjdk11:bullseye-slim
 
 COPY start-tb-vc-executor.sh ${pkg.name}.deb /tmp/
 
-RUN mkdir -p /home/thingsboard/.config/jgit \
-    && chown -R ${pkg.user}:${pkg.user} /home/thingsboard \
+RUN mkdir -p /home/vizzionnaire/.config/jgit \
+    && chown -R ${pkg.user}:${pkg.user} /home/vizzionnaire \
     && chmod a+x /tmp/*.sh \
     && mv /tmp/start-tb-vc-executor.sh /usr/bin && \
     (yes | dpkg -i /tmp/${pkg.name}.deb) && \

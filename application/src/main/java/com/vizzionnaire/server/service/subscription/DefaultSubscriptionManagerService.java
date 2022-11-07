@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.common.util.DonAsynchron;
 import com.vizzionnaire.common.util.JacksonUtil;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.rule.engine.api.msg.DeviceAttributesEventNotificationMsg;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.data.DataConstants;
@@ -107,7 +107,7 @@ public class DefaultSubscriptionManagerService extends TbApplicationEventListene
 
     @PostConstruct
     public void initExecutor() {
-        tsCallBackExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("ts-sub-callback"));
+        tsCallBackExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("ts-sub-callback"));
         serviceId = serviceInfoProvider.getServiceId();
         toCoreNotificationsProducer = producerProvider.getTbCoreNotificationsMsgProducer();
     }

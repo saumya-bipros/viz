@@ -12,7 +12,7 @@
 
     <name>Vizzionnaire Version Control Executor</name>
     <url>https://vizzionnaire.io</url>
-    <description>Project for Thingsboard version control microservice</description>
+    <description>Project for Vizzionnaire version control microservice</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,7 +25,7 @@
         <pkg.copyInstallScripts>false</pkg.copyInstallScripts>
         <pkg.win.dist>${project.build.directory}/windows</pkg.win.dist>
         <pkg.implementationTitle>Vizzionnaire Version Control Executor Service</pkg.implementationTitle>
-        <pkg.mainClass>com.vizzionnaire.server.vc.ThingsboardVersionControlExecutorApplication</pkg.mainClass>
+        <pkg.mainClass>com.vizzionnaire.server.vc.VizzionnaireVersionControlExecutorApplication</pkg.mainClass>
     </properties>
 
     <dependencies>

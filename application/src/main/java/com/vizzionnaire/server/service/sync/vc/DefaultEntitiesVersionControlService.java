@@ -7,7 +7,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.vizzionnaire.common.util.DonAsynchron;
 import com.vizzionnaire.common.util.JacksonUtil;
 import com.vizzionnaire.common.util.TbStopWatch;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.cache.TbTransactionalCache;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.ExportableEntity;
@@ -108,7 +108,7 @@ public class DefaultEntitiesVersionControlService implements EntitiesVersionCont
 
     @PostConstruct
     public void init() {
-        executor = MoreExecutors.listeningDecorator(ThingsBoardExecutors.newWorkStealingPool(threadPoolSize, DefaultEntitiesVersionControlService.class));
+        executor = MoreExecutors.listeningDecorator(VizzionnaireExecutors.newWorkStealingPool(threadPoolSize, DefaultEntitiesVersionControlService.class));
     }
 
     @PreDestroy

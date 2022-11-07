@@ -1,13 +1,13 @@
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VizzionnaireBaseComponent from './json-form-base-component';
 import TextField from '@material-ui/core/TextField';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 
-interface ThingsboardTextState extends JsonFormFieldState {
+interface VizzionnaireTextState extends JsonFormFieldState {
   focused: boolean;
 }
 
-class ThingsboardText extends React.Component<JsonFormFieldProps, ThingsboardTextState> {
+class VizzionnaireText extends React.Component<JsonFormFieldProps, VizzionnaireTextState> {
 
   constructor(props) {
     super(props);
@@ -73,4 +73,4 @@ class ThingsboardText extends React.Component<JsonFormFieldProps, ThingsboardTex
   }
 }
 
-export default ThingsboardBaseComponent(ThingsboardText);
+export default VizzionnaireBaseComponent(VizzionnaireText);

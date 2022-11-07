@@ -2,7 +2,7 @@ package com.vizzionnaire.server.dao.sql;
 
 import org.springframework.stereotype.Component;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -17,7 +17,7 @@ public class ScheduledLogExecutorComponent {
 
     @PostConstruct
     public void init() {
-        schedulerLogExecutor = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("sql-log"));
+        schedulerLogExecutor = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("sql-log"));
     }
 
     @PreDestroy

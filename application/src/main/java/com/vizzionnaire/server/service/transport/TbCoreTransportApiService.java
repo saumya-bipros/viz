@@ -7,7 +7,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.common.stats.MessagesStats;
 import com.vizzionnaire.server.common.stats.StatsFactory;
 import com.vizzionnaire.server.common.stats.StatsType;
@@ -58,7 +58,7 @@ public class TbCoreTransportApiService {
 
     @PostConstruct
     public void init() {
-        this.transportCallbackExecutor = ThingsBoardExecutors.newWorkStealingPool(maxCallbackThreads, getClass());
+        this.transportCallbackExecutor = VizzionnaireExecutors.newWorkStealingPool(maxCallbackThreads, getClass());
         TbQueueProducer<TbProtoQueueMsg<TransportApiResponseMsg>> producer = tbCoreQueueFactory.createTransportApiResponseProducer();
         TbQueueConsumer<TbProtoQueueMsg<TransportApiRequestMsg>> consumer = tbCoreQueueFactory.createTransportApiRequestConsumer();
 

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Slf4j
-public class ThingsBoardDbInstaller extends ExternalResource {
+public class VizzionnaireDbInstaller extends ExternalResource {
 
     final static boolean IS_REDIS_CLUSTER = Boolean.parseBoolean(System.getProperty("blackBoxTests.redisCluster"));
     final static boolean IS_HYBRID_MODE = Boolean.parseBoolean(System.getProperty("blackBoxTests.hybridMode"));
@@ -50,7 +50,7 @@ public class ThingsBoardDbInstaller extends ExternalResource {
     private final String tbVcExecutorLogVolume;
     private final Map<String, String> env;
 
-    public ThingsBoardDbInstaller() {
+    public VizzionnaireDbInstaller() {
         log.info("System property of blackBoxTests.redisCluster is {}", IS_REDIS_CLUSTER);
         log.info("System property of blackBoxTests.hybridMode is {}", IS_HYBRID_MODE);
         List<File> composeFiles = new ArrayList<>(Arrays.asList(

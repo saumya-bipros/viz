@@ -7,8 +7,8 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.id.CustomerId;
@@ -145,9 +145,9 @@ public class DefaultTelemetryWebSocketService implements TelemetryWebSocketServi
     @PostConstruct
     public void initExecutor() {
         serviceId = serviceInfoProvider.getServiceId();
-        executor = ThingsBoardExecutors.newWorkStealingPool(50, getClass());
+        executor = VizzionnaireExecutors.newWorkStealingPool(50, getClass());
 
-        pingExecutor = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName("telemetry-web-socket-ping"));
+        pingExecutor = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName("telemetry-web-socket-ping"));
         pingExecutor.scheduleWithFixedDelay(this::sendPing, pingTimeout / NUMBER_OF_PING_ATTEMPTS, pingTimeout / NUMBER_OF_PING_ATTEMPTS, TimeUnit.MILLISECONDS);
     }
 

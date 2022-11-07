@@ -3,7 +3,7 @@ package com.vizzionnaire.server.service.telemetry;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.msg.queue.ServiceType;
 import com.vizzionnaire.server.common.msg.queue.TopicPartitionInfo;
@@ -54,7 +54,7 @@ public abstract class AbstractSubscriptionService extends TbApplicationEventList
 
     @PostConstruct
     public void initExecutor() {
-        wsCallBackExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName(getExecutorPrefix() + "-service-ws-callback"));
+        wsCallBackExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName(getExecutorPrefix() + "-service-ws-callback"));
     }
 
     @PreDestroy

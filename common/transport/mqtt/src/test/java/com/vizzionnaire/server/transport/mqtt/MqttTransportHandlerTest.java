@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.transport.mqtt.MqttTransportContext;
 import com.vizzionnaire.server.transport.mqtt.MqttTransportHandler;
 
@@ -162,7 +162,7 @@ public class MqttTransportHandlerTest {
         List<MqttPublishMessage> messages = Stream.generate(this::getMqttPublishMessage).limit(MSG_QUEUE_LIMIT).collect(Collectors.toList());
         messages.forEach((msg) -> handler.enqueueRegularSessionMsg(ctx, msg));
         willDoNothing().given(handler).processRegularSessionMsg(any(), any());
-        executor = Executors.newCachedThreadPool(ThingsBoardThreadFactory.forName(getClass().getName()));
+        executor = Executors.newCachedThreadPool(VizzionnaireThreadFactory.forName(getClass().getName()));
 
         CountDownLatch readyLatch = new CountDownLatch(MSG_QUEUE_LIMIT);
         CountDownLatch startLatch = new CountDownLatch(1);

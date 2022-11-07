@@ -8,8 +8,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.actors.ActorSystemContext;
 import com.vizzionnaire.server.actors.DefaultTbActorSystem;
 import com.vizzionnaire.server.actors.TbActorRef;
@@ -94,9 +94,9 @@ public class DefaultActorService extends TbApplicationEventListener<PartitionCha
             poolSize = Math.max(1, cores / 2);
         }
         if (poolSize == 1) {
-            return Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName(dispatcherName));
+            return Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName(dispatcherName));
         } else {
-            return ThingsBoardExecutors.newWorkStealingPool(poolSize, dispatcherName);
+            return VizzionnaireExecutors.newWorkStealingPool(poolSize, dispatcherName);
         }
     }
 

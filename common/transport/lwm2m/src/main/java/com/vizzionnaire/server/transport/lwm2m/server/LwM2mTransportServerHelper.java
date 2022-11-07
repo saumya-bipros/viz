@@ -40,18 +40,18 @@ public class LwM2mTransportServerHelper {
     private final LwM2mTransportContext context;
     private final static JsonParser JSON_PARSER = new JsonParser();
 
-    public void sendParametersOnThingsboardAttribute(List<TransportProtos.KeyValueProto> result, SessionInfoProto sessionInfo) {
+    public void sendParametersOnVizzionnaireAttribute(List<TransportProtos.KeyValueProto> result, SessionInfoProto sessionInfo) {
         PostAttributeMsg.Builder request = PostAttributeMsg.newBuilder();
         request.addAllKv(result);
         PostAttributeMsg postAttributeMsg = request.build();
         context.getTransportService().process(sessionInfo, postAttributeMsg, TransportServiceCallback.EMPTY);
     }
 
-    public void sendParametersOnThingsboardTelemetry(List<TransportProtos.KeyValueProto> kvList, SessionInfoProto sessionInfo) {
-        sendParametersOnThingsboardTelemetry(kvList, sessionInfo, null);
+    public void sendParametersOnVizzionnaireTelemetry(List<TransportProtos.KeyValueProto> kvList, SessionInfoProto sessionInfo) {
+        sendParametersOnVizzionnaireTelemetry(kvList, sessionInfo, null);
     }
 
-    public void sendParametersOnThingsboardTelemetry(List<TransportProtos.KeyValueProto> kvList, SessionInfoProto sessionInfo, @Nullable Map<String, AtomicLong> keyTsLatestMap) {
+    public void sendParametersOnVizzionnaireTelemetry(List<TransportProtos.KeyValueProto> kvList, SessionInfoProto sessionInfo, @Nullable Map<String, AtomicLong> keyTsLatestMap) {
         TransportProtos.TsKvListProto tsKvList = toTsKvList(kvList, keyTsLatestMap);
 
         PostTelemetryMsg postTelemetryMsg = PostTelemetryMsg.newBuilder()
@@ -143,7 +143,7 @@ public class LwM2mTransportServerHelper {
      * @param value - info about Logs
      * @return- KeyValueProto for telemetry (Logs)
      */
-    public List<TransportProtos.KeyValueProto> getKvStringtoThingsboard(String key, String value) {
+    public List<TransportProtos.KeyValueProto> getKvStringtoVizzionnaire(String key, String value) {
         List<TransportProtos.KeyValueProto> result = new ArrayList<>();
         value = value.replaceAll("<", "").replaceAll(">", "");
         result.add(TransportProtos.KeyValueProto.newBuilder()
@@ -158,7 +158,7 @@ public class LwM2mTransportServerHelper {
      * @throws CodecException -
      */
 
-    public TransportProtos.KeyValueProto getKvAttrTelemetryToThingsboard(ResourceModel.Type resourceType, String resourceName, Object value, boolean isMultiInstances) {
+    public TransportProtos.KeyValueProto getKvAttrTelemetryToVizzionnaire(ResourceModel.Type resourceType, String resourceName, Object value, boolean isMultiInstances) {
         TransportProtos.KeyValueProto.Builder kvProto = TransportProtos.KeyValueProto.newBuilder().setKey(resourceName);
         if (isMultiInstances) {
             kvProto.setType(TransportProtos.KeyValueType.JSON_V)

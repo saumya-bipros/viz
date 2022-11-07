@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import com.vizzionnaire.common.util.ThingsBoardExecutors;
+import com.vizzionnaire.common.util.VizzionnaireExecutors;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.msg.queue.ServiceType;
 import com.vizzionnaire.server.common.msg.queue.TbCallback;
@@ -79,7 +79,7 @@ public class DefaultTbLocalSubscriptionService implements TbLocalSubscriptionSer
 
     @PostConstruct
     public void initExecutor() {
-        subscriptionUpdateExecutor = ThingsBoardExecutors.newWorkStealingPool(20, getClass());
+        subscriptionUpdateExecutor = VizzionnaireExecutors.newWorkStealingPool(20, getClass());
     }
 
     @PreDestroy

@@ -11,7 +11,7 @@ import org.eclipse.californium.scandium.config.DtlsConnectorConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -111,7 +111,7 @@ public class DefaultCoapServerService implements CoapServerService {
             CoapEndpoint dtlsCoapEndpoint = dtlsCoapEndpointBuilder.build();
             server.addEndpoint(dtlsCoapEndpoint);
             tbDtlsCertificateVerifier = (TbCoapDtlsCertificateVerifier) dtlsConnectorConfig.getAdvancedCertificateVerifier();
-            dtlsSessionsExecutor = Executors.newSingleThreadScheduledExecutor(ThingsBoardThreadFactory.forName(getClass().getSimpleName()));
+            dtlsSessionsExecutor = Executors.newSingleThreadScheduledExecutor(VizzionnaireThreadFactory.forName(getClass().getSimpleName()));
             dtlsSessionsExecutor.scheduleAtFixedRate(this::evictTimeoutSessions, new Random().nextInt((int) getDtlsSessionReportTimeout()), getDtlsSessionReportTimeout(), TimeUnit.MILLISECONDS);
         }
         Resource root = server.getRoot();

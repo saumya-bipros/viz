@@ -6,7 +6,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.gson.JsonObject;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
@@ -52,7 +52,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void telemetryUpload() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -79,7 +79,7 @@ public class MqttClientTest extends AbstractContainerTest {
     public void telemetryUploadWithTs() throws Exception {
         long ts = 1451649600512L;
 
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -103,7 +103,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void publishAttributeUpdateToServer() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -134,7 +134,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void requestAttributeValuesFromServer() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -194,7 +194,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void subscribeToAttributeUpdatesFromServer() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -240,7 +240,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void serverSideRpc() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -255,7 +255,7 @@ public class MqttClientTest extends AbstractContainerTest {
         JsonObject serverRpcPayload = new JsonObject();
         serverRpcPayload.addProperty("method", "getValue");
         serverRpcPayload.addProperty("params", true);
-        ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName(getClass().getSimpleName())));
+        ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName(getClass().getSimpleName())));
         ListenableFuture<ResponseEntity> future = service.submit(() -> {
             try {
                 return restClient.getRestTemplate()
@@ -288,7 +288,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void clientSideRpc() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         Device device = createDevice("mqtt_");
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();
 
@@ -332,7 +332,7 @@ public class MqttClientTest extends AbstractContainerTest {
 
     @Test
     public void deviceDeletedClosingSession() throws Exception {
-        restClient.login("tenant@thingsboard.org", "tenant");
+        restClient.login("tenant@vizzionnaire.org", "tenant");
         String deviceForDeletingTestName = "Device for deleting notification test";
         Device device = createDevice(deviceForDeletingTestName);
         DeviceCredentials deviceCredentials = restClient.getDeviceCredentialsByDeviceId(device.getId()).get();

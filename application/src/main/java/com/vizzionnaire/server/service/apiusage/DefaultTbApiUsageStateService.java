@@ -2,7 +2,7 @@ package com.vizzionnaire.server.service.apiusage;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.rule.engine.api.MailService;
 import com.vizzionnaire.server.cluster.TbClusterService;
 import com.vizzionnaire.server.common.data.ApiFeature;
@@ -129,7 +129,7 @@ public class DefaultTbApiUsageStateService extends AbstractPartitionBasedService
         this.apiUsageStateService = apiUsageStateService;
         this.tenantProfileCache = tenantProfileCache;
         this.mailService = mailService;
-        this.mailExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("api-usage-svc-mail"));
+        this.mailExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("api-usage-svc-mail"));
         this.dbExecutor = dbExecutor;
     }
 

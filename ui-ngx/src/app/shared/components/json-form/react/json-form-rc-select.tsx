@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VizzionnaireBaseComponent from './json-form-base-component';
 import Select, { Option } from 'rc-select';
 import {
   JsonFormFieldProps,
@@ -9,13 +9,13 @@ import {
 import { Mode } from 'rc-select/lib/interface';
 import { deepClone } from '@core/utils';
 
-interface ThingsboardRcSelectState extends JsonFormFieldState {
+interface VizzionnaireRcSelectState extends JsonFormFieldState {
   currentValue: KeyLabelItem | KeyLabelItem[];
   items: Array<KeyLabelItem>;
   focused: boolean;
 }
 
-class ThingsboardRcSelect extends React.Component<JsonFormFieldProps, ThingsboardRcSelectState> {
+class VizzionnaireRcSelect extends React.Component<JsonFormFieldProps, VizzionnaireRcSelectState> {
 
     constructor(props) {
         super(props);
@@ -184,4 +184,4 @@ class ThingsboardRcSelect extends React.Component<JsonFormFieldProps, Thingsboar
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardRcSelect);
+export default VizzionnaireBaseComponent(VizzionnaireRcSelect);

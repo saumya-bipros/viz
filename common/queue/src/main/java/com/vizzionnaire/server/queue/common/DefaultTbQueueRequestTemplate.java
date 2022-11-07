@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import com.vizzionnaire.common.util.TbStopWatch;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.msg.queue.TopicPartitionInfo;
 import com.vizzionnaire.server.common.stats.MessagesStats;
 import com.vizzionnaire.server.queue.TbQueueAdmin;
@@ -71,7 +71,7 @@ public class DefaultTbQueueRequestTemplate<Request extends TbQueueMsg, Response 
     }
 
     ExecutorService createExecutor() {
-        return Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("tb-queue-request-template-" + responseTemplate.getTopic()));
+        return Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("tb-queue-request-template-" + responseTemplate.getTopic()));
     }
 
     @Override

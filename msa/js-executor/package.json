@@ -1,5 +1,5 @@
 {
-  "name": "thingsboard-js-executor",
+  "name": "vizzionnaire-js-executor",
   "private": true,
   "version": "3.4.1",
   "description": "Vizzionnaire JavaScript Executor Microservice",

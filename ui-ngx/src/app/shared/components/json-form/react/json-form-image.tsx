@@ -1,16 +1,16 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import ThingsboardBaseComponent from './json-form-base-component';
+import VizzionnaireBaseComponent from './json-form-base-component';
 import { JsonFormFieldProps, JsonFormFieldState } from '@shared/components/json-form/react/json-form.models';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
 import Tooltip from '@material-ui/core/Tooltip';
 
-interface ThingsboardImageState extends JsonFormFieldState {
+interface VizzionnaireImageState extends JsonFormFieldState {
   imageUrl: string;
 }
 
-class ThingsboardImage extends React.Component<JsonFormFieldProps, ThingsboardImageState> {
+class VizzionnaireImage extends React.Component<JsonFormFieldProps, VizzionnaireImageState> {
 
     constructor(props) {
         super(props);
@@ -90,4 +90,4 @@ class ThingsboardImage extends React.Component<JsonFormFieldProps, ThingsboardIm
     }
 }
 
-export default ThingsboardBaseComponent(ThingsboardImage);
+export default VizzionnaireBaseComponent(VizzionnaireImage);

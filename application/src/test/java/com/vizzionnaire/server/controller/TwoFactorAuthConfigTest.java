@@ -209,7 +209,7 @@ public abstract class TwoFactorAuthConfigTest extends AbstractControllerTest {
                 .andExpect(status().isBadRequest()));
         assertThat(errorMessage).containsIgnoringCase("otp auth url is invalid");
 
-        totpTwoFaAccountConfig.setAuthUrl("otpauth://totp/ThingsBoard%20(Tenant):tenant@thingsboard.org?issuer=ThingsBoard+%28Tenant%29&secret=FUNBIM3CXFNNGQR6ZIPVWHP65PPFWDII");
+        totpTwoFaAccountConfig.setAuthUrl("otpauth://totp/ThingsBoard%20(Tenant):tenant@vizzionnaire.org?issuer=ThingsBoard+%28Tenant%29&secret=FUNBIM3CXFNNGQR6ZIPVWHP65PPFWDII");
         doPost("/api/2fa/account/config/submit", totpTwoFaAccountConfig)
                 .andExpect(status().isOk());
     }

@@ -24,7 +24,7 @@
         <pkg.copyInstallScripts>false</pkg.copyInstallScripts>
         <pkg.win.dist>${project.build.directory}/windows</pkg.win.dist>
         <pkg.implementationTitle>Vizzionnaire HTTP Transport Service</pkg.implementationTitle>
-        <pkg.mainClass>com.vizzionnaire.server.http.ThingsboardHttpTransportApplication</pkg.mainClass>
+        <pkg.mainClass>com.vizzionnaire.server.http.VizzionnaireHttpTransportApplication</pkg.mainClass>
     </properties>
 
     <dependencies>

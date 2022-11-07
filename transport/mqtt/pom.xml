@@ -24,7 +24,7 @@
         <pkg.copyInstallScripts>false</pkg.copyInstallScripts>
         <pkg.win.dist>${project.build.directory}/windows</pkg.win.dist>
         <pkg.implementationTitle>Vizzionnaire MQTT Transport Service</pkg.implementationTitle>
-        <pkg.mainClass>com.vizzionnaire.server.mqtt.ThingsboardMqttTransportApplication</pkg.mainClass>
+        <pkg.mainClass>com.vizzionnaire.server.mqtt.VizzionnaireMqttTransportApplication</pkg.mainClass>
     </properties>
 
     <dependencies>

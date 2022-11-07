@@ -7,7 +7,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.vizzionnaire.common.util.CollectionsUtil;
-import com.vizzionnaire.common.util.ThingsBoardThreadFactory;
+import com.vizzionnaire.common.util.VizzionnaireThreadFactory;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.id.EntityId;
@@ -122,8 +122,8 @@ public class DefaultClusterVersionControlService extends TbApplicationEventListe
 
     @PostConstruct
     public void init() {
-        consumerExecutor = Executors.newSingleThreadExecutor(ThingsBoardThreadFactory.forName("vc-consumer"));
-        var threadFactory = ThingsBoardThreadFactory.forName("vc-io-thread");
+        consumerExecutor = Executors.newSingleThreadExecutor(VizzionnaireThreadFactory.forName("vc-consumer"));
+        var threadFactory = VizzionnaireThreadFactory.forName("vc-io-thread");
         for (int i = 0; i < ioPoolSize; i++) {
             ioThreads.add(MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor(threadFactory)));
         }
