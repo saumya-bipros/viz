@@ -14,8 +14,8 @@ import com.vizzionnaire.server.common.data.TbResource;
 import com.vizzionnaire.server.common.data.TbResourceInfo;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TbResourceId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.lwm2m.LwM2mInstance;
@@ -165,7 +165,7 @@ public class DefaultTbResourceService extends AbstractTbEntityService implements
     }
 
     @Override
-    public TbResource save(TbResource tbResource, User user) throws ThingsboardException {
+    public TbResource save(TbResource tbResource, User user) throws VizzionnaireException {
         ActionType actionType = tbResource.getId() == null ? ActionType.ADDED : ActionType.UPDATED;
         TenantId tenantId = tbResource.getTenantId();
         try {
@@ -195,7 +195,7 @@ public class DefaultTbResourceService extends AbstractTbEntityService implements
         }
     }
 
-    private TbResource doSave(TbResource resource) throws ThingsboardException {
+    private TbResource doSave(TbResource resource) throws VizzionnaireException {
         log.trace("Executing saveResource [{}]", resource);
         if (StringUtils.isEmpty(resource.getData())) {
             throw new DataValidationException("Resource data should be specified!");
@@ -221,7 +221,7 @@ public class DefaultTbResourceService extends AbstractTbEntityService implements
                 log.error("Failed to parse file {}", resource.getFileName(), e);
                 throw new DataValidationException("Failed to parse file " + resource.getFileName());
             } catch (IOException e) {
-                throw new ThingsboardException(e, ThingsboardErrorCode.GENERAL);
+                throw new VizzionnaireException(e, VizzionnaireErrorCode.GENERAL);
             }
             if (resource.getResourceType().equals(ResourceType.LWM2M_MODEL) && toLwM2mObject(resource, true) == null) {
                 throw new DataValidationException(String.format("Could not parse the XML of objectModel with name %s", resource.getSearchText()));

@@ -11,7 +11,7 @@ import com.vizzionnaire.server.common.data.SaveOtaPackageInfoRequest;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.OtaPackageId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.ota.ChecksumAlgorithm;
@@ -30,7 +30,7 @@ public class DefaultTbOtaPackageService extends AbstractTbEntityService implemen
     private final OtaPackageService otaPackageService;
 
     @Override
-    public OtaPackageInfo save(SaveOtaPackageInfoRequest saveOtaPackageInfoRequest, User user) throws ThingsboardException {
+    public OtaPackageInfo save(SaveOtaPackageInfoRequest saveOtaPackageInfoRequest, User user) throws VizzionnaireException {
         ActionType actionType = saveOtaPackageInfoRequest.getId() == null ? ActionType.ADDED : ActionType.UPDATED;
         TenantId tenantId = saveOtaPackageInfoRequest.getTenantId();
         try {
@@ -50,7 +50,7 @@ public class DefaultTbOtaPackageService extends AbstractTbEntityService implemen
 
     @Override
     public OtaPackageInfo saveOtaPackageData(OtaPackageInfo otaPackageInfo, String checksum, ChecksumAlgorithm checksumAlgorithm,
-                                             byte[] data, String filename, String contentType, User user) throws ThingsboardException {
+                                             byte[] data, String filename, String contentType, User user) throws VizzionnaireException {
         TenantId tenantId = otaPackageInfo.getTenantId();
         OtaPackageId otaPackageId = otaPackageInfo.getId();
         try {
@@ -84,7 +84,7 @@ public class DefaultTbOtaPackageService extends AbstractTbEntityService implemen
     }
 
     @Override
-    public void delete(OtaPackageInfo otaPackageInfo, User user) throws ThingsboardException {
+    public void delete(OtaPackageInfo otaPackageInfo, User user) throws VizzionnaireException {
         TenantId tenantId = otaPackageInfo.getTenantId();
         OtaPackageId otaPackageId = otaPackageInfo.getId();
         try {

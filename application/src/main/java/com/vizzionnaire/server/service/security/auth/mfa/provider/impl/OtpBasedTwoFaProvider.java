@@ -6,7 +6,7 @@ import org.springframework.cache.CacheManager;
 
 import com.vizzionnaire.server.common.data.CacheConstants;
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.OtpBasedTwoFaAccountConfig;
 import com.vizzionnaire.server.common.data.security.model.mfa.provider.OtpBasedTwoFaProviderConfig;
 import com.vizzionnaire.server.service.security.auth.mfa.provider.TwoFaProvider;
@@ -25,13 +25,13 @@ public abstract class OtpBasedTwoFaProvider<C extends OtpBasedTwoFaProviderConfi
 
 
     @Override
-    public final void prepareVerificationCode(SecurityUser user, C providerConfig, A accountConfig) throws ThingsboardException {
+    public final void prepareVerificationCode(SecurityUser user, C providerConfig, A accountConfig) throws VizzionnaireException {
         String verificationCode = StringUtils.randomNumeric(6);
         sendVerificationCode(user, verificationCode, providerConfig, accountConfig);
         verificationCodesCache.put(user.getId(), new Otp(System.currentTimeMillis(), verificationCode, accountConfig));
     }
 
-    protected abstract void sendVerificationCode(SecurityUser user, String verificationCode, C providerConfig, A accountConfig) throws ThingsboardException;
+    protected abstract void sendVerificationCode(SecurityUser user, String verificationCode, C providerConfig, A accountConfig) throws VizzionnaireException;
 
 
     @Override

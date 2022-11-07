@@ -13,7 +13,7 @@ IF "%SQL_DATA_FOLDER%" == "" (
 	SET SQL_DATA_FOLDER=/tmp
 )
 
-java -cp %jarfile% -Dloader.main=com.vizzionnaire.server.ThingsboardInstallApplication^
+java -cp %jarfile% -Dloader.main=com.vizzionnaire.server.VizzionnaireInstallApplication^
                     -Dinstall.data_dir=%installDir%^
                     -Dinstall.load_demo=%loadDemo%^
                     -Dspring.jpa.hibernate.ddl-auto=none^

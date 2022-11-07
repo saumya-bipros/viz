@@ -28,7 +28,7 @@ SET installDir=%BASE%\data
 
 PUSHD "%BASE%\conf"
 
-java -cp "%jarfile%" -Dloader.main=com.vizzionnaire.server.ThingsboardInstallApplication^
+java -cp "%jarfile%" -Dloader.main=com.vizzionnaire.server.VizzionnaireInstallApplication^
                     -Dinstall.data_dir="%installDir%"^
                     -Dspring.jpa.hibernate.ddl-auto=none^
                     -Dinstall.upgrade=true^

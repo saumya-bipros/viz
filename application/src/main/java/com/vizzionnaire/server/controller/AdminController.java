@@ -8,7 +8,7 @@ import com.vizzionnaire.rule.engine.api.MailService;
 import com.vizzionnaire.rule.engine.api.SmsService;
 import com.vizzionnaire.server.common.data.AdminSettings;
 import com.vizzionnaire.server.common.data.UpdateMessage;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.security.model.SecuritySettings;
 import com.vizzionnaire.server.common.data.sms.config.TestSmsRequest;
@@ -67,7 +67,7 @@ public class AdminController extends BaseController {
     @ResponseBody
     public AdminSettings getAdminSettings(
             @ApiParam(value = "A string value of the key (e.g. 'general' or 'mail').")
-            @PathVariable("key") String key) throws ThingsboardException {
+            @PathVariable("key") String key) throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.ADMIN_SETTINGS, Operation.READ);
             AdminSettings adminSettings = checkNotNull(adminSettingsService.findAdminSettingsByKey(TenantId.SYS_TENANT_ID, key), "No Administration settings found for key: " + key);
@@ -90,7 +90,7 @@ public class AdminController extends BaseController {
     @ResponseBody
     public AdminSettings saveAdminSettings(
             @ApiParam(value = "A JSON value representing the Administration Settings.")
-            @RequestBody AdminSettings adminSettings) throws ThingsboardException {
+            @RequestBody AdminSettings adminSettings) throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.ADMIN_SETTINGS, Operation.WRITE);
             adminSettings.setTenantId(getTenantId());
@@ -112,7 +112,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('SYS_ADMIN')")
     @RequestMapping(value = "/securitySettings", method = RequestMethod.GET)
     @ResponseBody
-    public SecuritySettings getSecuritySettings() throws ThingsboardException {
+    public SecuritySettings getSecuritySettings() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.ADMIN_SETTINGS, Operation.READ);
             return checkNotNull(systemSecurityService.getSecuritySettings(TenantId.SYS_TENANT_ID));
@@ -128,7 +128,7 @@ public class AdminController extends BaseController {
     @ResponseBody
     public SecuritySettings saveSecuritySettings(
             @ApiParam(value = "A JSON value representing the Security Settings.")
-            @RequestBody SecuritySettings securitySettings) throws ThingsboardException {
+            @RequestBody SecuritySettings securitySettings) throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.ADMIN_SETTINGS, Operation.WRITE);
             securitySettings = checkNotNull(systemSecurityService.saveSecuritySettings(TenantId.SYS_TENANT_ID, securitySettings));
@@ -145,7 +145,7 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/settings/testMail", method = RequestMethod.POST)
     public void sendTestMail(
             @ApiParam(value = "A JSON value representing the Mail Settings.")
-            @RequestBody AdminSettings adminSettings) throws ThingsboardException {
+            @RequestBody AdminSettings adminSettings) throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.ADMIN_SETTINGS, Operation.READ);
             adminSettings = checkNotNull(adminSettings);
@@ -169,7 +169,7 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/settings/testSms", method = RequestMethod.POST)
     public void sendTestSms(
             @ApiParam(value = "A JSON value representing the Test SMS request.")
-            @RequestBody TestSmsRequest testSmsRequest) throws ThingsboardException {
+            @RequestBody TestSmsRequest testSmsRequest) throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.ADMIN_SETTINGS, Operation.READ);
             smsService.sendTestSms(testSmsRequest);
@@ -183,7 +183,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @GetMapping("/repositorySettings")
     @ResponseBody
-    public RepositorySettings getRepositorySettings() throws ThingsboardException {
+    public RepositorySettings getRepositorySettings() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.READ);
             RepositorySettings versionControlSettings = checkNotNull(versionControlService.getVersionControlSettings(getTenantId()));
@@ -201,7 +201,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @GetMapping("/repositorySettings/exists")
     @ResponseBody
-    public Boolean repositorySettingsExists() throws ThingsboardException {
+    public Boolean repositorySettingsExists() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.READ);
             return versionControlService.getVersionControlSettings(getTenantId()) != null;
@@ -214,7 +214,7 @@ public class AdminController extends BaseController {
             notes = "Creates or Updates the repository settings object. " + TENANT_AUTHORITY_PARAGRAPH)
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @PostMapping("/repositorySettings")
-    public DeferredResult<RepositorySettings> saveRepositorySettings(@RequestBody RepositorySettings settings) throws ThingsboardException {
+    public DeferredResult<RepositorySettings> saveRepositorySettings(@RequestBody RepositorySettings settings) throws VizzionnaireException {
         accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.WRITE);
         ListenableFuture<RepositorySettings> future = versionControlService.saveVersionControlSettings(getTenantId(), settings);
         return wrapFuture(Futures.transform(future, savedSettings -> {
@@ -231,7 +231,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @RequestMapping(value = "/repositorySettings", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public DeferredResult<Void> deleteRepositorySettings() throws ThingsboardException {
+    public DeferredResult<Void> deleteRepositorySettings() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.DELETE);
             return wrapFuture(versionControlService.deleteVersionControlSettings(getTenantId()));
@@ -247,7 +247,7 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/repositorySettings/checkAccess", method = RequestMethod.POST)
     public DeferredResult<Void> checkRepositoryAccess(
             @ApiParam(value = "A JSON value representing the Repository Settings.")
-            @RequestBody RepositorySettings settings) throws ThingsboardException {
+            @RequestBody RepositorySettings settings) throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.READ);
             settings = checkNotNull(settings);
@@ -262,7 +262,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @GetMapping("/autoCommitSettings")
     @ResponseBody
-    public AutoCommitSettings getAutoCommitSettings() throws ThingsboardException {
+    public AutoCommitSettings getAutoCommitSettings() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.READ);
             return checkNotNull(autoCommitSettingsService.get(getTenantId()));
@@ -276,7 +276,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @GetMapping("/autoCommitSettings/exists")
     @ResponseBody
-    public Boolean autoCommitSettingsExists() throws ThingsboardException {
+    public Boolean autoCommitSettingsExists() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.READ);
             return autoCommitSettingsService.get(getTenantId()) != null;
@@ -289,7 +289,7 @@ public class AdminController extends BaseController {
             notes = "Creates or Updates the auto commit settings object. " + TENANT_AUTHORITY_PARAGRAPH)
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @PostMapping("/autoCommitSettings")
-    public AutoCommitSettings saveAutoCommitSettings(@RequestBody AutoCommitSettings settings) throws ThingsboardException {
+    public AutoCommitSettings saveAutoCommitSettings(@RequestBody AutoCommitSettings settings) throws VizzionnaireException {
         accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.WRITE);
         return autoCommitSettingsService.save(getTenantId(), settings);
     }
@@ -300,7 +300,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @RequestMapping(value = "/autoCommitSettings", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteAutoCommitSettings() throws ThingsboardException {
+    public void deleteAutoCommitSettings() throws VizzionnaireException {
         try {
             accessControlService.checkPermission(getCurrentUser(), Resource.VERSION_CONTROL, Operation.DELETE);
             autoCommitSettingsService.delete(getTenantId());
@@ -315,7 +315,7 @@ public class AdminController extends BaseController {
     @PreAuthorize("hasAuthority('SYS_ADMIN')")
     @RequestMapping(value = "/updates", method = RequestMethod.GET)
     @ResponseBody
-    public UpdateMessage checkUpdates() throws ThingsboardException {
+    public UpdateMessage checkUpdates() throws VizzionnaireException {
         try {
             return updateService.checkUpdates();
         } catch (Exception e) {

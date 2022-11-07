@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.server.common.data.HasTenantId;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.security.Authority;
 import com.vizzionnaire.server.service.security.model.SecurityUser;
@@ -34,7 +34,7 @@ public class DefaultAccessControlService implements AccessControlService {
     }
 
     @Override
-    public void checkPermission(SecurityUser user, Resource resource, Operation operation) throws ThingsboardException {
+    public void checkPermission(SecurityUser user, Resource resource, Operation operation) throws VizzionnaireException {
         PermissionChecker permissionChecker = getPermissionChecker(user.getAuthority(), resource);
         if (!permissionChecker.hasPermission(user, operation)) {
             permissionDenied();
@@ -44,14 +44,14 @@ public class DefaultAccessControlService implements AccessControlService {
     @Override
     @SuppressWarnings("unchecked")
     public <I extends EntityId, T extends HasTenantId> void checkPermission(SecurityUser user, Resource resource,
-                                                                                            Operation operation, I entityId, T entity) throws ThingsboardException {
+                                                                                            Operation operation, I entityId, T entity) throws VizzionnaireException {
         PermissionChecker permissionChecker = getPermissionChecker(user.getAuthority(), resource);
         if (!permissionChecker.hasPermission(user, operation, entityId, entity)) {
             permissionDenied();
         }
     }
 
-    private PermissionChecker getPermissionChecker(Authority authority, Resource resource) throws ThingsboardException {
+    private PermissionChecker getPermissionChecker(Authority authority, Resource resource) throws VizzionnaireException {
         Permissions permissions = authorityPermissions.get(authority);
         if (permissions == null) {
             permissionDenied();
@@ -63,9 +63,9 @@ public class DefaultAccessControlService implements AccessControlService {
         return permissionChecker.get();
     }
 
-    private void permissionDenied() throws ThingsboardException {
-        throw new ThingsboardException(YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION,
-                ThingsboardErrorCode.PERMISSION_DENIED);
+    private void permissionDenied() throws VizzionnaireException {
+        throw new VizzionnaireException(YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION,
+                VizzionnaireErrorCode.PERMISSION_DENIED);
     }
 
 }

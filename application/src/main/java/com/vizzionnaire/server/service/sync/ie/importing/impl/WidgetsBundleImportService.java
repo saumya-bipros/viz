@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.WidgetsBundleId;
 import com.vizzionnaire.server.common.data.sync.ie.WidgetsBundleExportData;
@@ -78,7 +78,7 @@ public class WidgetsBundleImportService extends BaseEntityImportService<WidgetsB
     }
 
     @Override
-    protected void onEntitySaved(User user, WidgetsBundle savedWidgetsBundle, WidgetsBundle oldWidgetsBundle) throws ThingsboardException {
+    protected void onEntitySaved(User user, WidgetsBundle savedWidgetsBundle, WidgetsBundle oldWidgetsBundle) throws VizzionnaireException {
         entityNotificationService.notifySendMsgToEdgeService(user.getTenantId(), savedWidgetsBundle.getId(),
                 oldWidgetsBundle == null ? EdgeEventActionType.ADDED : EdgeEventActionType.UPDATED);
     }

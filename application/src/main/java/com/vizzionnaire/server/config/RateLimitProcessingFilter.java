@@ -16,7 +16,7 @@ import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.msg.tools.TbRateLimits;
 import com.vizzionnaire.server.common.msg.tools.TbRateLimitsException;
 import com.vizzionnaire.server.dao.tenant.TbTenantProfileCache;
-import com.vizzionnaire.server.exception.ThingsboardErrorResponseHandler;
+import com.vizzionnaire.server.exception.VizzionnaireErrorResponseHandler;
 import com.vizzionnaire.server.service.security.model.SecurityUser;
 
 import javax.servlet.FilterChain;
@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentMap;
 public class RateLimitProcessingFilter extends GenericFilterBean {
 
     @Autowired
-    private ThingsboardErrorResponseHandler errorResponseHandler;
+    private VizzionnaireErrorResponseHandler errorResponseHandler;
 
     @Autowired
     @Lazy

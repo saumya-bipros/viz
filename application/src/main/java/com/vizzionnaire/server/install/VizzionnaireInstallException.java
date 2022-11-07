@@ -2,9 +2,9 @@ package com.vizzionnaire.server.install;
 
 import org.springframework.boot.ExitCodeGenerator;
 
-public class ThingsboardInstallException extends RuntimeException implements ExitCodeGenerator {
+public class VizzionnaireInstallException extends RuntimeException implements ExitCodeGenerator {
 
-    public ThingsboardInstallException(String message, Throwable cause) {
+    public VizzionnaireInstallException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -7,7 +7,7 @@ import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.sync.ie.DeviceExportData;
@@ -79,7 +79,7 @@ public class DeviceImportService extends BaseEntityImportService<DeviceId, Devic
     }
 
     @Override
-    protected void onEntitySaved(User user, Device savedDevice, Device oldDevice) throws ThingsboardException {
+    protected void onEntitySaved(User user, Device savedDevice, Device oldDevice) throws VizzionnaireException {
         entityNotificationService.notifyCreateOrUpdateDevice(user.getTenantId(), savedDevice.getId(), savedDevice.getCustomerId(),
                 savedDevice, oldDevice, oldDevice == null ? ActionType.ADDED : ActionType.UPDATED, user);
     }

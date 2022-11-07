@@ -8,7 +8,7 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceProfileId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.plugin.ComponentLifecycleEvent;
@@ -48,7 +48,7 @@ public class DeviceProfileImportService extends BaseEntityImportService<DevicePr
     }
 
     @Override
-    protected void onEntitySaved(User user, DeviceProfile savedDeviceProfile, DeviceProfile oldDeviceProfile) throws ThingsboardException {
+    protected void onEntitySaved(User user, DeviceProfile savedDeviceProfile, DeviceProfile oldDeviceProfile) throws VizzionnaireException {
         clusterService.onDeviceProfileChange(savedDeviceProfile, null);
         clusterService.broadcastEntityStateChangeEvent(user.getTenantId(), savedDeviceProfile.getId(),
                 oldDeviceProfile == null ? ComponentLifecycleEvent.CREATED : ComponentLifecycleEvent.UPDATED);

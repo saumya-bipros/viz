@@ -14,7 +14,7 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.Tenant;
 import com.vizzionnaire.server.common.data.TenantProfile;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.ApiUsageStateId;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EntityId;
@@ -347,7 +347,7 @@ public class DefaultTbApiUsageStateService extends AbstractPartitionBasedService
                     mailExecutor.submit(() -> {
                         try {
                             mailService.sendApiFeatureStateEmail(apiFeature, stateValue, email, createStateMailMessage((TenantApiUsageState) state, apiFeature, stateValue));
-                        } catch (ThingsboardException e) {
+                        } catch (VizzionnaireException e) {
                             log.warn("[{}] Can't send update of the API state to tenant with provided email [{}]", state.getTenantId(), email, e);
                         }
                     });

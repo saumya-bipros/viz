@@ -1,7 +1,7 @@
 package com.vizzionnaire.server.dao.rule;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
 import com.vizzionnaire.server.common.data.id.RuleNodeId;
@@ -57,7 +57,7 @@ public interface RuleChainService {
 
     void deleteRuleChainsByTenantId(TenantId tenantId);
 
-    RuleChainData exportTenantRuleChains(TenantId tenantId, PageLink pageLink) throws ThingsboardException;
+    RuleChainData exportTenantRuleChains(TenantId tenantId, PageLink pageLink) throws VizzionnaireException;
 
     List<RuleChainImportResult> importTenantRuleChains(TenantId tenantId, RuleChainData ruleChainData, boolean overwrite);
 

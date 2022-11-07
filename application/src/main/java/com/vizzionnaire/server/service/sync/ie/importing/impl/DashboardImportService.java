@@ -7,7 +7,7 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.ShortCustomerInfo;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.DashboardId;
 import com.vizzionnaire.server.common.data.id.TenantId;

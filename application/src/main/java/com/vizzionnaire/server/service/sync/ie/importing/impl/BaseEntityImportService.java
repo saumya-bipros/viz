@@ -9,7 +9,7 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.ExportableEntity;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.id.EntityIdFactory;
 import com.vizzionnaire.server.common.data.id.HasId;
@@ -75,7 +75,7 @@ public abstract class BaseEntityImportService<I extends EntityId, E extends Expo
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public EntityImportResult<E> importEntity(EntitiesImportCtx ctx, D exportData) throws ThingsboardException {
+    public EntityImportResult<E> importEntity(EntitiesImportCtx ctx, D exportData) throws VizzionnaireException {
         EntityImportResult<E> importResult = new EntityImportResult<>();
         ctx.setCurrentImportResult(importResult);
         importResult.setEntityType(getEntityType());
@@ -152,7 +152,7 @@ public abstract class BaseEntityImportService<I extends EntityId, E extends Expo
     protected abstract E saveOrUpdate(EntitiesImportCtx ctx, E entity, D exportData, IdProvider idProvider);
 
 
-    protected void processAfterSaved(EntitiesImportCtx ctx, EntityImportResult<E> importResult, D exportData, IdProvider idProvider) throws ThingsboardException {
+    protected void processAfterSaved(EntitiesImportCtx ctx, EntityImportResult<E> importResult, D exportData, IdProvider idProvider) throws VizzionnaireException {
         E savedEntity = importResult.getSavedEntity();
         E oldEntity = importResult.getOldEntity();
 
@@ -253,7 +253,7 @@ public abstract class BaseEntityImportService<I extends EntityId, E extends Expo
         });
     }
 
-    protected void onEntitySaved(User user, E savedEntity, E oldEntity) throws ThingsboardException {
+    protected void onEntitySaved(User user, E savedEntity, E oldEntity) throws VizzionnaireException {
         entityNotificationService.notifyCreateOrUpdateEntity(user.getTenantId(), savedEntity.getId(), savedEntity,
                 null, oldEntity == null ? ActionType.ADDED : ActionType.UPDATED, user);
     }

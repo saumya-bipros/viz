@@ -8,7 +8,7 @@ import com.vizzionnaire.rule.engine.api.MailService;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -37,7 +37,7 @@ public class DefaultUserService extends AbstractTbEntityService implements TbUse
 
     @Override
     public User save(TenantId tenantId, CustomerId customerId, User tbUser, boolean sendActivationMail,
-                     HttpServletRequest request, User user) throws ThingsboardException {
+                     HttpServletRequest request, User user) throws VizzionnaireException {
         ActionType actionType = tbUser.getId() == null ? ActionType.ADDED : ActionType.UPDATED;
         try {
             boolean sendEmail = tbUser.getId() == null && sendActivationMail;
@@ -50,7 +50,7 @@ public class DefaultUserService extends AbstractTbEntityService implements TbUse
                 String email = savedUser.getEmail();
                 try {
                     mailService.sendActivationEmail(activateUrl, email);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     userService.deleteUser(tenantId, savedUser.getId());
                     throw e;
                 }
@@ -65,7 +65,7 @@ public class DefaultUserService extends AbstractTbEntityService implements TbUse
     }
 
     @Override
-    public void delete(TenantId tenantId, CustomerId customerId, User tbUser, User user) throws ThingsboardException {
+    public void delete(TenantId tenantId, CustomerId customerId, User tbUser, User user) throws VizzionnaireException {
         UserId userId = tbUser.getId();
 
         try {

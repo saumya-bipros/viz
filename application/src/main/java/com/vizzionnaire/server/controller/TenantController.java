@@ -3,7 +3,7 @@ package com.vizzionnaire.server.controller;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vizzionnaire.server.common.data.Tenant;
 import com.vizzionnaire.server.common.data.TenantInfo;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.page.PageData;
 import com.vizzionnaire.server.common.data.page.PageLink;
@@ -64,7 +64,7 @@ public class TenantController extends BaseController {
     @ResponseBody
     public Tenant getTenantById(
             @ApiParam(value = TENANT_ID_PARAM_DESCRIPTION)
-            @PathVariable(TENANT_ID) String strTenantId) throws ThingsboardException {
+            @PathVariable(TENANT_ID) String strTenantId) throws VizzionnaireException {
         checkParameter(TENANT_ID, strTenantId);
         try {
             TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
@@ -86,7 +86,7 @@ public class TenantController extends BaseController {
     @ResponseBody
     public TenantInfo getTenantInfoById(
             @ApiParam(value = TENANT_ID_PARAM_DESCRIPTION)
-            @PathVariable(TENANT_ID) String strTenantId) throws ThingsboardException {
+            @PathVariable(TENANT_ID) String strTenantId) throws VizzionnaireException {
         checkParameter(TENANT_ID, strTenantId);
         try {
             TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
@@ -140,7 +140,7 @@ public class TenantController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = TENANT_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(tenantService.findTenants(pageLink));
@@ -165,7 +165,7 @@ public class TenantController extends BaseController {
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortOrder
-    ) throws ThingsboardException {
+    ) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(tenantService.findTenantInfos(pageLink));

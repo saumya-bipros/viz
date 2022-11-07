@@ -2,7 +2,7 @@ package com.vizzionnaire.server.controller;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.vizzionnaire.common.util.JacksonUtil;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceId;
 import com.vizzionnaire.server.common.data.id.RpcId;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -115,7 +115,7 @@ public class RpcV2Controller extends AbstractRpcController {
             @ApiParam(value = DEVICE_ID_PARAM_DESCRIPTION)
             @PathVariable("deviceId") String deviceIdStr,
             @ApiParam(value = "A JSON value representing the RPC request.")
-            @RequestBody String requestBody) throws ThingsboardException {
+            @RequestBody String requestBody) throws VizzionnaireException {
         return handleDeviceRPCRequest(true, new DeviceId(UUID.fromString(deviceIdStr)), requestBody, HttpStatus.GATEWAY_TIMEOUT, HttpStatus.GATEWAY_TIMEOUT);
     }
 
@@ -133,7 +133,7 @@ public class RpcV2Controller extends AbstractRpcController {
             @ApiParam(value = DEVICE_ID_PARAM_DESCRIPTION)
             @PathVariable(DEVICE_ID) String deviceIdStr,
             @ApiParam(value = "A JSON value representing the RPC request.")
-            @RequestBody String requestBody) throws ThingsboardException {
+            @RequestBody String requestBody) throws VizzionnaireException {
         return handleDeviceRPCRequest(false, new DeviceId(UUID.fromString(deviceIdStr)), requestBody, HttpStatus.GATEWAY_TIMEOUT, HttpStatus.GATEWAY_TIMEOUT);
     }
 
@@ -143,7 +143,7 @@ public class RpcV2Controller extends AbstractRpcController {
     @ResponseBody
     public Rpc getPersistedRpc(
             @ApiParam(value = RPC_ID_PARAM_DESCRIPTION, required = true)
-            @PathVariable(RPC_ID) String strRpc) throws ThingsboardException {
+            @PathVariable(RPC_ID) String strRpc) throws VizzionnaireException {
         checkParameter("RpcId", strRpc);
         try {
             RpcId rpcId = new RpcId(UUID.fromString(strRpc));
@@ -171,7 +171,7 @@ public class RpcV2Controller extends AbstractRpcController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = RPC_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("DeviceId", strDeviceId);
         try {
             if (rpcStatus != null && rpcStatus.equals(RpcStatus.DELETED)) {
@@ -218,7 +218,7 @@ public class RpcV2Controller extends AbstractRpcController {
     @ResponseBody
     public void deleteRpc(
             @ApiParam(value = RPC_ID_PARAM_DESCRIPTION, required = true)
-            @PathVariable(RPC_ID) String strRpc) throws ThingsboardException {
+            @PathVariable(RPC_ID) String strRpc) throws VizzionnaireException {
         checkParameter("RpcId", strRpc);
         try {
             RpcId rpcId = new RpcId(UUID.fromString(strRpc));

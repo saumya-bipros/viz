@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vizzionnaire.server.common.data.edge.EdgeEvent;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.page.PageData;
@@ -66,7 +66,7 @@ public class EdgeEventController extends BaseController {
             @ApiParam(value = "Timestamp. Edge events with creation time before it won't be queried")
             @RequestParam(required = false) Long startTime,
             @ApiParam(value = "Timestamp. Edge events with creation time after it won't be queried")
-            @RequestParam(required = false) Long endTime) throws ThingsboardException {
+            @RequestParam(required = false) Long endTime) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();

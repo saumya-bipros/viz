@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.page.PageData;
 import com.vizzionnaire.server.common.data.query.AlarmData;
@@ -46,7 +46,7 @@ public class EntityQueryController extends BaseController {
     @ResponseBody
     public long countEntitiesByQuery(
             @ApiParam(value = "A JSON value representing the entity count query. See API call notes above for more details.")
-            @RequestBody EntityCountQuery query) throws ThingsboardException {
+            @RequestBody EntityCountQuery query) throws VizzionnaireException {
         checkNotNull(query);
         try {
             return this.entityQueryService.countEntitiesByQuery(getCurrentUser(), query);
@@ -61,7 +61,7 @@ public class EntityQueryController extends BaseController {
     @ResponseBody
     public PageData<EntityData> findEntityDataByQuery(
             @ApiParam(value = "A JSON value representing the entity data query. See API call notes above for more details.")
-            @RequestBody EntityDataQuery query) throws ThingsboardException {
+            @RequestBody EntityDataQuery query) throws VizzionnaireException {
         checkNotNull(query);
         try {
             return this.entityQueryService.findEntityDataByQuery(getCurrentUser(), query);
@@ -76,7 +76,7 @@ public class EntityQueryController extends BaseController {
     @ResponseBody
     public PageData<AlarmData> findAlarmDataByQuery(
             @ApiParam(value = "A JSON value representing the alarm data query. See API call notes above for more details.")
-            @RequestBody AlarmDataQuery query) throws ThingsboardException {
+            @RequestBody AlarmDataQuery query) throws VizzionnaireException {
         checkNotNull(query);
         try {
             return this.entityQueryService.findAlarmDataByQuery(getCurrentUser(), query);
@@ -96,7 +96,7 @@ public class EntityQueryController extends BaseController {
             @ApiParam(value = "Include all unique time-series keys to the result.")
             @RequestParam("timeseries") boolean isTimeseries,
             @ApiParam(value = "Include all unique attribute keys to the result.")
-            @RequestParam("attributes") boolean isAttributes) throws ThingsboardException {
+            @RequestParam("attributes") boolean isAttributes) throws VizzionnaireException {
         TenantId tenantId = getTenantId();
         checkNotNull(query);
         try {

@@ -10,7 +10,7 @@ import com.vizzionnaire.server.common.data.Tenant;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.Edge;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.DeviceId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
@@ -61,7 +61,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public Device saveDeviceWithCredentials(Device device, DeviceCredentials credentials, User user) throws ThingsboardException {
+    public Device saveDeviceWithCredentials(Device device, DeviceCredentials credentials, User user) throws VizzionnaireException {
         ActionType actionType = device.getId() == null ? ActionType.ADDED : ActionType.UPDATED;
         TenantId tenantId = device.getTenantId();
         try {
@@ -96,7 +96,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public Device assignDeviceToCustomer(TenantId tenantId, DeviceId deviceId, Customer customer, User user) throws ThingsboardException {
+    public Device assignDeviceToCustomer(TenantId tenantId, DeviceId deviceId, Customer customer, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         CustomerId customerId = customer.getId();
         try {
@@ -113,7 +113,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public Device unassignDeviceFromCustomer(Device device, Customer customer, User user) throws ThingsboardException {
+    public Device unassignDeviceFromCustomer(Device device, Customer customer, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_CUSTOMER;
         TenantId tenantId = device.getTenantId();
         DeviceId deviceId = device.getId();
@@ -133,7 +133,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public Device assignDeviceToPublicCustomer(TenantId tenantId, DeviceId deviceId, User user) throws ThingsboardException {
+    public Device assignDeviceToPublicCustomer(TenantId tenantId, DeviceId deviceId, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         Customer publicCustomer = customerService.findOrCreatePublicCustomer(tenantId);
         try {
@@ -152,7 +152,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public DeviceCredentials getDeviceCredentialsByDeviceId(Device device, User user) throws ThingsboardException {
+    public DeviceCredentials getDeviceCredentialsByDeviceId(Device device, User user) throws VizzionnaireException {
         TenantId tenantId = device.getTenantId();
         DeviceId deviceId = device.getId();
         try {
@@ -168,7 +168,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public DeviceCredentials updateDeviceCredentials(Device device, DeviceCredentials deviceCredentials, User user) throws ThingsboardException {
+    public DeviceCredentials updateDeviceCredentials(Device device, DeviceCredentials deviceCredentials, User user) throws VizzionnaireException {
         TenantId tenantId = device.getTenantId();
         DeviceId deviceId = device.getId();
         try {
@@ -232,7 +232,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public Device assignDeviceToEdge(TenantId tenantId, DeviceId deviceId, Edge edge, User user) throws ThingsboardException {
+    public Device assignDeviceToEdge(TenantId tenantId, DeviceId deviceId, Edge edge, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_EDGE;
         EdgeId edgeId = edge.getId();
         try {
@@ -248,7 +248,7 @@ public class DefaultTbDeviceService extends AbstractTbEntityService implements T
     }
 
     @Override
-    public Device unassignDeviceFromEdge(Device device, Edge edge, User user) throws ThingsboardException {
+    public Device unassignDeviceFromEdge(Device device, Edge edge, User user) throws VizzionnaireException {
         TenantId tenantId = device.getTenantId();
         DeviceId deviceId = device.getId();
         EdgeId edgeId = edge.getId();

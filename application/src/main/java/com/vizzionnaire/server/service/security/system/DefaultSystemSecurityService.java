@@ -9,7 +9,7 @@ import com.vizzionnaire.server.common.data.AdminSettings;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.UserId;
@@ -178,7 +178,7 @@ public class DefaultSystemSecurityService implements SystemSecurityService {
         if (StringUtils.isNotBlank(userLockoutNotificationEmail)) {
             try {
                 mailService.sendAccountLockoutEmail(username, userLockoutNotificationEmail, maxFailedLoginAttempts);
-            } catch (ThingsboardException e) {
+            } catch (VizzionnaireException e) {
                 log.warn("Can't send email regarding user account [{}] lockout to provided email [{}]", username, userLockoutNotificationEmail, e);
             }
         }

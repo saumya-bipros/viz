@@ -9,8 +9,8 @@ import com.vizzionnaire.server.common.data.ApiUsageRecordKey;
 import com.vizzionnaire.server.common.data.ApiUsageStateMailMessage;
 import com.vizzionnaire.server.common.data.ApiUsageStateValue;
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.dao.exception.IncorrectParameterException;
@@ -161,12 +161,12 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendEmail(TenantId tenantId, String email, String subject, String message) throws ThingsboardException {
+    public void sendEmail(TenantId tenantId, String email, String subject, String message) throws VizzionnaireException {
         sendMail(mailSender, mailFrom, email, subject, message, timeout);
     }
 
     @Override
-    public void sendTestMail(JsonNode jsonConfig, String email) throws ThingsboardException {
+    public void sendTestMail(JsonNode jsonConfig, String email) throws VizzionnaireException {
         JavaMailSenderImpl testMailSender = createMailSender(jsonConfig);
         String mailFrom = jsonConfig.get("mailFrom").asText();
         String subject = messages.getMessage("test.message.subject", null, Locale.US);
@@ -181,7 +181,7 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendActivationEmail(String activationLink, String email) throws ThingsboardException {
+    public void sendActivationEmail(String activationLink, String email) throws VizzionnaireException {
 
         String subject = messages.getMessage("activation.subject", null, Locale.US);
 
@@ -195,7 +195,7 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendAccountActivatedEmail(String loginLink, String email) throws ThingsboardException {
+    public void sendAccountActivatedEmail(String loginLink, String email) throws VizzionnaireException {
 
         String subject = messages.getMessage("account.activated.subject", null, Locale.US);
 
@@ -209,7 +209,7 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendResetPasswordEmail(String passwordResetLink, String email) throws ThingsboardException {
+    public void sendResetPasswordEmail(String passwordResetLink, String email) throws VizzionnaireException {
 
         String subject = messages.getMessage("reset.password.subject", null, Locale.US);
 
@@ -227,14 +227,14 @@ public class DefaultMailService implements MailService {
         passwordResetExecutorService.execute(() -> {
             try {
                 this.sendResetPasswordEmail(passwordResetLink, email);
-            } catch (ThingsboardException e) {
+            } catch (VizzionnaireException e) {
                 log.error("Error occurred: {} ", e.getMessage());
             }
         });
     }
 
     @Override
-    public void sendPasswordWasResetEmail(String loginLink, String email) throws ThingsboardException {
+    public void sendPasswordWasResetEmail(String loginLink, String email) throws VizzionnaireException {
 
         String subject = messages.getMessage("password.was.reset.subject", null, Locale.US);
 
@@ -248,16 +248,16 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void send(TenantId tenantId, CustomerId customerId, TbEmail tbEmail) throws ThingsboardException {
+    public void send(TenantId tenantId, CustomerId customerId, TbEmail tbEmail) throws VizzionnaireException {
         sendMail(tenantId, customerId, tbEmail, this.mailSender, timeout);
     }
 
     @Override
-    public void send(TenantId tenantId, CustomerId customerId, TbEmail tbEmail, JavaMailSender javaMailSender, long timeout) throws ThingsboardException {
+    public void send(TenantId tenantId, CustomerId customerId, TbEmail tbEmail, JavaMailSender javaMailSender, long timeout) throws VizzionnaireException {
         sendMail(tenantId, customerId, tbEmail, javaMailSender, timeout);
     }
 
-    private void sendMail(TenantId tenantId, CustomerId customerId, TbEmail tbEmail, JavaMailSender javaMailSender, long timeout) throws ThingsboardException {
+    private void sendMail(TenantId tenantId, CustomerId customerId, TbEmail tbEmail, JavaMailSender javaMailSender, long timeout) throws VizzionnaireException {
         if (apiUsageStateService.getApiUsageState(tenantId).isEmailSendEnabled()) {
             try {
                 MimeMessage mailMsg = javaMailSender.createMimeMessage();
@@ -295,7 +295,7 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendAccountLockoutEmail(String lockoutEmail, String email, Integer maxFailedLoginAttempts) throws ThingsboardException {
+    public void sendAccountLockoutEmail(String lockoutEmail, String email, Integer maxFailedLoginAttempts) throws VizzionnaireException {
         String subject = messages.getMessage("account.lockout.subject", null, Locale.US);
 
         Map<String, Object> model = new HashMap<>();
@@ -309,7 +309,7 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendTwoFaVerificationEmail(String email, String verificationCode, int expirationTimeSeconds) throws ThingsboardException {
+    public void sendTwoFaVerificationEmail(String email, String verificationCode, int expirationTimeSeconds) throws VizzionnaireException {
         String subject = messages.getMessage("2fa.verification.code.subject", null, Locale.US);
         String message = mergeTemplateIntoString("2fa.verification.code.ftl", Map.of(
                 TARGET_EMAIL, email,
@@ -321,7 +321,7 @@ public class DefaultMailService implements MailService {
     }
 
     @Override
-    public void sendApiFeatureStateEmail(ApiFeature apiFeature, ApiUsageStateValue stateValue, String email, ApiUsageStateMailMessage msg) throws ThingsboardException {
+    public void sendApiFeatureStateEmail(ApiFeature apiFeature, ApiUsageStateValue stateValue, String email, ApiUsageStateMailMessage msg) throws VizzionnaireException {
         String subject = messages.getMessage("api.usage.state", null, Locale.US);
 
         Map<String, Object> model = new HashMap<>();
@@ -445,7 +445,7 @@ public class DefaultMailService implements MailService {
     }
 
     private void sendMail(JavaMailSenderImpl mailSender, String mailFrom, String email,
-                          String subject, String message, long timeout) throws ThingsboardException {
+                          String subject, String message, long timeout) throws VizzionnaireException {
         try {
             MimeMessage mimeMsg = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMsg, UTF_8);
@@ -472,7 +472,7 @@ public class DefaultMailService implements MailService {
     }
 
     private String mergeTemplateIntoString(String templateLocation,
-                                           Map<String, Object> model) throws ThingsboardException {
+                                           Map<String, Object> model) throws VizzionnaireException {
         try {
             Template template = freemarkerConfig.getTemplate(templateLocation);
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
@@ -481,7 +481,7 @@ public class DefaultMailService implements MailService {
         }
     }
 
-    protected ThingsboardException handleException(Exception exception) {
+    protected VizzionnaireException handleException(Exception exception) {
         String message;
         if (exception instanceof NestedRuntimeException) {
             message = ((NestedRuntimeException) exception).getMostSpecificCause().getMessage();
@@ -489,8 +489,8 @@ public class DefaultMailService implements MailService {
             message = exception.getMessage();
         }
         log.warn("Unable to send mail: {}", message);
-        return new ThingsboardException(String.format("Unable to send mail: %s", message),
-                ThingsboardErrorCode.GENERAL);
+        return new VizzionnaireException(String.format("Unable to send mail: %s", message),
+                VizzionnaireErrorCode.GENERAL);
     }
 
 }

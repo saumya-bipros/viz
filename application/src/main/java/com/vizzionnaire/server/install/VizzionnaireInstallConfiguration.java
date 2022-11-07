@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 @Configuration
 @Profile("install")
-public class ThingsboardInstallConfiguration {
+public class VizzionnaireInstallConfiguration {
 
     @Bean
     public AuditLogLevelFilter emptyAuditLogLevelFilter() {

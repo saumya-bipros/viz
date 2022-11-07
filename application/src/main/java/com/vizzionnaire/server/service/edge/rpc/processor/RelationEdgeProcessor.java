@@ -8,8 +8,8 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.edge.EdgeEvent;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
 import com.vizzionnaire.server.common.data.edge.EdgeEventType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.AssetId;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.DashboardId;
@@ -84,7 +84,7 @@ public class RelationEdgeProcessor extends BaseEdgeProcessor {
     }
 
 
-    private boolean isEntityExists(TenantId tenantId, EntityId entityId) throws ThingsboardException {
+    private boolean isEntityExists(TenantId tenantId, EntityId entityId) throws VizzionnaireException {
         switch (entityId.getEntityType()) {
             case DEVICE:
                 return deviceService.findDeviceById(tenantId, new DeviceId(entityId.getId())) != null;
@@ -99,7 +99,7 @@ public class RelationEdgeProcessor extends BaseEdgeProcessor {
             case DASHBOARD:
                 return dashboardService.findDashboardById(tenantId, new DashboardId(entityId.getId())) != null;
             default:
-                throw new ThingsboardException("Unsupported entity type " + entityId.getEntityType(), ThingsboardErrorCode.INVALID_ARGUMENTS);
+                throw new VizzionnaireException("Unsupported entity type " + entityId.getEntityType(), VizzionnaireErrorCode.INVALID_ARGUMENTS);
         }
     }
 

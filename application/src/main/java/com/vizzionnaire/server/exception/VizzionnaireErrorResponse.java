@@ -4,12 +4,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.http.HttpStatus;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
 
 import java.util.Date;
 
 @ApiModel
-public class ThingsboardErrorResponse {
+public class VizzionnaireErrorResponse {
     // HTTP Response Status Code
     private final HttpStatus status;
 
@@ -17,19 +17,19 @@ public class ThingsboardErrorResponse {
     private final String message;
 
     // Error code
-    private final ThingsboardErrorCode errorCode;
+    private final VizzionnaireErrorCode errorCode;
 
     private final Date timestamp;
 
-    protected ThingsboardErrorResponse(final String message, final ThingsboardErrorCode errorCode, HttpStatus status) {
+    protected VizzionnaireErrorResponse(final String message, final VizzionnaireErrorCode errorCode, HttpStatus status) {
         this.message = message;
         this.errorCode = errorCode;
         this.status = status;
         this.timestamp = new java.util.Date();
     }
 
-    public static ThingsboardErrorResponse of(final String message, final ThingsboardErrorCode errorCode, HttpStatus status) {
-        return new ThingsboardErrorResponse(message, errorCode, status);
+    public static VizzionnaireErrorResponse of(final String message, final VizzionnaireErrorCode errorCode, HttpStatus status) {
+        return new VizzionnaireErrorResponse(message, errorCode, status);
     }
 
     @ApiModelProperty(position = 1, value = "HTTP Response Status Code", example = "401", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
@@ -56,7 +56,7 @@ public class ThingsboardErrorResponse {
             "\n\n* `40` - Subscription violation (HTTP: 403 - Forbidden)",
             example = "10", dataType = "integer",
             accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    public ThingsboardErrorCode getErrorCode() {
+    public VizzionnaireErrorCode getErrorCode() {
         return errorCode;
     }
 

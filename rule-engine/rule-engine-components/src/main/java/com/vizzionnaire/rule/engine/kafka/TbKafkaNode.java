@@ -22,7 +22,7 @@ import com.vizzionnaire.rule.engine.api.TbNodeException;
 import com.vizzionnaire.rule.engine.api.TbRelationTypes;
 import com.vizzionnaire.rule.engine.api.util.TbNodeUtils;
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.common.data.exception.ThingsboardKafkaClientError;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireKafkaClientError;
 import com.vizzionnaire.server.common.data.plugin.ComponentType;
 import com.vizzionnaire.server.common.msg.TbMsg;
 import com.vizzionnaire.server.common.msg.TbMsgMetaData;
@@ -88,7 +88,7 @@ public class TbKafkaNode implements TbNode {
             this.producer = new KafkaProducer<>(properties);
             Thread ioThread = (Thread) ReflectionUtils.getField(IO_THREAD_FIELD, producer);
             ioThread.setUncaughtExceptionHandler((thread, throwable) -> {
-                if (throwable instanceof ThingsboardKafkaClientError) {
+                if (throwable instanceof VizzionnaireKafkaClientError) {
                     initError = throwable;
                     destroy();
                 }

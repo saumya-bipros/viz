@@ -6,7 +6,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.vizzionnaire.server.install.ThingsboardInstallService;
+import com.vizzionnaire.server.install.VizzionnaireInstallService;
 
 import java.util.Arrays;
 
@@ -21,17 +21,17 @@ import java.util.Arrays;
         "com.vizzionnaire.server.cache",
         "com.vizzionnaire.server.springfox"
 })
-public class ThingsboardInstallApplication {
+public class VizzionnaireInstallApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
     private static final String DEFAULT_SPRING_CONFIG_PARAM = SPRING_CONFIG_NAME_KEY + "=" + "thingsboard";
 
     public static void main(String[] args) {
         try {
-            SpringApplication application = new SpringApplication(ThingsboardInstallApplication.class);
+            SpringApplication application = new SpringApplication(VizzionnaireInstallApplication.class);
             application.setAdditionalProfiles("install");
             ConfigurableApplicationContext context = application.run(updateArguments(args));
-            context.getBean(ThingsboardInstallService.class).performInstall();
+            context.getBean(VizzionnaireInstallService.class).performInstall();
         } catch (Exception e) {
             log.error(e.getMessage());
             System.exit(1);

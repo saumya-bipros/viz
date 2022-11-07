@@ -8,7 +8,7 @@ import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionStatus;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.audit.AuditLog;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.page.PageLink;
 import com.vizzionnaire.server.common.data.page.SortOrder;
@@ -317,7 +317,7 @@ public abstract class TwoFactorAuthTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testAuthWithoutTwoFaAccountConfig() throws ThingsboardException {
+    public void testAuthWithoutTwoFaAccountConfig() throws VizzionnaireException {
         configureTotpTwoFa();
         twoFaConfigManager.deleteTwoFaAccountConfig(tenantId, user.getId(), TwoFaProviderType.TOTP);
 
@@ -391,7 +391,7 @@ public abstract class TwoFactorAuthTest extends AbstractControllerTest {
         this.token = response.getToken();
     }
 
-    private TotpTwoFaAccountConfig configureTotpTwoFa(Consumer<PlatformTwoFaSettings>... customizer) throws ThingsboardException {
+    private TotpTwoFaAccountConfig configureTotpTwoFa(Consumer<PlatformTwoFaSettings>... customizer) throws VizzionnaireException {
         TotpTwoFaProviderConfig totpTwoFaProviderConfig = new TotpTwoFaProviderConfig();
         totpTwoFaProviderConfig.setIssuerName("tb");
 
@@ -407,7 +407,7 @@ public abstract class TwoFactorAuthTest extends AbstractControllerTest {
         return totpTwoFaAccountConfig;
     }
 
-    private SmsTwoFaAccountConfig configureSmsTwoFa(Consumer<SmsTwoFaProviderConfig>... customizer) throws ThingsboardException {
+    private SmsTwoFaAccountConfig configureSmsTwoFa(Consumer<SmsTwoFaProviderConfig>... customizer) throws VizzionnaireException {
         SmsTwoFaProviderConfig smsTwoFaProviderConfig = new SmsTwoFaProviderConfig();
         smsTwoFaProviderConfig.setVerificationCodeLifetime(60);
         smsTwoFaProviderConfig.setSmsVerificationMessageTemplate("${code}");

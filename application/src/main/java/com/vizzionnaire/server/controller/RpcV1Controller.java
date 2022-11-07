@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceId;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
 
@@ -37,7 +37,7 @@ public class RpcV1Controller extends AbstractRpcController {
             @ApiParam(value = DEVICE_ID_PARAM_DESCRIPTION)
             @PathVariable("deviceId") String deviceIdStr,
             @ApiParam(value = "A JSON value representing the RPC request.")
-            @RequestBody String requestBody) throws ThingsboardException {
+            @RequestBody String requestBody) throws VizzionnaireException {
         return handleDeviceRPCRequest(true, new DeviceId(UUID.fromString(deviceIdStr)), requestBody, HttpStatus.REQUEST_TIMEOUT, HttpStatus.CONFLICT);
     }
 
@@ -49,7 +49,7 @@ public class RpcV1Controller extends AbstractRpcController {
             @ApiParam(value = DEVICE_ID_PARAM_DESCRIPTION)
             @PathVariable("deviceId") String deviceIdStr,
             @ApiParam(value = "A JSON value representing the RPC request.")
-            @RequestBody String requestBody) throws ThingsboardException {
+            @RequestBody String requestBody) throws VizzionnaireException {
         return handleDeviceRPCRequest(false, new DeviceId(UUID.fromString(deviceIdStr)), requestBody, HttpStatus.REQUEST_TIMEOUT, HttpStatus.CONFLICT);
     }
 

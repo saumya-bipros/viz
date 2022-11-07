@@ -11,7 +11,7 @@ import com.vizzionnaire.server.common.data.HomeDashboardInfo;
 import com.vizzionnaire.server.common.data.Tenant;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.edge.Edge;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.DashboardId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
@@ -98,7 +98,7 @@ public class DashboardController extends BaseController {
     @RequestMapping(value = "/dashboard/serverTime", method = RequestMethod.GET)
     @ResponseBody
     @ApiResponse(code = 200, message = "OK", examples = @Example(value = @ExampleProperty(value = "1636023857137", mediaType = "application/json")))
-    public long getServerTime() throws ThingsboardException {
+    public long getServerTime() throws VizzionnaireException {
         return System.currentTimeMillis();
     }
 
@@ -111,7 +111,7 @@ public class DashboardController extends BaseController {
     @RequestMapping(value = "/dashboard/maxDatapointsLimit", method = RequestMethod.GET)
     @ResponseBody
     @ApiResponse(code = 200, message = "OK", examples = @Example(value = @ExampleProperty(value = "5000", mediaType = "application/json")))
-    public long getMaxDatapointsLimit() throws ThingsboardException {
+    public long getMaxDatapointsLimit() throws VizzionnaireException {
         return maxDatapointsLimit;
     }
 
@@ -124,7 +124,7 @@ public class DashboardController extends BaseController {
     @ResponseBody
     public DashboardInfo getDashboardInfoById(
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         try {
             DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
@@ -143,7 +143,7 @@ public class DashboardController extends BaseController {
     @ResponseBody
     public Dashboard getDashboardById(
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         try {
             DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
@@ -180,7 +180,7 @@ public class DashboardController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteDashboard(
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
         Dashboard dashboard = checkDashboardId(dashboardId, Operation.DELETE);
@@ -198,7 +198,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION)
             @PathVariable(CUSTOMER_ID) String strCustomerId,
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(CUSTOMER_ID, strCustomerId);
         checkParameter(DASHBOARD_ID, strDashboardId);
 
@@ -221,7 +221,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION)
             @PathVariable(CUSTOMER_ID) String strCustomerId,
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter("customerId", strCustomerId);
         checkParameter(DASHBOARD_ID, strDashboardId);
         CustomerId customerId = new CustomerId(toUUID(strCustomerId));
@@ -244,7 +244,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
             @PathVariable(DASHBOARD_ID) String strDashboardId,
             @ApiParam(value = "JSON array with the list of customer ids, or empty to remove all customers")
-            @RequestBody(required = false) String[] strCustomerIds) throws ThingsboardException {
+            @RequestBody(required = false) String[] strCustomerIds) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
         Dashboard dashboard = checkDashboardId(dashboardId, Operation.ASSIGN_TO_CUSTOMER);
@@ -264,7 +264,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
             @PathVariable(DASHBOARD_ID) String strDashboardId,
             @ApiParam(value = "JSON array with the list of customer ids")
-            @RequestBody String[] strCustomerIds) throws ThingsboardException {
+            @RequestBody String[] strCustomerIds) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
         Dashboard dashboard = checkDashboardId(dashboardId, Operation.ASSIGN_TO_CUSTOMER);
@@ -284,7 +284,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
             @PathVariable(DASHBOARD_ID) String strDashboardId,
             @ApiParam(value = "JSON array with the list of customer ids")
-            @RequestBody String[] strCustomerIds) throws ThingsboardException {
+            @RequestBody String[] strCustomerIds) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
         Dashboard dashboard = checkDashboardId(dashboardId, Operation.UNASSIGN_FROM_CUSTOMER);
@@ -305,7 +305,7 @@ public class DashboardController extends BaseController {
     @ResponseBody
     public Dashboard assignDashboardToPublicCustomer(
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
         Dashboard dashboard = checkDashboardId(dashboardId, Operation.ASSIGN_TO_CUSTOMER);
@@ -321,7 +321,7 @@ public class DashboardController extends BaseController {
     @ResponseBody
     public Dashboard unassignDashboardFromPublicCustomer(
             @ApiParam(value = DASHBOARD_ID_PARAM_DESCRIPTION)
-            @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+            @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(DASHBOARD_ID, strDashboardId);
         DashboardId dashboardId = new DashboardId(toUUID(strDashboardId));
         Dashboard dashboard = checkDashboardId(dashboardId, Operation.UNASSIGN_FROM_CUSTOMER);
@@ -347,7 +347,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = DASHBOARD_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
             checkTenantId(tenantId, Operation.READ);
@@ -377,7 +377,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = DASHBOARD_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
@@ -412,7 +412,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = DASHBOARD_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter(CUSTOMER_ID, strCustomerId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -438,7 +438,7 @@ public class DashboardController extends BaseController {
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/dashboard/home", method = RequestMethod.GET)
     @ResponseBody
-    public HomeDashboard getHomeDashboard() throws ThingsboardException {
+    public HomeDashboard getHomeDashboard() throws VizzionnaireException {
         try {
             SecurityUser securityUser = getCurrentUser();
             if (securityUser.isSystemAdmin()) {
@@ -475,7 +475,7 @@ public class DashboardController extends BaseController {
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/dashboard/home/info", method = RequestMethod.GET)
     @ResponseBody
-    public HomeDashboardInfo getHomeDashboardInfo() throws ThingsboardException {
+    public HomeDashboardInfo getHomeDashboardInfo() throws VizzionnaireException {
         try {
             SecurityUser securityUser = getCurrentUser();
             if (securityUser.isSystemAdmin()) {
@@ -510,7 +510,7 @@ public class DashboardController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @RequestMapping(value = "/tenant/dashboard/home/info", method = RequestMethod.GET)
     @ResponseBody
-    public HomeDashboardInfo getTenantHomeDashboardInfo() throws ThingsboardException {
+    public HomeDashboardInfo getTenantHomeDashboardInfo() throws VizzionnaireException {
         try {
             Tenant tenant = tenantService.findTenantById(getTenantId());
             JsonNode additionalInfo = tenant.getAdditionalInfo();
@@ -538,7 +538,7 @@ public class DashboardController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void setTenantHomeDashboardInfo(
             @ApiParam(value = "A JSON object that represents home dashboard id and other parameters", required = true)
-            @RequestBody HomeDashboardInfo homeDashboardInfo) throws ThingsboardException {
+            @RequestBody HomeDashboardInfo homeDashboardInfo) throws VizzionnaireException {
 
         try {
             if (homeDashboardInfo.getDashboardId() != null) {
@@ -609,7 +609,7 @@ public class DashboardController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}/dashboard/{dashboardId}", method = RequestMethod.POST)
     @ResponseBody
     public Dashboard assignDashboardToEdge(@PathVariable("edgeId") String strEdgeId,
-                                           @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+                                           @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter("edgeId", strEdgeId);
         checkParameter(DASHBOARD_ID, strDashboardId);
 
@@ -633,7 +633,7 @@ public class DashboardController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}/dashboard/{dashboardId}", method = RequestMethod.DELETE)
     @ResponseBody
     public Dashboard unassignDashboardFromEdge(@PathVariable("edgeId") String strEdgeId,
-                                               @PathVariable(DASHBOARD_ID) String strDashboardId) throws ThingsboardException {
+                                               @PathVariable(DASHBOARD_ID) String strDashboardId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         checkParameter(DASHBOARD_ID, strDashboardId);
 
@@ -665,7 +665,7 @@ public class DashboardController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = DASHBOARD_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("edgeId", strEdgeId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -677,7 +677,7 @@ public class DashboardController extends BaseController {
                 try {
                     accessControlService.checkPermission(getCurrentUser(), Resource.DASHBOARD, Operation.READ, dashboardInfo.getId(), dashboardInfo);
                     return true;
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return false;
                 }
             }).collect(Collectors.toList());

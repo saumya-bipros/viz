@@ -3,11 +3,11 @@ package com.vizzionnaire.server.service.entitiy.alarm;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.alarm.Alarm;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 
 public interface TbAlarmService {
 
-    Alarm save(Alarm entity, User user) throws ThingsboardException;
+    Alarm save(Alarm entity, User user) throws VizzionnaireException;
 
     ListenableFuture<Void> ack(Alarm alarm, User user);
 

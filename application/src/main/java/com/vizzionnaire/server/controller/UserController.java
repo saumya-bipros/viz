@@ -3,8 +3,8 @@ package com.vizzionnaire.server.controller;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vizzionnaire.rule.engine.api.MailService;
 import com.vizzionnaire.server.common.data.User;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.UserId;
@@ -96,7 +96,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public User getUserById(
             @ApiParam(value = USER_ID_PARAM_DESCRIPTION)
-            @PathVariable(USER_ID) String strUserId) throws ThingsboardException {
+            @PathVariable(USER_ID) String strUserId) throws VizzionnaireException {
         checkParameter(USER_ID, strUserId);
         try {
             UserId userId = new UserId(toUUID(strUserId));
@@ -136,12 +136,12 @@ public class UserController extends BaseController {
     @ResponseBody
     public JwtTokenPair getUserToken(
             @ApiParam(value = USER_ID_PARAM_DESCRIPTION)
-            @PathVariable(USER_ID) String strUserId) throws ThingsboardException {
+            @PathVariable(USER_ID) String strUserId) throws VizzionnaireException {
         checkParameter(USER_ID, strUserId);
         try {
             if (!userTokenAccessEnabled) {
-                throw new ThingsboardException(YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION,
-                        ThingsboardErrorCode.PERMISSION_DENIED);
+                throw new VizzionnaireException(YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION,
+                        VizzionnaireErrorCode.PERMISSION_DENIED);
             }
             UserId userId = new UserId(toUUID(strUserId));
             SecurityUser authUser = getCurrentUser();
@@ -172,7 +172,7 @@ public class UserController extends BaseController {
             @ApiParam(value = "A JSON value representing the User.", required = true)
             @RequestBody User user,
             @ApiParam(value = "Send activation email (or use activation link)", defaultValue = "true")
-            @RequestParam(required = false, defaultValue = "true") boolean sendActivationMail, HttpServletRequest request) throws ThingsboardException {
+            @RequestParam(required = false, defaultValue = "true") boolean sendActivationMail, HttpServletRequest request) throws VizzionnaireException {
         if (Authority.TENANT_ADMIN.equals(getCurrentUser().getAuthority())) {
             user.setTenantId(getCurrentUser().getTenantId());
         }
@@ -188,7 +188,7 @@ public class UserController extends BaseController {
     public void sendActivationEmail(
             @ApiParam(value = "Email of the user", required = true)
             @RequestParam(value = "email") String email,
-            HttpServletRequest request) throws ThingsboardException {
+            HttpServletRequest request) throws VizzionnaireException {
         try {
             User user = checkNotNull(userService.findUserByEmail(getCurrentUser().getTenantId(), email));
 
@@ -202,7 +202,7 @@ public class UserController extends BaseController {
                         userCredentials.getActivateToken());
                 mailService.sendActivationEmail(activateUrl, email);
             } else {
-                throw new ThingsboardException("User is already activated!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+                throw new VizzionnaireException("User is already activated!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
             }
         } catch (Exception e) {
             throw handleException(e);
@@ -218,7 +218,7 @@ public class UserController extends BaseController {
     public String getActivationLink(
             @ApiParam(value = USER_ID_PARAM_DESCRIPTION)
             @PathVariable(USER_ID) String strUserId,
-            HttpServletRequest request) throws ThingsboardException {
+            HttpServletRequest request) throws VizzionnaireException {
         checkParameter(USER_ID, strUserId);
         try {
             UserId userId = new UserId(toUUID(strUserId));
@@ -231,7 +231,7 @@ public class UserController extends BaseController {
                         userCredentials.getActivateToken());
                 return activateUrl;
             } else {
-                throw new ThingsboardException("User is already activated!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+                throw new VizzionnaireException("User is already activated!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
             }
         } catch (Exception e) {
             throw handleException(e);
@@ -246,12 +246,12 @@ public class UserController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(
             @ApiParam(value = USER_ID_PARAM_DESCRIPTION)
-            @PathVariable(USER_ID) String strUserId) throws ThingsboardException {
+            @PathVariable(USER_ID) String strUserId) throws VizzionnaireException {
         checkParameter(USER_ID, strUserId);
         UserId userId = new UserId(toUUID(strUserId));
         User user = checkUserId(userId, Operation.DELETE);
         if (user.getAuthority() == Authority.SYS_ADMIN && getCurrentUser().getId().equals(userId)) {
-            throw new ThingsboardException("Sysadmin is not allowed to delete himself", ThingsboardErrorCode.PERMISSION_DENIED);
+            throw new VizzionnaireException("Sysadmin is not allowed to delete himself", VizzionnaireErrorCode.PERMISSION_DENIED);
         }
         tbUserService.delete(getTenantId(), getCurrentUser().getCustomerId(), user, getCurrentUser());
     }
@@ -272,7 +272,7 @@ public class UserController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = USER_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             SecurityUser currentUser = getCurrentUser();
@@ -303,7 +303,7 @@ public class UserController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = USER_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("tenantId", strTenantId);
         try {
             TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
@@ -331,7 +331,7 @@ public class UserController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = USER_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("customerId", strCustomerId);
         try {
             CustomerId customerId = new CustomerId(toUUID(strCustomerId));
@@ -353,7 +353,7 @@ public class UserController extends BaseController {
             @ApiParam(value = USER_ID_PARAM_DESCRIPTION)
             @PathVariable(USER_ID) String strUserId,
             @ApiParam(value = "Disable (\"true\") or enable (\"false\") the credentials.", defaultValue = "true")
-            @RequestParam(required = false, defaultValue = "true") boolean userCredentialsEnabled) throws ThingsboardException {
+            @RequestParam(required = false, defaultValue = "true") boolean userCredentialsEnabled) throws VizzionnaireException {
         checkParameter(USER_ID, strUserId);
         try {
             UserId userId = new UserId(toUUID(strUserId));

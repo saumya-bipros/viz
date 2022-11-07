@@ -15,8 +15,8 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.controller.plugin.TbWebSocketHandler;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
 import com.vizzionnaire.server.service.security.model.SecurityUser;
@@ -50,7 +50,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
                         SecurityUser user = null;
                         try {
                             user = getCurrentUser();
-                        } catch (ThingsboardException ex) {
+                        } catch (VizzionnaireException ex) {
                         }
                         if (user == null) {
                             response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -73,12 +73,12 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
         return new TbWebSocketHandler();
     }
 
-    protected SecurityUser getCurrentUser() throws ThingsboardException {
+    protected SecurityUser getCurrentUser() throws VizzionnaireException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
             return (SecurityUser) authentication.getPrincipal();
         } else {
-            throw new ThingsboardException("You aren't authorized to perform this operation!", ThingsboardErrorCode.AUTHENTICATION);
+            throw new VizzionnaireException("You aren't authorized to perform this operation!", VizzionnaireErrorCode.AUTHENTICATION);
         }
     }
 }

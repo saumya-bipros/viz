@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 import com.vizzionnaire.rule.engine.api.MailService;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 
 @Profile("test")
 @Configuration
@@ -20,7 +20,7 @@ public class TestMailService {
 
     @Bean
     @Primary
-    public MailService mailService() throws ThingsboardException {
+    public MailService mailService() throws VizzionnaireException {
         MailService mailService = Mockito.mock(MailService.class);
         Mockito.doAnswer(new Answer<Void>() {
             public Void answer(InvocationOnMock invocation) {

@@ -23,7 +23,7 @@ import com.vizzionnaire.server.service.install.update.DataUpdateService;
 @Service
 @Profile("install")
 @Slf4j
-public class ThingsboardInstallService {
+public class VizzionnaireInstallService {
 
     @Value("${install.upgrade:false}")
     private Boolean isUpgrade;
@@ -263,7 +263,7 @@ public class ThingsboardInstallService {
 
         } catch (Exception e) {
             log.error("Unexpected error during ThingsBoard installation!", e);
-            throw new ThingsboardInstallException("Unexpected error during ThingsBoard installation!", e);
+            throw new VizzionnaireInstallException("Unexpected error during ThingsBoard installation!", e);
         } finally {
             SpringApplication.exit(context);
         }

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.ExportableEntity;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.relation.EntityRelation;
 import com.vizzionnaire.server.common.data.sync.ThrowingRunnable;
@@ -57,9 +57,9 @@ public class DefaultEntitiesExportImportService implements EntitiesExportImportS
 
 
     @Override
-    public <E extends ExportableEntity<I>, I extends EntityId> EntityExportData<E> exportEntity(EntitiesExportCtx<?> ctx, I entityId) throws ThingsboardException {
+    public <E extends ExportableEntity<I>, I extends EntityId> EntityExportData<E> exportEntity(EntitiesExportCtx<?> ctx, I entityId) throws VizzionnaireException {
         if (!rateLimitService.checkEntityExportLimit(ctx.getTenantId())) {
-            throw new ThingsboardException("Rate limit for entities export is exceeded", ThingsboardErrorCode.TOO_MANY_REQUESTS);
+            throw new VizzionnaireException("Rate limit for entities export is exceeded", VizzionnaireErrorCode.TOO_MANY_REQUESTS);
         }
 
         EntityType entityType = entityId.getEntityType();
@@ -69,9 +69,9 @@ public class DefaultEntitiesExportImportService implements EntitiesExportImportS
     }
 
     @Override
-    public <E extends ExportableEntity<I>, I extends EntityId> EntityImportResult<E> importEntity(EntitiesImportCtx ctx, EntityExportData<E> exportData) throws ThingsboardException {
+    public <E extends ExportableEntity<I>, I extends EntityId> EntityImportResult<E> importEntity(EntitiesImportCtx ctx, EntityExportData<E> exportData) throws VizzionnaireException {
         if (!rateLimitService.checkEntityImportLimit(ctx.getTenantId())) {
-            throw new ThingsboardException("Rate limit for entities import is exceeded", ThingsboardErrorCode.TOO_MANY_REQUESTS);
+            throw new VizzionnaireException("Rate limit for entities import is exceeded", VizzionnaireErrorCode.TOO_MANY_REQUESTS);
         }
         if (exportData.getEntity() == null || exportData.getEntity().getId() == null) {
             throw new DataValidationException("Invalid entity data");
@@ -89,7 +89,7 @@ public class DefaultEntitiesExportImportService implements EntitiesExportImportS
     }
 
     @Override
-    public void saveReferencesAndRelations(EntitiesImportCtx ctx) throws ThingsboardException {
+    public void saveReferencesAndRelations(EntitiesImportCtx ctx) throws VizzionnaireException {
         for (Map.Entry<EntityId, ThrowingRunnable> callbackEntry : ctx.getReferenceCallbacks().entrySet()) {
             EntityId externalId = callbackEntry.getKey();
             ThrowingRunnable saveReferencesCallback = callbackEntry.getValue();

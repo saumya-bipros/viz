@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.id.EntityIdFactory;
 import com.vizzionnaire.server.common.data.relation.EntityRelation;
@@ -65,7 +65,7 @@ public class EntityRelationController extends BaseController {
     @RequestMapping(value = "/relation", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public void saveRelation(@ApiParam(value = "A JSON value representing the relation.", required = true)
-                             @RequestBody EntityRelation relation) throws ThingsboardException {
+                             @RequestBody EntityRelation relation) throws VizzionnaireException {
         checkNotNull(relation);
         checkCanCreateRelation(relation.getFrom());
         checkCanCreateRelation(relation.getTo());
@@ -86,7 +86,7 @@ public class EntityRelationController extends BaseController {
                                @ApiParam(value = RELATION_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(RELATION_TYPE) String strRelationType,
                                @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION) @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup,
                                @ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam(TO_ID) String strToId,
-                               @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType) throws ThingsboardException {
+                               @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType) throws VizzionnaireException {
         checkParameter(FROM_ID, strFromId);
         checkParameter(FROM_TYPE, strFromType);
         checkParameter(RELATION_TYPE, strRelationType);
@@ -109,7 +109,7 @@ public class EntityRelationController extends BaseController {
     @RequestMapping(value = "/relations", method = RequestMethod.DELETE, params = {"entityId", "entityType"})
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteRelations(@ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam("entityId") String strId,
-                                @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam("entityType") String strType) throws ThingsboardException {
+                                @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam("entityType") String strType) throws VizzionnaireException {
         checkParameter("entityId", strId);
         checkParameter("entityType", strType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strType, strId);
@@ -128,7 +128,7 @@ public class EntityRelationController extends BaseController {
                                       @ApiParam(value = RELATION_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(RELATION_TYPE) String strRelationType,
                                       @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION) @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup,
                                       @ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam(TO_ID) String strToId,
-                                      @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType) throws ThingsboardException {
+                                      @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType) throws VizzionnaireException {
         try {
             checkParameter(FROM_ID, strFromId);
             checkParameter(FROM_TYPE, strFromType);
@@ -156,7 +156,7 @@ public class EntityRelationController extends BaseController {
     public List<EntityRelation> findByFrom(@ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam(FROM_ID) String strFromId,
                                            @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(FROM_TYPE) String strFromType,
                                            @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION)
-                                           @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws ThingsboardException {
+                                           @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws VizzionnaireException {
         checkParameter(FROM_ID, strFromId);
         checkParameter(FROM_TYPE, strFromType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strFromType, strFromId);
@@ -179,7 +179,7 @@ public class EntityRelationController extends BaseController {
     public List<EntityRelationInfo> findInfoByFrom(@ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam(FROM_ID) String strFromId,
                                                    @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(FROM_TYPE) String strFromType,
                                                    @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION)
-                                                   @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws ThingsboardException {
+                                                   @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws VizzionnaireException {
         checkParameter(FROM_ID, strFromId);
         checkParameter(FROM_TYPE, strFromType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strFromType, strFromId);
@@ -203,7 +203,7 @@ public class EntityRelationController extends BaseController {
                                            @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(FROM_TYPE) String strFromType,
                                            @ApiParam(value = RELATION_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(RELATION_TYPE) String strRelationType,
                                            @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION)
-                                           @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws ThingsboardException {
+                                           @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws VizzionnaireException {
         checkParameter(FROM_ID, strFromId);
         checkParameter(FROM_TYPE, strFromType);
         checkParameter(RELATION_TYPE, strRelationType);
@@ -227,7 +227,7 @@ public class EntityRelationController extends BaseController {
     public List<EntityRelation> findByTo(@ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam(TO_ID) String strToId,
                                          @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType,
                                          @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION)
-                                         @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws ThingsboardException {
+                                         @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws VizzionnaireException {
         checkParameter(TO_ID, strToId);
         checkParameter(TO_TYPE, strToType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strToType, strToId);
@@ -250,7 +250,7 @@ public class EntityRelationController extends BaseController {
     public List<EntityRelationInfo> findInfoByTo(@ApiParam(value = ENTITY_ID_PARAM_DESCRIPTION, required = true) @RequestParam(TO_ID) String strToId,
                                                  @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType,
                                                  @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION)
-                                                 @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws ThingsboardException {
+                                                 @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws VizzionnaireException {
         checkParameter(TO_ID, strToId);
         checkParameter(TO_TYPE, strToType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strToType, strToId);
@@ -274,7 +274,7 @@ public class EntityRelationController extends BaseController {
                                          @ApiParam(value = ENTITY_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(TO_TYPE) String strToType,
                                          @ApiParam(value = RELATION_TYPE_PARAM_DESCRIPTION, required = true) @RequestParam(RELATION_TYPE) String strRelationType,
                                          @ApiParam(value = RELATION_TYPE_GROUP_PARAM_DESCRIPTION)
-                                         @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws ThingsboardException {
+                                         @RequestParam(value = "relationTypeGroup", required = false) String strRelationTypeGroup) throws VizzionnaireException {
         checkParameter(TO_ID, strToId);
         checkParameter(TO_TYPE, strToType);
         checkParameter(RELATION_TYPE, strRelationType);
@@ -296,7 +296,7 @@ public class EntityRelationController extends BaseController {
     @RequestMapping(value = "/relations", method = RequestMethod.POST)
     @ResponseBody
     public List<EntityRelation> findByQuery(@ApiParam(value = "A JSON value representing the entity relations query object.", required = true)
-                                            @RequestBody EntityRelationsQuery query) throws ThingsboardException {
+                                            @RequestBody EntityRelationsQuery query) throws VizzionnaireException {
         checkNotNull(query);
         checkNotNull(query.getParameters());
         checkNotNull(query.getFilters());
@@ -316,7 +316,7 @@ public class EntityRelationController extends BaseController {
     @RequestMapping(value = "/relations/info", method = RequestMethod.POST)
     @ResponseBody
     public List<EntityRelationInfo> findInfoByQuery(@ApiParam(value = "A JSON value representing the entity relations query object.", required = true)
-                                                    @RequestBody EntityRelationsQuery query) throws ThingsboardException {
+                                                    @RequestBody EntityRelationsQuery query) throws VizzionnaireException {
         checkNotNull(query);
         checkNotNull(query.getParameters());
         checkNotNull(query.getFilters());
@@ -328,7 +328,7 @@ public class EntityRelationController extends BaseController {
         }
     }
 
-    private void checkCanCreateRelation(EntityId entityId) throws ThingsboardException {
+    private void checkCanCreateRelation(EntityId entityId) throws VizzionnaireException {
         SecurityUser currentUser = getCurrentUser();
         var isTenantAdminAndRelateToSelf = currentUser.isTenantAdmin() && currentUser.getTenantId().equals(entityId);
         if (!isTenantAdminAndRelateToSelf) {
@@ -340,12 +340,12 @@ public class EntityRelationController extends BaseController {
         return relationsByQuery.stream().filter(relationByQuery -> {
             try {
                 checkEntityId(relationByQuery.getTo(), Operation.READ);
-            } catch (ThingsboardException e) {
+            } catch (VizzionnaireException e) {
                 return false;
             }
             try {
                 checkEntityId(relationByQuery.getFrom(), Operation.READ);
-            } catch (ThingsboardException e) {
+            } catch (VizzionnaireException e) {
                 return false;
             }
             return true;

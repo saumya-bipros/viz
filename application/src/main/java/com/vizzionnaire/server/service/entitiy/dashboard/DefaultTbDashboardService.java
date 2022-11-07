@@ -10,7 +10,7 @@ import com.vizzionnaire.server.common.data.ShortCustomerInfo;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.Edge;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.DashboardId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
@@ -62,7 +62,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard assignDashboardToCustomer(Dashboard dashboard, Customer customer, User user) throws ThingsboardException {
+    public Dashboard assignDashboardToCustomer(Dashboard dashboard, Customer customer, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         CustomerId customerId = customer.getId();
@@ -80,7 +80,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard assignDashboardToPublicCustomer(Dashboard dashboard, User user) throws ThingsboardException {
+    public Dashboard assignDashboardToPublicCustomer(Dashboard dashboard, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();
@@ -98,7 +98,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard unassignDashboardFromPublicCustomer(Dashboard dashboard, User user) throws ThingsboardException {
+    public Dashboard unassignDashboardFromPublicCustomer(Dashboard dashboard, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();
@@ -116,7 +116,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard updateDashboardCustomers(Dashboard dashboard, Set<CustomerId> customerIds, User user) throws ThingsboardException {
+    public Dashboard updateDashboardCustomers(Dashboard dashboard, Set<CustomerId> customerIds, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();
@@ -164,7 +164,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard addDashboardCustomers(Dashboard dashboard, Set<CustomerId> customerIds, User user) throws ThingsboardException {
+    public Dashboard addDashboardCustomers(Dashboard dashboard, Set<CustomerId> customerIds, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();
@@ -194,7 +194,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard removeDashboardCustomers(Dashboard dashboard, Set<CustomerId> customerIds, User user) throws ThingsboardException {
+    public Dashboard removeDashboardCustomers(Dashboard dashboard, Set<CustomerId> customerIds, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();
@@ -224,7 +224,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard asignDashboardToEdge(TenantId tenantId, DashboardId dashboardId, Edge edge, User user) throws ThingsboardException {
+    public Dashboard asignDashboardToEdge(TenantId tenantId, DashboardId dashboardId, Edge edge, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_EDGE;
         EdgeId edgeId = edge.getId();
         try {
@@ -241,7 +241,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard unassignDashboardFromEdge(Dashboard dashboard, Edge edge, User user) throws ThingsboardException {
+    public Dashboard unassignDashboardFromEdge(Dashboard dashboard, Edge edge, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_EDGE;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();
@@ -261,7 +261,7 @@ public class DefaultTbDashboardService extends AbstractTbEntityService implement
     }
 
     @Override
-    public Dashboard unassignDashboardFromCustomer(Dashboard dashboard, Customer customer, User user) throws ThingsboardException {
+    public Dashboard unassignDashboardFromCustomer(Dashboard dashboard, Customer customer, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_CUSTOMER;
         TenantId tenantId = dashboard.getTenantId();
         DashboardId dashboardId = dashboard.getId();

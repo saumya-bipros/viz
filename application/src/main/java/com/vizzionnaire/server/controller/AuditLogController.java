@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.audit.AuditLog;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EntityIdFactory;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -82,7 +82,7 @@ public class AuditLogController extends BaseController {
             @ApiParam(value = AUDIT_LOG_QUERY_END_TIME_DESCRIPTION)
             @RequestParam(required = false) Long endTime,
             @ApiParam(value = AUDIT_LOG_QUERY_ACTION_TYPES_DESCRIPTION)
-            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws ThingsboardException {
+            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws VizzionnaireException {
         try {
             checkParameter("CustomerId", strCustomerId);
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -120,7 +120,7 @@ public class AuditLogController extends BaseController {
             @ApiParam(value = AUDIT_LOG_QUERY_END_TIME_DESCRIPTION)
             @RequestParam(required = false) Long endTime,
             @ApiParam(value = AUDIT_LOG_QUERY_ACTION_TYPES_DESCRIPTION)
-            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws ThingsboardException {
+            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws VizzionnaireException {
         try {
             checkParameter("UserId", strUserId);
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -161,7 +161,7 @@ public class AuditLogController extends BaseController {
             @ApiParam(value = AUDIT_LOG_QUERY_END_TIME_DESCRIPTION)
             @RequestParam(required = false) Long endTime,
             @ApiParam(value = AUDIT_LOG_QUERY_ACTION_TYPES_DESCRIPTION)
-            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws ThingsboardException {
+            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws VizzionnaireException {
         try {
             checkParameter("EntityId", strEntityId);
             checkParameter("EntityType", strEntityType);
@@ -197,7 +197,7 @@ public class AuditLogController extends BaseController {
             @ApiParam(value = AUDIT_LOG_QUERY_END_TIME_DESCRIPTION)
             @RequestParam(required = false) Long endTime,
             @ApiParam(value = AUDIT_LOG_QUERY_ACTION_TYPES_DESCRIPTION)
-            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws ThingsboardException {
+            @RequestParam(name = "actionTypes", required = false) String actionTypesStr) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             List<ActionType> actionTypes = parseActionTypesStr(actionTypesStr);

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vizzionnaire.server.common.data.Device;
 import com.vizzionnaire.server.common.data.SaveDeviceWithCredentialsRequest;
 import com.vizzionnaire.server.common.data.device.profile.lwm2m.bootstrap.LwM2MServerSecurityConfigDefault;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.security.DeviceCredentials;
 import com.vizzionnaire.server.service.lwm2m.LwM2MService;
 
@@ -49,7 +49,7 @@ public class Lwm2mController extends BaseController {
     @ResponseBody
     public LwM2MServerSecurityConfigDefault getLwm2mBootstrapSecurityInfo(
         @ApiParam(value = IS_BOOTSTRAP_SERVER_PARAM_DESCRIPTION)
-        @PathVariable(IS_BOOTSTRAP_SERVER) boolean bootstrapServer) throws ThingsboardException {
+        @PathVariable(IS_BOOTSTRAP_SERVER) boolean bootstrapServer) throws VizzionnaireException {
             try {
                 return lwM2MService.getServerSecurityInfo(bootstrapServer);
             } catch (Exception e) {
@@ -61,7 +61,7 @@ public class Lwm2mController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/lwm2m/device-credentials", method = RequestMethod.POST)
     @ResponseBody
-    public Device saveDeviceWithCredentials(@RequestBody Map<Class<?>, Object> deviceWithDeviceCredentials) throws ThingsboardException {
+    public Device saveDeviceWithCredentials(@RequestBody Map<Class<?>, Object> deviceWithDeviceCredentials) throws VizzionnaireException {
         ObjectMapper mapper = new ObjectMapper();
         Device device = checkNotNull(mapper.convertValue(deviceWithDeviceCredentials.get(Device.class), Device.class));
         DeviceCredentials credentials = checkNotNull(mapper.convertValue(deviceWithDeviceCredentials.get(DeviceCredentials.class), DeviceCredentials.class));

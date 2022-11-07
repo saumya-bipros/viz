@@ -9,7 +9,7 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.Edge;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
@@ -67,7 +67,7 @@ public class DefaultTbEdgeService extends AbstractTbEntityService implements TbE
     }
 
     @Override
-    public Edge assignEdgeToCustomer(TenantId tenantId, EdgeId edgeId, Customer customer, User user) throws ThingsboardException {
+    public Edge assignEdgeToCustomer(TenantId tenantId, EdgeId edgeId, Customer customer, User user) throws VizzionnaireException {
         CustomerId customerId = customer.getId();
         try {
             Edge savedEdge = checkNotNull(edgeService.assignEdgeToCustomer(tenantId, edgeId, customerId));
@@ -83,7 +83,7 @@ public class DefaultTbEdgeService extends AbstractTbEntityService implements TbE
     }
 
     @Override
-    public Edge unassignEdgeFromCustomer(Edge edge, Customer customer, User user) throws ThingsboardException {
+    public Edge unassignEdgeFromCustomer(Edge edge, Customer customer, User user) throws VizzionnaireException {
         TenantId tenantId = edge.getTenantId();
         EdgeId edgeId = edge.getId();
         CustomerId customerId = customer.getId();
@@ -101,7 +101,7 @@ public class DefaultTbEdgeService extends AbstractTbEntityService implements TbE
     }
 
     @Override
-    public Edge assignEdgeToPublicCustomer(TenantId tenantId, EdgeId edgeId, User user) throws ThingsboardException {
+    public Edge assignEdgeToPublicCustomer(TenantId tenantId, EdgeId edgeId, User user) throws VizzionnaireException {
         Customer publicCustomer = customerService.findOrCreatePublicCustomer(tenantId);
         CustomerId customerId = publicCustomer.getId();
         try {

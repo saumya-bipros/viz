@@ -2,10 +2,10 @@ package com.vizzionnaire.server.config;
 
 import com.fasterxml.classmate.TypeResolver;
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
 import com.vizzionnaire.server.common.data.security.Authority;
-import com.vizzionnaire.server.exception.ThingsboardCredentialsExpiredResponse;
-import com.vizzionnaire.server.exception.ThingsboardErrorResponse;
+import com.vizzionnaire.server.exception.VizzionnaireCredentialsExpiredResponse;
+import com.vizzionnaire.server.exception.VizzionnaireErrorResponse;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
 import com.vizzionnaire.server.service.security.auth.rest.LoginRequest;
 import com.vizzionnaire.server.service.security.auth.rest.LoginResponse;
@@ -105,8 +105,8 @@ public class SwaggerConfiguration {
                 .groupName("thingsboard")
                 .apiInfo(apiInfo())
                 .additionalModels(
-                        typeResolver.resolve(ThingsboardErrorResponse.class),
-                        typeResolver.resolve(ThingsboardCredentialsExpiredResponse.class),
+                        typeResolver.resolve(VizzionnaireErrorResponse.class),
+                        typeResolver.resolve(VizzionnaireCredentialsExpiredResponse.class),
                         typeResolver.resolve(LoginRequest.class),
                         typeResolver.resolve(LoginResponse.class)
                 )
@@ -286,17 +286,17 @@ public class SwaggerConfiguration {
     private List<Response> defaultErrorResponses(boolean isPost) {
         return List.of(
                 errorResponse("400", "Bad Request",
-                        ThingsboardErrorResponse.of(isPost ? "Invalid request body" : "Invalid UUID string: 123", ThingsboardErrorCode.BAD_REQUEST_PARAMS, HttpStatus.BAD_REQUEST)),
+                        VizzionnaireErrorResponse.of(isPost ? "Invalid request body" : "Invalid UUID string: 123", VizzionnaireErrorCode.BAD_REQUEST_PARAMS, HttpStatus.BAD_REQUEST)),
                 errorResponse("401", "Unauthorized",
-                        ThingsboardErrorResponse.of("Authentication failed", ThingsboardErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
+                        VizzionnaireErrorResponse.of("Authentication failed", VizzionnaireErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
                 errorResponse("403", "Forbidden",
-                        ThingsboardErrorResponse.of("You don't have permission to perform this operation!",
-                        ThingsboardErrorCode.PERMISSION_DENIED, HttpStatus.FORBIDDEN)),
+                        VizzionnaireErrorResponse.of("You don't have permission to perform this operation!",
+                        VizzionnaireErrorCode.PERMISSION_DENIED, HttpStatus.FORBIDDEN)),
                 errorResponse("404", "Not Found",
-                        ThingsboardErrorResponse.of("Requested item wasn't found!", ThingsboardErrorCode.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND)),
+                        VizzionnaireErrorResponse.of("Requested item wasn't found!", VizzionnaireErrorCode.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND)),
                 errorResponse("429", "Too Many Requests",
-                        ThingsboardErrorResponse.of("Too many requests for current tenant!",
-                        ThingsboardErrorCode.TOO_MANY_REQUESTS, HttpStatus.TOO_MANY_REQUESTS))
+                        VizzionnaireErrorResponse.of("Too many requests for current tenant!",
+                        VizzionnaireErrorCode.TOO_MANY_REQUESTS, HttpStatus.TOO_MANY_REQUESTS))
         );
     }
 
@@ -305,36 +305,36 @@ public class SwaggerConfiguration {
                 errorResponse("401", "Unauthorized",
                         List.of(
                                 errorExample("bad-credentials", "Bad credentials",
-                                    ThingsboardErrorResponse.of("Invalid username or password", ThingsboardErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
+                                    VizzionnaireErrorResponse.of("Invalid username or password", VizzionnaireErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
                                  errorExample("token-expired", "JWT token expired",
-                                    ThingsboardErrorResponse.of("Token has expired", ThingsboardErrorCode.JWT_TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED)),
+                                    VizzionnaireErrorResponse.of("Token has expired", VizzionnaireErrorCode.JWT_TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED)),
                                 errorExample("account-disabled", "Disabled account",
-                                    ThingsboardErrorResponse.of("User account is not active", ThingsboardErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
+                                    VizzionnaireErrorResponse.of("User account is not active", VizzionnaireErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
                                 errorExample("account-locked", "Locked account",
-                                    ThingsboardErrorResponse.of("User account is locked due to security policy", ThingsboardErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
+                                    VizzionnaireErrorResponse.of("User account is locked due to security policy", VizzionnaireErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED)),
                                 errorExample("authentication-failed", "General authentication error",
-                                    ThingsboardErrorResponse.of("Authentication failed", ThingsboardErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED))
+                                    VizzionnaireErrorResponse.of("Authentication failed", VizzionnaireErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED))
                         )
                 ),
                 errorResponse("401 ", "Unauthorized (**Expired credentials**)",
                         List.of(
                                 errorExample("credentials-expired", "Expired credentials",
-                                        ThingsboardCredentialsExpiredResponse.of("User password expired!", StringUtils.randomAlphanumeric(30)))
-                        ), ThingsboardCredentialsExpiredResponse.class
+                                        VizzionnaireCredentialsExpiredResponse.of("User password expired!", StringUtils.randomAlphanumeric(30)))
+                        ), VizzionnaireCredentialsExpiredResponse.class
                 )
         );
     }
 
-    private Response errorResponse(String code, String description, ThingsboardErrorResponse example) {
+    private Response errorResponse(String code, String description, VizzionnaireErrorResponse example) {
         return errorResponse(code, description,  List.of(errorExample("error-code-" + code, description, example)));
     }
 
     private Response errorResponse(String code, String description, List<Example> examples) {
-        return errorResponse(code, description, examples, ThingsboardErrorResponse.class);
+        return errorResponse(code, description, examples, VizzionnaireErrorResponse.class);
     }
 
     private Response errorResponse(String code, String description, List<Example> examples,
-                                   Class<? extends ThingsboardErrorResponse> errorResponseClass) {
+                                   Class<? extends VizzionnaireErrorResponse> errorResponseClass) {
         return new ResponseBuilder()
                 .code(code)
                 .description(description)
@@ -344,7 +344,7 @@ public class SwaggerConfiguration {
                 .build();
     }
 
-    private Example errorExample(String id, String summary, ThingsboardErrorResponse example) {
+    private Example errorExample(String id, String summary, VizzionnaireErrorResponse example) {
         return new ExampleBuilder()
                 .mediaType(MediaType.APPLICATION_JSON_VALUE)
                 .summary(summary)

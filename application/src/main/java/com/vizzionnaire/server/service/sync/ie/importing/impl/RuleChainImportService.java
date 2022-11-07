@@ -8,7 +8,7 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
 import com.vizzionnaire.server.common.data.id.RuleNodeId;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -112,7 +112,7 @@ public class RuleChainImportService extends BaseEntityImportService<RuleChainId,
     }
 
     @Override
-    protected void onEntitySaved(User user, RuleChain savedRuleChain, RuleChain oldRuleChain) throws ThingsboardException {
+    protected void onEntitySaved(User user, RuleChain savedRuleChain, RuleChain oldRuleChain) throws VizzionnaireException {
         entityActionService.logEntityAction(user, savedRuleChain.getId(), savedRuleChain, null,
                 oldRuleChain == null ? ActionType.ADDED : ActionType.UPDATED, null);
         if (savedRuleChain.getType() == RuleChainType.CORE) {

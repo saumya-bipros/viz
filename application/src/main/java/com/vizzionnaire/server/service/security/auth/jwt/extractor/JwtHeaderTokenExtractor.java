@@ -4,7 +4,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.stereotype.Component;
 
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.config.ThingsboardSecurityConfiguration;
+import com.vizzionnaire.server.config.VizzionnaireSecurityConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,9 +14,9 @@ public class JwtHeaderTokenExtractor implements TokenExtractor {
 
     @Override
     public String extract(HttpServletRequest request) {
-        String header = request.getHeader(ThingsboardSecurityConfiguration.JWT_TOKEN_HEADER_PARAM);
+        String header = request.getHeader(VizzionnaireSecurityConfiguration.JWT_TOKEN_HEADER_PARAM);
         if (StringUtils.isBlank(header)) {
-            header = request.getHeader(ThingsboardSecurityConfiguration.JWT_TOKEN_HEADER_PARAM_V2);
+            header = request.getHeader(VizzionnaireSecurityConfiguration.JWT_TOKEN_HEADER_PARAM_V2);
             if (StringUtils.isBlank(header)) {
                 throw new AuthenticationServiceException("Authorization header cannot be blank!");
             }

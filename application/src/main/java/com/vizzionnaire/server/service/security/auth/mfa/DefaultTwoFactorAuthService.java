@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.User;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.UserId;
 import com.vizzionnaire.server.common.data.security.model.mfa.PlatformTwoFaSettings;
@@ -40,9 +40,9 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
     private final UserService userService;
     private final Map<TwoFaProviderType, TwoFaProvider<TwoFaProviderConfig, TwoFaAccountConfig>> providers = new EnumMap<>(TwoFaProviderType.class);
 
-    private static final ThingsboardException ACCOUNT_NOT_CONFIGURED_ERROR = new ThingsboardException("2FA is not configured for account", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
-    private static final ThingsboardException PROVIDER_NOT_CONFIGURED_ERROR = new ThingsboardException("2FA provider is not configured", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
-    private static final ThingsboardException PROVIDER_NOT_AVAILABLE_ERROR = new ThingsboardException("2FA provider is not available", ThingsboardErrorCode.GENERAL);
+    private static final VizzionnaireException ACCOUNT_NOT_CONFIGURED_ERROR = new VizzionnaireException("2FA is not configured for account", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
+    private static final VizzionnaireException PROVIDER_NOT_CONFIGURED_ERROR = new VizzionnaireException("2FA provider is not configured", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
+    private static final VizzionnaireException PROVIDER_NOT_AVAILABLE_ERROR = new VizzionnaireException("2FA provider is not available", VizzionnaireErrorCode.GENERAL);
 
     private final ConcurrentMap<UserId, ConcurrentMap<TwoFaProviderType, TbRateLimits>> verificationCodeSendingRateLimits = new ConcurrentHashMap<>();
     private final ConcurrentMap<UserId, ConcurrentMap<TwoFaProviderType, TbRateLimits>> verificationCodeCheckingRateLimits = new ConcurrentHashMap<>();
@@ -55,7 +55,7 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
     }
 
     @Override
-    public void checkProvider(TenantId tenantId, TwoFaProviderType providerType) throws ThingsboardException {
+    public void checkProvider(TenantId tenantId, TwoFaProviderType providerType) throws VizzionnaireException {
         getTwoFaProvider(providerType).check(tenantId);
     }
 
@@ -68,7 +68,7 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
     }
 
     @Override
-    public void prepareVerificationCode(SecurityUser user, TwoFaAccountConfig accountConfig, boolean checkLimits) throws ThingsboardException {
+    public void prepareVerificationCode(SecurityUser user, TwoFaAccountConfig accountConfig, boolean checkLimits) throws VizzionnaireException {
         PlatformTwoFaSettings twoFaSettings = configManager.getPlatformTwoFaSettings(user.getTenantId(), true)
                 .orElseThrow(() -> PROVIDER_NOT_CONFIGURED_ERROR);
         if (checkLimits) {
@@ -87,16 +87,16 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
 
 
     @Override
-    public boolean checkVerificationCode(SecurityUser user, TwoFaProviderType providerType, String verificationCode, boolean checkLimits) throws ThingsboardException {
+    public boolean checkVerificationCode(SecurityUser user, TwoFaProviderType providerType, String verificationCode, boolean checkLimits) throws VizzionnaireException {
         TwoFaAccountConfig accountConfig = configManager.getTwoFaAccountConfig(user.getTenantId(), user.getId(), providerType)
                 .orElseThrow(() -> ACCOUNT_NOT_CONFIGURED_ERROR);
         return checkVerificationCode(user, verificationCode, accountConfig, checkLimits);
     }
 
     @Override
-    public boolean checkVerificationCode(SecurityUser user, String verificationCode, TwoFaAccountConfig accountConfig, boolean checkLimits) throws ThingsboardException {
+    public boolean checkVerificationCode(SecurityUser user, String verificationCode, TwoFaAccountConfig accountConfig, boolean checkLimits) throws VizzionnaireException {
         if (!userService.findUserCredentialsByUserId(user.getTenantId(), user.getId()).isEnabled()) {
-            throw new ThingsboardException("User is disabled", ThingsboardErrorCode.AUTHENTICATION);
+            throw new VizzionnaireException("User is disabled", VizzionnaireErrorCode.AUTHENTICATION);
         }
 
         PlatformTwoFaSettings twoFaSettings = configManager.getPlatformTwoFaSettings(user.getTenantId(), true)
@@ -119,7 +119,7 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
             } catch (LockedException e) {
                 verificationCodeCheckingRateLimits.remove(user.getId());
                 verificationCodeSendingRateLimits.remove(user.getId());
-                throw new ThingsboardException(e.getMessage(), ThingsboardErrorCode.AUTHENTICATION);
+                throw new VizzionnaireException(e.getMessage(), VizzionnaireErrorCode.AUTHENTICATION);
             }
             if (verificationSuccess) {
                 verificationCodeCheckingRateLimits.remove(user.getId());
@@ -130,7 +130,7 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
     }
 
     private void checkRateLimits(UserId userId, TwoFaProviderType providerType, String rateLimitConfig,
-                                 ConcurrentMap<UserId, ConcurrentMap<TwoFaProviderType, TbRateLimits>> rateLimits) throws ThingsboardException {
+                                 ConcurrentMap<UserId, ConcurrentMap<TwoFaProviderType, TbRateLimits>> rateLimits) throws VizzionnaireException {
         if (StringUtils.isNotEmpty(rateLimitConfig)) {
             ConcurrentMap<TwoFaProviderType, TbRateLimits> providersRateLimits = rateLimits.computeIfAbsent(userId, i -> new ConcurrentHashMap<>());
 
@@ -140,7 +140,7 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
                 providersRateLimits.put(providerType, rateLimit);
             }
             if (!rateLimit.tryConsume()) {
-                throw new ThingsboardException("Too many requests", ThingsboardErrorCode.TOO_MANY_REQUESTS);
+                throw new VizzionnaireException("Too many requests", VizzionnaireErrorCode.TOO_MANY_REQUESTS);
             }
         } else {
             rateLimits.remove(userId);
@@ -149,19 +149,19 @@ public class DefaultTwoFactorAuthService implements TwoFactorAuthService {
 
 
     @Override
-    public TwoFaAccountConfig generateNewAccountConfig(User user, TwoFaProviderType providerType) throws ThingsboardException {
+    public TwoFaAccountConfig generateNewAccountConfig(User user, TwoFaProviderType providerType) throws VizzionnaireException {
         TwoFaProviderConfig providerConfig = getTwoFaProviderConfig(user.getTenantId(), providerType);
         return getTwoFaProvider(providerType).generateNewAccountConfig(user, providerConfig);
     }
 
 
-    private TwoFaProviderConfig getTwoFaProviderConfig(TenantId tenantId, TwoFaProviderType providerType) throws ThingsboardException {
+    private TwoFaProviderConfig getTwoFaProviderConfig(TenantId tenantId, TwoFaProviderType providerType) throws VizzionnaireException {
         return configManager.getPlatformTwoFaSettings(tenantId, true)
                 .flatMap(twoFaSettings -> twoFaSettings.getProviderConfig(providerType))
                 .orElseThrow(() -> PROVIDER_NOT_CONFIGURED_ERROR);
     }
 
-    private TwoFaProvider<TwoFaProviderConfig, TwoFaAccountConfig> getTwoFaProvider(TwoFaProviderType providerType) throws ThingsboardException {
+    private TwoFaProvider<TwoFaProviderConfig, TwoFaAccountConfig> getTwoFaProvider(TwoFaProviderType providerType) throws VizzionnaireException {
         return Optional.ofNullable(providers.get(providerType))
                 .orElseThrow(() -> PROVIDER_NOT_AVAILABLE_ERROR);
     }

@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vizzionnaire.server.common.data.EntityInfo;
 import com.vizzionnaire.server.common.data.TenantProfile;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantProfileId;
 import com.vizzionnaire.server.common.data.page.PageData;
 import com.vizzionnaire.server.common.data.page.PageLink;
@@ -60,7 +60,7 @@ public class TenantProfileController extends BaseController {
     @ResponseBody
     public TenantProfile getTenantProfileById(
             @ApiParam(value = TENANT_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable("tenantProfileId") String strTenantProfileId) throws ThingsboardException {
+            @PathVariable("tenantProfileId") String strTenantProfileId) throws VizzionnaireException {
         checkParameter("tenantProfileId", strTenantProfileId);
         try {
             TenantProfileId tenantProfileId = new TenantProfileId(toUUID(strTenantProfileId));
@@ -77,7 +77,7 @@ public class TenantProfileController extends BaseController {
     @ResponseBody
     public EntityInfo getTenantProfileInfoById(
             @ApiParam(value = TENANT_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable("tenantProfileId") String strTenantProfileId) throws ThingsboardException {
+            @PathVariable("tenantProfileId") String strTenantProfileId) throws VizzionnaireException {
         checkParameter("tenantProfileId", strTenantProfileId);
         try {
             TenantProfileId tenantProfileId = new TenantProfileId(toUUID(strTenantProfileId));
@@ -92,7 +92,7 @@ public class TenantProfileController extends BaseController {
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN')")
     @RequestMapping(value = "/tenantProfileInfo/default", method = RequestMethod.GET)
     @ResponseBody
-    public EntityInfo getDefaultTenantProfileInfo() throws ThingsboardException {
+    public EntityInfo getDefaultTenantProfileInfo() throws VizzionnaireException {
         try {
             return checkNotNull(tenantProfileService.findDefaultTenantProfileInfo(getTenantId()));
         } catch (Exception e) {
@@ -157,7 +157,7 @@ public class TenantProfileController extends BaseController {
     @RequestMapping(value = "/tenantProfile", method = RequestMethod.POST)
     @ResponseBody
     public TenantProfile saveTenantProfile(@ApiParam(value = "A JSON value representing the tenant profile.")
-                                           @RequestBody TenantProfile tenantProfile) throws ThingsboardException {
+                                           @RequestBody TenantProfile tenantProfile) throws VizzionnaireException {
         try {
             TenantProfile oldProfile;
             if (tenantProfile.getId() == null) {
@@ -179,7 +179,7 @@ public class TenantProfileController extends BaseController {
     @RequestMapping(value = "/tenantProfile/{tenantProfileId}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteTenantProfile(@ApiParam(value = TENANT_PROFILE_ID_PARAM_DESCRIPTION)
-                                    @PathVariable("tenantProfileId") String strTenantProfileId) throws ThingsboardException {
+                                    @PathVariable("tenantProfileId") String strTenantProfileId) throws VizzionnaireException {
         try {
             checkParameter("tenantProfileId", strTenantProfileId);
             TenantProfileId tenantProfileId = new TenantProfileId(toUUID(strTenantProfileId));
@@ -197,7 +197,7 @@ public class TenantProfileController extends BaseController {
     @ResponseBody
     public TenantProfile setDefaultTenantProfile(
             @ApiParam(value = TENANT_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable("tenantProfileId") String strTenantProfileId) throws ThingsboardException {
+            @PathVariable("tenantProfileId") String strTenantProfileId) throws VizzionnaireException {
         checkParameter("tenantProfileId", strTenantProfileId);
         try {
             TenantProfileId tenantProfileId = new TenantProfileId(toUUID(strTenantProfileId));
@@ -223,7 +223,7 @@ public class TenantProfileController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = TENANT_PROFILE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(tenantProfileService.findTenantProfiles(getTenantId(), pageLink));
@@ -247,7 +247,7 @@ public class TenantProfileController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = TENANT_PROFILE_INFO_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(tenantProfileService.findTenantProfileInfos(getTenantId(), pageLink));

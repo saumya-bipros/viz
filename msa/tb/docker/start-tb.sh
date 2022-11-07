@@ -15,7 +15,7 @@ fi
 if [ -f ${firstlaunch} ]; then
     echo "Starting Vizzionnaire ..."
 
-    java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.ThingsboardServerApplication \
+    java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.VizzionnaireServerApplication \
                         -Dspring.jpa.hibernate.ddl-auto=none \
                         -Dlogging.config=${CONF_FOLDER}/logback.xml \
                         org.springframework.boot.loader.PropertiesLauncher

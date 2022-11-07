@@ -7,7 +7,7 @@ import com.vizzionnaire.server.common.data.EntityView;
 import com.vizzionnaire.server.common.data.EntityViewInfo;
 import com.vizzionnaire.server.common.data.edge.Edge;
 import com.vizzionnaire.server.common.data.entityview.EntityViewSearchQuery;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.EntityViewId;
@@ -89,7 +89,7 @@ public class EntityViewController extends BaseController {
     @ResponseBody
     public EntityView getEntityViewById(
             @ApiParam(value = ENTITY_VIEW_ID_PARAM_DESCRIPTION)
-            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
         try {
             return checkEntityViewId(new EntityViewId(toUUID(strEntityViewId)), Operation.READ);
@@ -107,7 +107,7 @@ public class EntityViewController extends BaseController {
     @ResponseBody
     public EntityViewInfo getEntityViewInfoById(
             @ApiParam(value = ENTITY_VIEW_ID_PARAM_DESCRIPTION)
-            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
         try {
             EntityViewId entityViewId = new EntityViewId(toUUID(strEntityViewId));
@@ -147,7 +147,7 @@ public class EntityViewController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteEntityView(
             @ApiParam(value = ENTITY_VIEW_ID_PARAM_DESCRIPTION)
-            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
         EntityViewId entityViewId = new EntityViewId(toUUID(strEntityViewId));
         EntityView entityView = checkEntityViewId(entityViewId, Operation.DELETE);
@@ -162,7 +162,7 @@ public class EntityViewController extends BaseController {
     @ResponseBody
     public EntityView getTenantEntityView(
             @ApiParam(value = "Entity View name")
-            @RequestParam String entityViewName) throws ThingsboardException {
+            @RequestParam String entityViewName) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             return checkNotNull(entityViewService.findEntityViewByTenantIdAndName(tenantId, entityViewName));
@@ -180,7 +180,7 @@ public class EntityViewController extends BaseController {
             @ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION)
             @PathVariable(CUSTOMER_ID) String strCustomerId,
             @ApiParam(value = ENTITY_VIEW_ID_PARAM_DESCRIPTION)
-            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(CUSTOMER_ID, strCustomerId);
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
 
@@ -200,7 +200,7 @@ public class EntityViewController extends BaseController {
     @ResponseBody
     public EntityView unassignEntityViewFromCustomer(
             @ApiParam(value = ENTITY_VIEW_ID_PARAM_DESCRIPTION)
-            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
         EntityViewId entityViewId = new EntityViewId(toUUID(strEntityViewId));
         EntityView entityView = checkEntityViewId(entityViewId, Operation.UNASSIGN_FROM_CUSTOMER);
@@ -233,7 +233,7 @@ public class EntityViewController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = ENTITY_VIEW_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter(CUSTOMER_ID, strCustomerId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -270,7 +270,7 @@ public class EntityViewController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = ENTITY_VIEW_INFO_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("customerId", strCustomerId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -305,7 +305,7 @@ public class EntityViewController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = ENTITY_VIEW_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
@@ -338,7 +338,7 @@ public class EntityViewController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = ENTITY_VIEW_INFO_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
@@ -361,7 +361,7 @@ public class EntityViewController extends BaseController {
     @ResponseBody
     public List<EntityView> findByQuery(
             @ApiParam(value = "The entity view search query JSON")
-            @RequestBody EntityViewSearchQuery query) throws ThingsboardException {
+            @RequestBody EntityViewSearchQuery query) throws VizzionnaireException {
         checkNotNull(query);
         checkNotNull(query.getParameters());
         checkNotNull(query.getEntityViewTypes());
@@ -372,7 +372,7 @@ public class EntityViewController extends BaseController {
                 try {
                     accessControlService.checkPermission(getCurrentUser(), Resource.ENTITY_VIEW, Operation.READ, entityView.getId(), entityView);
                     return true;
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return false;
                 }
             }).collect(Collectors.toList());
@@ -388,7 +388,7 @@ public class EntityViewController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/entityView/types", method = RequestMethod.GET)
     @ResponseBody
-    public List<EntitySubtype> getEntityViewTypes() throws ThingsboardException {
+    public List<EntitySubtype> getEntityViewTypes() throws VizzionnaireException {
         try {
             SecurityUser user = getCurrentUser();
             TenantId tenantId = user.getTenantId();
@@ -408,7 +408,7 @@ public class EntityViewController extends BaseController {
     @ResponseBody
     public EntityView assignEntityViewToPublicCustomer(
             @ApiParam(value = ENTITY_VIEW_ID_PARAM_DESCRIPTION)
-            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+            @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
         EntityViewId entityViewId = new EntityViewId(toUUID(strEntityViewId));
         checkEntityViewId(entityViewId, Operation.ASSIGN_TO_CUSTOMER);
@@ -430,7 +430,7 @@ public class EntityViewController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}/entityView/{entityViewId}", method = RequestMethod.POST)
     @ResponseBody
     public EntityView assignEntityViewToEdge(@PathVariable(EDGE_ID) String strEdgeId,
-                                             @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+                                             @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
 
@@ -455,7 +455,7 @@ public class EntityViewController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}/entityView/{entityViewId}", method = RequestMethod.DELETE)
     @ResponseBody
     public EntityView unassignEntityViewFromEdge(@PathVariable(EDGE_ID) String strEdgeId,
-                                                 @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws ThingsboardException {
+                                                 @PathVariable(ENTITY_VIEW_ID) String strEntityViewId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         checkParameter(ENTITY_VIEW_ID, strEntityViewId);
 
@@ -481,7 +481,7 @@ public class EntityViewController extends BaseController {
             @RequestParam(required = false) String sortProperty,
             @RequestParam(required = false) String sortOrder,
             @RequestParam(required = false) Long startTime,
-            @RequestParam(required = false) Long endTime) throws ThingsboardException {
+            @RequestParam(required = false) Long endTime) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -498,7 +498,7 @@ public class EntityViewController extends BaseController {
                 try {
                     accessControlService.checkPermission(getCurrentUser(), Resource.ENTITY_VIEW, Operation.READ, entityView.getId(), entityView);
                     return true;
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return false;
                 }
             }).collect(Collectors.toList());

@@ -6,8 +6,8 @@ import com.vizzionnaire.common.util.JacksonUtil;
 import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceId;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -54,7 +54,7 @@ public abstract class AbstractRpcController extends BaseController {
     @Value("${server.rest.server_side_rpc.default_timeout:10000}")
     protected long defaultTimeout;
 
-    protected DeferredResult<ResponseEntity> handleDeviceRPCRequest(boolean oneWay, DeviceId deviceId, String requestBody, HttpStatus timeoutStatus, HttpStatus noActiveConnectionStatus) throws ThingsboardException {
+    protected DeferredResult<ResponseEntity> handleDeviceRPCRequest(boolean oneWay, DeviceId deviceId, String requestBody, HttpStatus timeoutStatus, HttpStatus noActiveConnectionStatus) throws VizzionnaireException {
         try {
             JsonNode rpcRequestBody = JacksonUtil.toJsonNode(requestBody);
             ToDeviceRpcRequestBody body = new ToDeviceRpcRequestBody(rpcRequestBody.get("method").asText(), JacksonUtil.toString(rpcRequestBody.get("params")));
@@ -97,7 +97,7 @@ public abstract class AbstractRpcController extends BaseController {
             }));
             return response;
         } catch (IllegalArgumentException ioe) {
-            throw new ThingsboardException("Invalid request body", ioe, ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Invalid request body", ioe, VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
     }
 

@@ -25,7 +25,7 @@
         <pkg.win.dist>${project.build.directory}/windows</pkg.win.dist>
         <pkg.copyInstallScripts>true</pkg.copyInstallScripts>
         <pkg.implementationTitle>Vizzionnaire</pkg.implementationTitle>
-        <pkg.mainClass>com.vizzionnaire.server.ThingsboardServerApplication</pkg.mainClass>
+        <pkg.mainClass>com.vizzionnaire.server.VizzionnaireServerApplication</pkg.mainClass>
     </properties>
 
     <dependencies>

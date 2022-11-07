@@ -2,7 +2,7 @@ package com.vizzionnaire.server.common.data.exception;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ThingsboardErrorCode {
+public enum VizzionnaireErrorCode {
 
     GENERAL(2),
     AUTHENTICATION(10),
@@ -18,7 +18,7 @@ public enum ThingsboardErrorCode {
 
     private int errorCode;
 
-    ThingsboardErrorCode(int errorCode) {
+    VizzionnaireErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
 

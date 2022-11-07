@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.vizzionnaire.server.common.data.OtaPackage;
 import com.vizzionnaire.server.common.data.OtaPackageInfo;
 import com.vizzionnaire.server.common.data.SaveOtaPackageInfoRequest;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceProfileId;
 import com.vizzionnaire.server.common.data.id.OtaPackageId;
 import com.vizzionnaire.server.common.data.ota.ChecksumAlgorithm;
@@ -71,7 +71,7 @@ public class OtaPackageController extends BaseController {
     @RequestMapping(value = "/otaPackage/{otaPackageId}/download", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<org.springframework.core.io.Resource> downloadOtaPackage(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
-                                                                                   @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws ThingsboardException {
+                                                                                   @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws VizzionnaireException {
         checkParameter(OTA_PACKAGE_ID, strOtaPackageId);
         try {
             OtaPackageId otaPackageId = new OtaPackageId(toUUID(strOtaPackageId));
@@ -101,7 +101,7 @@ public class OtaPackageController extends BaseController {
     @RequestMapping(value = "/otaPackage/info/{otaPackageId}", method = RequestMethod.GET)
     @ResponseBody
     public OtaPackageInfo getOtaPackageInfoById(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
-                                                @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws ThingsboardException {
+                                                @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws VizzionnaireException {
         checkParameter(OTA_PACKAGE_ID, strOtaPackageId);
         try {
             OtaPackageId otaPackageId = new OtaPackageId(toUUID(strOtaPackageId));
@@ -119,7 +119,7 @@ public class OtaPackageController extends BaseController {
     @RequestMapping(value = "/otaPackage/{otaPackageId}", method = RequestMethod.GET)
     @ResponseBody
     public OtaPackage getOtaPackageById(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
-                                        @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws ThingsboardException {
+                                        @PathVariable(OTA_PACKAGE_ID) String strOtaPackageId) throws VizzionnaireException {
         checkParameter(OTA_PACKAGE_ID, strOtaPackageId);
         try {
             OtaPackageId otaPackageId = new OtaPackageId(toUUID(strOtaPackageId));
@@ -141,7 +141,7 @@ public class OtaPackageController extends BaseController {
     @RequestMapping(value = "/otaPackage", method = RequestMethod.POST)
     @ResponseBody
     public OtaPackageInfo saveOtaPackageInfo(@ApiParam(value = "A JSON value representing the OTA Package.")
-                                             @RequestBody SaveOtaPackageInfoRequest otaPackageInfo) throws ThingsboardException {
+                                             @RequestBody SaveOtaPackageInfoRequest otaPackageInfo) throws VizzionnaireException {
         otaPackageInfo.setTenantId(getTenantId());
         checkEntity(otaPackageInfo.getId(), otaPackageInfo, Resource.OTA_PACKAGE);
 
@@ -162,7 +162,7 @@ public class OtaPackageController extends BaseController {
                                              @ApiParam(value = "OTA Package checksum algorithm.", allowableValues = OTA_PACKAGE_CHECKSUM_ALGORITHM_ALLOWABLE_VALUES)
                                              @RequestParam(CHECKSUM_ALGORITHM) String checksumAlgorithmStr,
                                              @ApiParam(value = "OTA Package data.")
-                                             @RequestPart MultipartFile file) throws ThingsboardException, IOException {
+                                             @RequestPart MultipartFile file) throws VizzionnaireException, IOException {
         checkParameter(OTA_PACKAGE_ID, strOtaPackageId);
         checkParameter(CHECKSUM_ALGORITHM, checksumAlgorithmStr);
         OtaPackageId otaPackageId = new OtaPackageId(toUUID(strOtaPackageId));
@@ -189,7 +189,7 @@ public class OtaPackageController extends BaseController {
                                                    @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = OTA_PACKAGE_SORT_PROPERTY_ALLOWABLE_VALUES)
                                                    @RequestParam(required = false) String sortProperty,
                                                    @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-                                                   @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+                                                   @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(otaPackageService.findTenantOtaPackagesByTenantId(getTenantId(), pageLink));
@@ -218,7 +218,7 @@ public class OtaPackageController extends BaseController {
                                                    @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = OTA_PACKAGE_SORT_PROPERTY_ALLOWABLE_VALUES)
                                                    @RequestParam(required = false) String sortProperty,
                                                    @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-                                                   @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+                                                   @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("deviceProfileId", strDeviceProfileId);
         checkParameter("type", strType);
         try {
@@ -238,7 +238,7 @@ public class OtaPackageController extends BaseController {
     @RequestMapping(value = "/otaPackage/{otaPackageId}", method = RequestMethod.DELETE)
     @ResponseBody
     public void deleteOtaPackage(@ApiParam(value = OTA_PACKAGE_ID_PARAM_DESCRIPTION)
-                                 @PathVariable("otaPackageId") String strOtaPackageId) throws ThingsboardException {
+                                 @PathVariable("otaPackageId") String strOtaPackageId) throws VizzionnaireException {
         checkParameter(OTA_PACKAGE_ID, strOtaPackageId);
         OtaPackageId otaPackageId = new OtaPackageId(toUUID(strOtaPackageId));
         OtaPackageInfo otaPackageInfo = checkOtaPackageInfoId(otaPackageId, Operation.DELETE);

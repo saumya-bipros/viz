@@ -7,7 +7,7 @@ import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.asset.Asset;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.Edge;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.AssetId;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
@@ -61,7 +61,7 @@ public class DefaultTbAssetService extends AbstractTbEntityService implements Tb
     }
 
     @Override
-    public Asset assignAssetToCustomer(TenantId tenantId, AssetId assetId, Customer customer, User user) throws ThingsboardException {
+    public Asset assignAssetToCustomer(TenantId tenantId, AssetId assetId, Customer customer, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         CustomerId customerId = customer.getId();
         try {
@@ -78,7 +78,7 @@ public class DefaultTbAssetService extends AbstractTbEntityService implements Tb
     }
 
     @Override
-    public Asset unassignAssetToCustomer(TenantId tenantId, AssetId assetId, Customer customer, User user) throws ThingsboardException {
+    public Asset unassignAssetToCustomer(TenantId tenantId, AssetId assetId, Customer customer, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_CUSTOMER;
         try {
             Asset savedAsset = checkNotNull(assetService.unassignAssetFromCustomer(tenantId, assetId));
@@ -94,7 +94,7 @@ public class DefaultTbAssetService extends AbstractTbEntityService implements Tb
     }
 
     @Override
-    public Asset assignAssetToPublicCustomer(TenantId tenantId, AssetId assetId, User user) throws ThingsboardException {
+    public Asset assignAssetToPublicCustomer(TenantId tenantId, AssetId assetId, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_CUSTOMER;
         try {
             Customer publicCustomer = customerService.findOrCreatePublicCustomer(tenantId);
@@ -110,7 +110,7 @@ public class DefaultTbAssetService extends AbstractTbEntityService implements Tb
     }
 
     @Override
-    public Asset assignAssetToEdge(TenantId tenantId, AssetId assetId, Edge edge, User user) throws ThingsboardException {
+    public Asset assignAssetToEdge(TenantId tenantId, AssetId assetId, Edge edge, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.ASSIGNED_TO_EDGE;
         EdgeId edgeId = edge.getId();
         try {
@@ -127,7 +127,7 @@ public class DefaultTbAssetService extends AbstractTbEntityService implements Tb
     }
 
     @Override
-    public Asset unassignAssetFromEdge(TenantId tenantId, Asset asset, Edge edge, User user) throws ThingsboardException {
+    public Asset unassignAssetFromEdge(TenantId tenantId, Asset asset, Edge edge, User user) throws VizzionnaireException {
         ActionType actionType = ActionType.UNASSIGNED_FROM_EDGE;
         AssetId assetId = asset.getId();
         EdgeId edgeId = edge.getId();

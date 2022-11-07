@@ -7,8 +7,8 @@ import com.vizzionnaire.server.common.data.EntitySubtype;
 import com.vizzionnaire.server.common.data.edge.Edge;
 import com.vizzionnaire.server.common.data.edge.EdgeInfo;
 import com.vizzionnaire.server.common.data.edge.EdgeSearchQuery;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
@@ -95,7 +95,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}", method = RequestMethod.GET)
     @ResponseBody
     public Edge getEdgeById(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                            @PathVariable(EDGE_ID) String strEdgeId) throws ThingsboardException {
+                            @PathVariable(EDGE_ID) String strEdgeId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         try {
             EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
@@ -112,7 +112,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/edge/info/{edgeId}", method = RequestMethod.GET)
     @ResponseBody
     public EdgeInfo getEdgeInfoById(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                                    @PathVariable(EDGE_ID) String strEdgeId) throws ThingsboardException {
+                                    @PathVariable(EDGE_ID) String strEdgeId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         try {
             EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
@@ -161,7 +161,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteEdge(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                           @PathVariable(EDGE_ID) String strEdgeId) throws ThingsboardException {
+                           @PathVariable(EDGE_ID) String strEdgeId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
         Edge edge = checkEdgeId(edgeId, Operation.DELETE);
@@ -183,7 +183,7 @@ public class EdgeController extends BaseController {
                                    @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = EDGE_SORT_PROPERTY_ALLOWABLE_VALUES)
                                    @RequestParam(required = false) String sortProperty,
                                    @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-                                   @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+                                   @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -202,7 +202,7 @@ public class EdgeController extends BaseController {
     public Edge assignEdgeToCustomer(@ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION, required = true)
                                      @PathVariable("customerId") String strCustomerId,
                                      @ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                                     @PathVariable(EDGE_ID) String strEdgeId) throws ThingsboardException {
+                                     @PathVariable(EDGE_ID) String strEdgeId) throws VizzionnaireException {
         checkParameter("customerId", strCustomerId);
         checkParameter(EDGE_ID, strEdgeId);
         CustomerId customerId = new CustomerId(toUUID(strCustomerId));
@@ -219,7 +219,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/customer/edge/{edgeId}", method = RequestMethod.DELETE)
     @ResponseBody
     public Edge unassignEdgeFromCustomer(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                                         @PathVariable(EDGE_ID) String strEdgeId) throws ThingsboardException {
+                                         @PathVariable(EDGE_ID) String strEdgeId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
         Edge edge = checkEdgeId(edgeId, Operation.UNASSIGN_FROM_CUSTOMER);
@@ -240,7 +240,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/customer/public/edge/{edgeId}", method = RequestMethod.POST)
     @ResponseBody
     public Edge assignEdgeToPublicCustomer(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                                           @PathVariable(EDGE_ID) String strEdgeId) throws ThingsboardException {
+                                           @PathVariable(EDGE_ID) String strEdgeId) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
         checkEdgeId(edgeId, Operation.ASSIGN_TO_CUSTOMER);
@@ -265,7 +265,7 @@ public class EdgeController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = EDGE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
@@ -298,7 +298,7 @@ public class EdgeController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = EDGE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
@@ -320,7 +320,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/tenant/edges", params = {"edgeName"}, method = RequestMethod.GET)
     @ResponseBody
     public Edge getTenantEdge(@ApiParam(value = "Unique name of the edge", required = true)
-                              @RequestParam String edgeName) throws ThingsboardException {
+                              @RequestParam String edgeName) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             return checkNotNull(edgeService.findEdgeByTenantIdAndName(tenantId, edgeName));
@@ -370,7 +370,7 @@ public class EdgeController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = EDGE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("customerId", strCustomerId);
         try {
             SecurityUser user = getCurrentUser();
@@ -410,7 +410,7 @@ public class EdgeController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = EDGE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter("customerId", strCustomerId);
         try {
             SecurityUser user = getCurrentUser();
@@ -438,7 +438,7 @@ public class EdgeController extends BaseController {
     @ResponseBody
     public List<Edge> getEdgesByIds(
             @ApiParam(value = "A list of edges ids, separated by comma ','", required = true)
-            @RequestParam("edgeIds") String[] strEdgeIds) throws ThingsboardException {
+            @RequestParam("edgeIds") String[] strEdgeIds) throws VizzionnaireException {
         checkArrayParameter("edgeIds", strEdgeIds);
         try {
             SecurityUser user = getCurrentUser();
@@ -469,7 +469,7 @@ public class EdgeController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/edges", method = RequestMethod.POST)
     @ResponseBody
-    public List<Edge> findByQuery(@RequestBody EdgeSearchQuery query) throws ThingsboardException {
+    public List<Edge> findByQuery(@RequestBody EdgeSearchQuery query) throws VizzionnaireException {
         checkNotNull(query);
         checkNotNull(query.getParameters());
         checkNotNull(query.getEdgeTypes());
@@ -482,7 +482,7 @@ public class EdgeController extends BaseController {
                 try {
                     accessControlService.checkPermission(user, Resource.EDGE, Operation.READ, edge.getId(), edge);
                     return true;
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return false;
                 }
             }).collect(Collectors.toList());
@@ -499,7 +499,7 @@ public class EdgeController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/edge/types", method = RequestMethod.GET)
     @ResponseBody
-    public List<EntitySubtype> getEdgeTypes() throws ThingsboardException {
+    public List<EntitySubtype> getEdgeTypes() throws VizzionnaireException {
         try {
             SecurityUser user = getCurrentUser();
             TenantId tenantId = user.getTenantId();
@@ -516,7 +516,7 @@ public class EdgeController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @RequestMapping(value = "/edge/sync/{edgeId}", method = RequestMethod.POST)
     public void syncEdge(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                         @PathVariable("edgeId") String strEdgeId) throws ThingsboardException {
+                         @PathVariable("edgeId") String strEdgeId) throws VizzionnaireException {
         checkParameter("edgeId", strEdgeId);
         try {
             if (isEdgesEnabled()) {
@@ -526,7 +526,7 @@ public class EdgeController extends BaseController {
                 TenantId tenantId = user.getTenantId();
                 edgeGrpcService.startSyncProcess(tenantId, edgeId);
             } else {
-                throw new ThingsboardException("Edges support disabled", ThingsboardErrorCode.GENERAL);
+                throw new VizzionnaireException("Edges support disabled", VizzionnaireErrorCode.GENERAL);
             }
         } catch (Exception e) {
             throw handleException(e);
@@ -539,7 +539,7 @@ public class EdgeController extends BaseController {
     @RequestMapping(value = "/edge/missingToRelatedRuleChains/{edgeId}", method = RequestMethod.GET)
     @ResponseBody
     public String findMissingToRelatedRuleChains(@ApiParam(value = EDGE_ID_PARAM_DESCRIPTION, required = true)
-                                                 @PathVariable("edgeId") String strEdgeId) throws ThingsboardException {
+                                                 @PathVariable("edgeId") String strEdgeId) throws VizzionnaireException {
         try {
             EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
             edgeId = checkNotNull(edgeId);

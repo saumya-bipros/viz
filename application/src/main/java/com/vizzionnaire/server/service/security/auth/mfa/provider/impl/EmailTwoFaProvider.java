@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.rule.engine.api.MailService;
 import com.vizzionnaire.server.common.data.User;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.EmailTwoFaAccountConfig;
 import com.vizzionnaire.server.common.data.security.model.mfa.provider.EmailTwoFaProviderConfig;
@@ -33,16 +33,16 @@ public class EmailTwoFaProvider extends OtpBasedTwoFaProvider<EmailTwoFaProvider
     }
 
     @Override
-    public void check(TenantId tenantId) throws ThingsboardException {
+    public void check(TenantId tenantId) throws VizzionnaireException {
         try {
             mailService.testConnection(tenantId);
         } catch (Exception e) {
-            throw new ThingsboardException("Mail service is not set up", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Mail service is not set up", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
     }
 
     @Override
-    protected void sendVerificationCode(SecurityUser user, String verificationCode, EmailTwoFaProviderConfig providerConfig, EmailTwoFaAccountConfig accountConfig) throws ThingsboardException {
+    protected void sendVerificationCode(SecurityUser user, String verificationCode, EmailTwoFaProviderConfig providerConfig, EmailTwoFaAccountConfig accountConfig) throws VizzionnaireException {
         mailService.sendTwoFaVerificationEmail(accountConfig.getEmail(), verificationCode, providerConfig.getVerificationCodeLifetime());
     }
 

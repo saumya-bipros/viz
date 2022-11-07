@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.WidgetsBundleId;
 import com.vizzionnaire.server.common.data.page.PageData;
@@ -58,7 +58,7 @@ public class WidgetsBundleController extends BaseController {
     @ResponseBody
     public WidgetsBundle getWidgetsBundleById(
             @ApiParam(value = WIDGET_BUNDLE_ID_PARAM_DESCRIPTION, required = true)
-            @PathVariable("widgetsBundleId") String strWidgetsBundleId) throws ThingsboardException {
+            @PathVariable("widgetsBundleId") String strWidgetsBundleId) throws VizzionnaireException {
         checkParameter("widgetsBundleId", strWidgetsBundleId);
         try {
             WidgetsBundleId widgetsBundleId = new WidgetsBundleId(toUUID(strWidgetsBundleId));
@@ -103,7 +103,7 @@ public class WidgetsBundleController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteWidgetsBundle(
             @ApiParam(value = WIDGET_BUNDLE_ID_PARAM_DESCRIPTION, required = true)
-            @PathVariable("widgetsBundleId") String strWidgetsBundleId) throws ThingsboardException {
+            @PathVariable("widgetsBundleId") String strWidgetsBundleId) throws VizzionnaireException {
         checkParameter("widgetsBundleId", strWidgetsBundleId);
         WidgetsBundleId widgetsBundleId = new WidgetsBundleId(toUUID(strWidgetsBundleId));
         WidgetsBundle widgetsBundle = checkWidgetsBundleId(widgetsBundleId, Operation.DELETE);
@@ -126,7 +126,7 @@ public class WidgetsBundleController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = WIDGET_BUNDLE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             if (Authority.SYS_ADMIN.equals(getCurrentUser().getAuthority())) {
@@ -145,7 +145,7 @@ public class WidgetsBundleController extends BaseController {
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/widgetsBundles", method = RequestMethod.GET)
     @ResponseBody
-    public List<WidgetsBundle> getWidgetsBundles() throws ThingsboardException {
+    public List<WidgetsBundle> getWidgetsBundles() throws VizzionnaireException {
         try {
             if (Authority.SYS_ADMIN.equals(getCurrentUser().getAuthority())) {
                 return checkNotNull(widgetsBundleService.findSystemWidgetsBundles(getTenantId()));

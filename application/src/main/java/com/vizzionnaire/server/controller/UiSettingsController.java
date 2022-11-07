@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
 
 @RestController
@@ -25,7 +25,7 @@ public class UiSettingsController extends BaseController {
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/uiSettings/helpBaseUrl", method = RequestMethod.GET)
     @ResponseBody
-    public String getHelpBaseUrl() throws ThingsboardException {
+    public String getHelpBaseUrl() throws VizzionnaireException {
         return helpBaseUrl;
     }
 

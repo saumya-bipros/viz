@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.security.model.mfa.PlatformTwoFaSettings;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.EmailTwoFaAccountConfig;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.SmsTwoFaAccountConfig;
@@ -83,7 +83,7 @@ public class TwoFactorAuthController extends BaseController {
             user = new SecurityUser(userService.findUserById(user.getTenantId(), user.getId()), true, user.getUserPrincipal());
             return tokenFactory.createTokenPair(user);
         } else {
-            ThingsboardException error = new ThingsboardException("Verification code is incorrect", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            VizzionnaireException error = new VizzionnaireException("Verification code is incorrect", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
             systemSecurityService.logLoginAction(user, new RestAuthenticationDetails(servletRequest), ActionType.LOGIN, error);
             throw error;
         }
@@ -99,7 +99,7 @@ public class TwoFactorAuthController extends BaseController {
                     "]\n```")
     @GetMapping("/providers")
     @PreAuthorize("hasAuthority('PRE_VERIFICATION_TOKEN')")
-    public List<TwoFaProviderInfo> getAvailableTwoFaProviders() throws ThingsboardException {
+    public List<TwoFaProviderInfo> getAvailableTwoFaProviders() throws VizzionnaireException {
         SecurityUser user = getCurrentUser();
         Optional<PlatformTwoFaSettings> platformTwoFaSettings = twoFaConfigManager.getPlatformTwoFaSettings(user.getTenantId(), true);
         return twoFaConfigManager.getAccountTwoFaSettings(user.getTenantId(), user.getId())

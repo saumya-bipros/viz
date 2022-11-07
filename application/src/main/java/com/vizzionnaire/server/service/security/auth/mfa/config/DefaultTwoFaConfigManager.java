@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.common.util.JacksonUtil;
 import com.vizzionnaire.server.common.data.AdminSettings;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.UserId;
 import com.vizzionnaire.server.common.data.security.UserAuthSettings;
@@ -147,7 +147,7 @@ public class DefaultTwoFaConfigManager implements TwoFaConfigManager {
     }
 
     @Override
-    public PlatformTwoFaSettings savePlatformTwoFaSettings(TenantId tenantId, PlatformTwoFaSettings twoFactorAuthSettings) throws ThingsboardException {
+    public PlatformTwoFaSettings savePlatformTwoFaSettings(TenantId tenantId, PlatformTwoFaSettings twoFactorAuthSettings) throws VizzionnaireException {
         ConstraintValidator.validateFields(twoFactorAuthSettings);
         for (TwoFaProviderConfig providerConfig : twoFactorAuthSettings.getProviders()) {
             twoFactorAuthService.checkProvider(tenantId, providerConfig.getProviderType());

@@ -13,7 +13,7 @@ import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
 import com.vizzionnaire.server.common.data.edge.Edge;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
 import com.vizzionnaire.server.common.data.id.RuleNodeId;
@@ -229,7 +229,7 @@ public class DefaultTbRuleChainService extends AbstractTbEntityService implement
     }
 
     @Override
-    public RuleChain setRootRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws ThingsboardException {
+    public RuleChain setRootRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws VizzionnaireException {
         RuleChainId ruleChainId = ruleChain.getId();
         try {
             RuleChain previousRootRuleChain = ruleChainService.getRootTenantRuleChain(tenantId);
@@ -315,7 +315,7 @@ public class DefaultTbRuleChainService extends AbstractTbEntityService implement
     }
 
     @Override
-    public RuleChain assignRuleChainToEdge(TenantId tenantId, RuleChain ruleChain, Edge edge, User user) throws ThingsboardException {
+    public RuleChain assignRuleChainToEdge(TenantId tenantId, RuleChain ruleChain, Edge edge, User user) throws VizzionnaireException {
         RuleChainId ruleChainId = ruleChain.getId();
         EdgeId edgeId = edge.getId();
         try {
@@ -332,7 +332,7 @@ public class DefaultTbRuleChainService extends AbstractTbEntityService implement
     }
 
     @Override
-    public RuleChain unassignRuleChainFromEdge(TenantId tenantId, RuleChain ruleChain, Edge edge, User user) throws ThingsboardException {
+    public RuleChain unassignRuleChainFromEdge(TenantId tenantId, RuleChain ruleChain, Edge edge, User user) throws VizzionnaireException {
         RuleChainId ruleChainId = ruleChain.getId();
         EdgeId edgeId = edge.getId();
         try {
@@ -349,7 +349,7 @@ public class DefaultTbRuleChainService extends AbstractTbEntityService implement
     }
 
     @Override
-    public RuleChain setEdgeTemplateRootRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws ThingsboardException {
+    public RuleChain setEdgeTemplateRootRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws VizzionnaireException {
         RuleChainId ruleChainId = ruleChain.getId();
         try {
             ruleChainService.setEdgeTemplateRootRuleChain(tenantId, ruleChainId);
@@ -363,7 +363,7 @@ public class DefaultTbRuleChainService extends AbstractTbEntityService implement
     }
 
     @Override
-    public RuleChain setAutoAssignToEdgeRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws ThingsboardException {
+    public RuleChain setAutoAssignToEdgeRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws VizzionnaireException {
         RuleChainId ruleChainId = ruleChain.getId();
         try {
             ruleChainService.setAutoAssignToEdgeRuleChain(tenantId, ruleChainId);
@@ -377,7 +377,7 @@ public class DefaultTbRuleChainService extends AbstractTbEntityService implement
     }
 
     @Override
-    public RuleChain unsetAutoAssignToEdgeRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws ThingsboardException {
+    public RuleChain unsetAutoAssignToEdgeRuleChain(TenantId tenantId, RuleChain ruleChain, User user) throws VizzionnaireException {
         RuleChainId ruleChainId = ruleChain.getId();
         try {
             ruleChainService.unsetAutoAssignToEdgeRuleChain(tenantId, ruleChainId);

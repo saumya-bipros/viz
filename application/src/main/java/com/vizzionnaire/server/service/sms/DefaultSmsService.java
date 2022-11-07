@@ -7,8 +7,8 @@ import com.vizzionnaire.rule.engine.api.sms.SmsSender;
 import com.vizzionnaire.rule.engine.api.sms.SmsSenderFactory;
 import com.vizzionnaire.server.common.data.AdminSettings;
 import com.vizzionnaire.server.common.data.ApiUsageRecordKey;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.sms.config.SmsProviderConfiguration;
@@ -72,15 +72,15 @@ public class DefaultSmsService implements SmsService {
         }
     }
 
-    private int sendSms(String numberTo, String message) throws ThingsboardException {
+    private int sendSms(String numberTo, String message) throws VizzionnaireException {
         if (this.smsSender == null) {
-            throw new ThingsboardException("Unable to send SMS: no SMS provider configured!", ThingsboardErrorCode.GENERAL);
+            throw new VizzionnaireException("Unable to send SMS: no SMS provider configured!", VizzionnaireErrorCode.GENERAL);
         }
         return this.sendSms(this.smsSender, numberTo, message);
     }
 
     @Override
-    public void sendSms(TenantId tenantId, CustomerId customerId, String[] numbersTo, String message) throws ThingsboardException {
+    public void sendSms(TenantId tenantId, CustomerId customerId, String[] numbersTo, String message) throws VizzionnaireException {
         if (apiUsageStateService.getApiUsageState(tenantId).isSmsSendEnabled()) {
             int smsCount = 0;
             try {
@@ -98,7 +98,7 @@ public class DefaultSmsService implements SmsService {
     }
 
     @Override
-    public void sendTestSms(TestSmsRequest testSmsRequest) throws ThingsboardException {
+    public void sendTestSms(TestSmsRequest testSmsRequest) throws VizzionnaireException {
         SmsSender testSmsSender;
         try {
             testSmsSender = this.smsSenderFactory.createSmsSender(testSmsRequest.getProviderConfiguration());
@@ -114,7 +114,7 @@ public class DefaultSmsService implements SmsService {
         return smsSender != null;
     }
 
-    private int sendSms(SmsSender smsSender, String numberTo, String message) throws ThingsboardException {
+    private int sendSms(SmsSender smsSender, String numberTo, String message) throws VizzionnaireException {
         try {
             return smsSender.sendSms(numberTo, message);
         } catch (Exception e) {
@@ -122,7 +122,7 @@ public class DefaultSmsService implements SmsService {
         }
     }
 
-    private ThingsboardException handleException(Exception exception) {
+    private VizzionnaireException handleException(Exception exception) {
         String message;
         if (exception instanceof NestedRuntimeException) {
             message = ((NestedRuntimeException) exception).getMostSpecificCause().getMessage();
@@ -130,7 +130,7 @@ public class DefaultSmsService implements SmsService {
             message = exception.getMessage();
         }
         log.warn("Unable to send SMS: {}", message);
-        return new ThingsboardException(String.format("Unable to send SMS: %s", message),
-                ThingsboardErrorCode.GENERAL);
+        return new VizzionnaireException(String.format("Unable to send SMS: %s", message),
+                VizzionnaireErrorCode.GENERAL);
     }
 }

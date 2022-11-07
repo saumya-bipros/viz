@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.EntityView;
 import com.vizzionnaire.server.common.data.User;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityViewId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.plugin.ComponentLifecycleEvent;
@@ -47,7 +47,7 @@ public class EntityViewImportService extends BaseEntityImportService<EntityViewI
     }
 
     @Override
-    protected void onEntitySaved(User user, EntityView savedEntityView, EntityView oldEntityView) throws ThingsboardException {
+    protected void onEntitySaved(User user, EntityView savedEntityView, EntityView oldEntityView) throws VizzionnaireException {
         tbEntityViewService.updateEntityViewAttributes(user.getTenantId(), savedEntityView, oldEntityView, user);
         super.onEntitySaved(user, savedEntityView, oldEntityView);
         clusterService.broadcastEntityStateChangeEvent(savedEntityView.getTenantId(), savedEntityView.getId(),

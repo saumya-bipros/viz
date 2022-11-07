@@ -16,7 +16,7 @@ import com.vizzionnaire.server.common.data.Tenant;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.asset.Asset;
 import com.vizzionnaire.server.common.data.edge.Edge;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.ApiUsageStateId;
 import com.vizzionnaire.server.common.data.id.AssetId;
 import com.vizzionnaire.server.common.data.id.CustomerId;
@@ -144,25 +144,25 @@ public class AccessValidator {
     }
 
     public DeferredResult<ResponseEntity> validateEntityAndCallback(SecurityUser currentUser, Operation operation, String entityType, String entityIdStr,
-                                                                    ThreeConsumer<DeferredResult<ResponseEntity>, TenantId, EntityId> onSuccess) throws ThingsboardException {
+                                                                    ThreeConsumer<DeferredResult<ResponseEntity>, TenantId, EntityId> onSuccess) throws VizzionnaireException {
         return validateEntityAndCallback(currentUser, operation, entityType, entityIdStr, onSuccess, (result, t) -> handleError(t, result, HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     public DeferredResult<ResponseEntity> validateEntityAndCallback(SecurityUser currentUser, Operation operation, String entityType, String entityIdStr,
                                                                     ThreeConsumer<DeferredResult<ResponseEntity>, TenantId, EntityId> onSuccess,
-                                                                    BiConsumer<DeferredResult<ResponseEntity>, Throwable> onFailure) throws ThingsboardException {
+                                                                    BiConsumer<DeferredResult<ResponseEntity>, Throwable> onFailure) throws VizzionnaireException {
         return validateEntityAndCallback(currentUser, operation, EntityIdFactory.getByTypeAndId(entityType, entityIdStr),
                 onSuccess, onFailure);
     }
 
     public DeferredResult<ResponseEntity> validateEntityAndCallback(SecurityUser currentUser, Operation operation, EntityId entityId,
-                                                                    ThreeConsumer<DeferredResult<ResponseEntity>, TenantId, EntityId> onSuccess) throws ThingsboardException {
+                                                                    ThreeConsumer<DeferredResult<ResponseEntity>, TenantId, EntityId> onSuccess) throws VizzionnaireException {
         return validateEntityAndCallback(currentUser, operation, entityId, onSuccess, (result, t) -> handleError(t, result, HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     public DeferredResult<ResponseEntity> validateEntityAndCallback(SecurityUser currentUser, Operation operation, EntityId entityId,
                                                                     ThreeConsumer<DeferredResult<ResponseEntity>, TenantId, EntityId> onSuccess,
-                                                                    BiConsumer<DeferredResult<ResponseEntity>, Throwable> onFailure) throws ThingsboardException {
+                                                                    BiConsumer<DeferredResult<ResponseEntity>, Throwable> onFailure) throws VizzionnaireException {
 
         final DeferredResult<ResponseEntity> response = new DeferredResult<>();
 
@@ -247,7 +247,7 @@ public class AccessValidator {
                 } else {
                     try {
                         accessControlService.checkPermission(currentUser, Resource.DEVICE, operation, entityId, device);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(device);
@@ -264,7 +264,7 @@ public class AccessValidator {
             } else {
                 try {
                     accessControlService.checkPermission(currentUser, Resource.RPC, operation, entityId, rpc);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return ValidationResult.accessDenied(e.getMessage());
                 }
                 return ValidationResult.ok(rpc);
@@ -282,7 +282,7 @@ public class AccessValidator {
             } else {
                 try {
                     accessControlService.checkPermission(currentUser, Resource.DEVICE_PROFILE, operation, entityId, deviceProfile);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     callback.onSuccess(ValidationResult.accessDenied(e.getMessage()));
                 }
                 callback.onSuccess(ValidationResult.ok(deviceProfile));
@@ -303,7 +303,7 @@ public class AccessValidator {
             } else {
                 try {
                     accessControlService.checkPermission(currentUser, Resource.API_USAGE_STATE, operation, entityId, apiUsageState);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     callback.onSuccess(ValidationResult.accessDenied(e.getMessage()));
                 }
                 callback.onSuccess(ValidationResult.ok(apiUsageState));
@@ -321,7 +321,7 @@ public class AccessValidator {
             } else {
                 try {
                     accessControlService.checkPermission(currentUser, Resource.OTA_PACKAGE, operation, entityId, otaPackage);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     callback.onSuccess(ValidationResult.accessDenied(e.getMessage()));
                 }
                 callback.onSuccess(ValidationResult.ok(otaPackage));
@@ -337,7 +337,7 @@ public class AccessValidator {
             } else {
                 try {
                     accessControlService.checkPermission(currentUser, Resource.TB_RESOURCE, operation, entityId, resource);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return ValidationResult.accessDenied(e.getMessage());
                 }
                 return ValidationResult.ok(resource);
@@ -356,7 +356,7 @@ public class AccessValidator {
                 } else {
                     try {
                         accessControlService.checkPermission(currentUser, Resource.ASSET, operation, entityId, asset);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(asset);
@@ -376,7 +376,7 @@ public class AccessValidator {
                 } else {
                     try {
                         accessControlService.checkPermission(currentUser, Resource.RULE_CHAIN, operation, entityId, ruleChain);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(ruleChain);
@@ -401,7 +401,7 @@ public class AccessValidator {
                     RuleChain ruleChain = ruleChainService.findRuleChainById(currentUser.getTenantId(), ruleNode.getRuleChainId());
                     try {
                         accessControlService.checkPermission(currentUser, Resource.RULE_CHAIN, operation, ruleNode.getRuleChainId(), ruleChain);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(ruleNode);
@@ -421,7 +421,7 @@ public class AccessValidator {
                 } else {
                     try {
                         accessControlService.checkPermission(currentUser, Resource.CUSTOMER, operation, entityId, customer);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(customer);
@@ -443,7 +443,7 @@ public class AccessValidator {
                 }
                 try {
                     accessControlService.checkPermission(currentUser, Resource.TENANT, operation, entityId, tenant);
-                } catch (ThingsboardException e) {
+                } catch (VizzionnaireException e) {
                     return ValidationResult.accessDenied(e.getMessage());
                 }
                 return ValidationResult.ok(tenant);
@@ -468,7 +468,7 @@ public class AccessValidator {
             }
             try {
                 accessControlService.checkPermission(currentUser, Resource.USER, operation, entityId, user);
-            } catch (ThingsboardException e) {
+            } catch (VizzionnaireException e) {
                 return ValidationResult.accessDenied(e.getMessage());
             }
             return ValidationResult.ok(user);
@@ -487,7 +487,7 @@ public class AccessValidator {
                 } else {
                     try {
                         accessControlService.checkPermission(currentUser, Resource.ENTITY_VIEW, operation, entityId, entityView);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(entityView);
@@ -507,7 +507,7 @@ public class AccessValidator {
                 } else {
                     try {
                         accessControlService.checkPermission(currentUser, Resource.EDGE, operation, entityId, edge);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         return ValidationResult.accessDenied(e.getMessage());
                     }
                     return ValidationResult.ok(edge);

@@ -14,7 +14,7 @@ import org.springframework.web.socket.adapter.NativeWebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
 import com.vizzionnaire.server.common.data.id.CustomerId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.id.UserId;
@@ -310,7 +310,7 @@ public class TbWebSocketHandler extends TextWebSocketHandler implements Telemetr
                         if (blacklistedSessions.putIfAbsent(externalId, sessionRef) == null) {
                             log.info("[{}][{}][{}] Failed to process session update. Max session updates limit reached"
                                     , sessionRef.getSecurityCtx().getTenantId(), sessionRef.getSecurityCtx().getId(), externalId);
-                            sessionMd.sendMsg("{\"subscriptionId\":" + subscriptionId + ", \"errorCode\":" + ThingsboardErrorCode.TOO_MANY_UPDATES.getErrorCode() + ", \"errorMsg\":\"Too many updates!\"}");
+                            sessionMd.sendMsg("{\"subscriptionId\":" + subscriptionId + ", \"errorCode\":" + VizzionnaireErrorCode.TOO_MANY_UPDATES.getErrorCode() + ", \"errorMsg\":\"Too many updates!\"}");
                         }
                         return;
                     } else {

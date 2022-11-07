@@ -14,8 +14,8 @@ import com.vizzionnaire.server.common.data.ExportableEntity;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.id.EntityIdFactory;
 import com.vizzionnaire.server.common.data.id.HasId;
@@ -153,26 +153,26 @@ public class DefaultEntitiesVersionControlService implements EntitiesVersionCont
     }
 
     @Override
-    public VersionCreationResult getVersionCreateStatus(User user, UUID requestId) throws ThingsboardException {
+    public VersionCreationResult getVersionCreateStatus(User user, UUID requestId) throws VizzionnaireException {
         return getStatus(user, requestId, VersionControlTaskCacheEntry::getExportResult);
     }
 
     @Override
-    public VersionLoadResult getVersionLoadStatus(User user, UUID requestId) throws ThingsboardException {
+    public VersionLoadResult getVersionLoadStatus(User user, UUID requestId) throws VizzionnaireException {
         return getStatus(user, requestId, VersionControlTaskCacheEntry::getImportResult);
     }
 
-    private <T> T getStatus(User user, UUID requestId, Function<VersionControlTaskCacheEntry, T> getter) throws ThingsboardException {
+    private <T> T getStatus(User user, UUID requestId, Function<VersionControlTaskCacheEntry, T> getter) throws VizzionnaireException {
         var cacheEntry = taskCache.get(requestId);
         if (cacheEntry == null || cacheEntry.get() == null) {
             log.debug("[{}] No cache record: {}", requestId, cacheEntry);
-            throw new ThingsboardException(ThingsboardErrorCode.ITEM_NOT_FOUND);
+            throw new VizzionnaireException(VizzionnaireErrorCode.ITEM_NOT_FOUND);
         } else {
             var entry = cacheEntry.get();
             log.debug("[{}] Cache get: {}", requestId, entry);
             var result = getter.apply(entry);
             if (result == null) {
-                throw new ThingsboardException(ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+                throw new VizzionnaireException(VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
             } else {
                 return result;
             }
@@ -460,7 +460,7 @@ public class DefaultEntitiesVersionControlService implements EntitiesVersionCont
                     EntityExportData<?> currentVersion;
                     try {
                         currentVersion = exportImportService.exportEntity(ctx, entityId);
-                    } catch (ThingsboardException e) {
+                    } catch (VizzionnaireException e) {
                         throw new RuntimeException(e);
                     }
                     return new EntityDataDiff(currentVersion.sort(), otherVersion.sort());
@@ -506,13 +506,13 @@ public class DefaultEntitiesVersionControlService implements EntitiesVersionCont
     }
 
     @Override
-    public ListenableFuture<Void> checkVersionControlAccess(TenantId tenantId, RepositorySettings settings) throws ThingsboardException {
+    public ListenableFuture<Void> checkVersionControlAccess(TenantId tenantId, RepositorySettings settings) throws VizzionnaireException {
         settings = this.repositorySettingsService.restore(tenantId, settings);
         try {
             return gitServiceQueue.testRepository(tenantId, settings);
         } catch (Exception e) {
-            throw new ThingsboardException(String.format("Unable to access repository: %s", getCauseMessage(e)),
-                    ThingsboardErrorCode.GENERAL);
+            throw new VizzionnaireException(String.format("Unable to access repository: %s", getCauseMessage(e)),
+                    VizzionnaireErrorCode.GENERAL);
         }
     }
 

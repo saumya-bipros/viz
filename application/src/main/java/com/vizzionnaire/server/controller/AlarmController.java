@@ -39,8 +39,8 @@ import com.vizzionnaire.server.common.data.alarm.AlarmQuery;
 import com.vizzionnaire.server.common.data.alarm.AlarmSearchStatus;
 import com.vizzionnaire.server.common.data.alarm.AlarmSeverity;
 import com.vizzionnaire.server.common.data.alarm.AlarmStatus;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.AlarmId;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.id.EntityIdFactory;
@@ -78,7 +78,7 @@ public class AlarmController extends BaseController {
     @RequestMapping(value = "/alarm/{alarmId}", method = RequestMethod.GET)
     @ResponseBody
     public Alarm getAlarmById(@ApiParam(value = ALARM_ID_PARAM_DESCRIPTION)
-                              @PathVariable(ALARM_ID) String strAlarmId) throws ThingsboardException {
+                              @PathVariable(ALARM_ID) String strAlarmId) throws VizzionnaireException {
         checkParameter(ALARM_ID, strAlarmId);
         try {
             AlarmId alarmId = new AlarmId(toUUID(strAlarmId));
@@ -95,7 +95,7 @@ public class AlarmController extends BaseController {
     @RequestMapping(value = "/alarm/info/{alarmId}", method = RequestMethod.GET)
     @ResponseBody
     public AlarmInfo getAlarmInfoById(@ApiParam(value = ALARM_ID_PARAM_DESCRIPTION)
-                                      @PathVariable(ALARM_ID) String strAlarmId) throws ThingsboardException {
+                                      @PathVariable(ALARM_ID) String strAlarmId) throws VizzionnaireException {
         checkParameter(ALARM_ID, strAlarmId);
         try {
             AlarmId alarmId = new AlarmId(toUUID(strAlarmId));
@@ -120,7 +120,7 @@ public class AlarmController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/alarm", method = RequestMethod.POST)
     @ResponseBody
-    public Alarm saveAlarm(@ApiParam(value = "A JSON value representing the alarm.") @RequestBody Alarm alarm) throws ThingsboardException {
+    public Alarm saveAlarm(@ApiParam(value = "A JSON value representing the alarm.") @RequestBody Alarm alarm) throws VizzionnaireException {
         alarm.setTenantId(getTenantId());
         checkEntity(alarm.getId(), alarm, Resource.ALARM);
         return tbAlarmService.save(alarm, getCurrentUser());
@@ -131,7 +131,7 @@ public class AlarmController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/alarm/{alarmId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Boolean deleteAlarm(@ApiParam(value = ALARM_ID_PARAM_DESCRIPTION) @PathVariable(ALARM_ID) String strAlarmId) throws ThingsboardException {
+    public Boolean deleteAlarm(@ApiParam(value = ALARM_ID_PARAM_DESCRIPTION) @PathVariable(ALARM_ID) String strAlarmId) throws VizzionnaireException {
         checkParameter(ALARM_ID, strAlarmId);
         AlarmId alarmId = new AlarmId(toUUID(strAlarmId));
         Alarm alarm = checkAlarmId(alarmId, Operation.DELETE);
@@ -197,15 +197,15 @@ public class AlarmController extends BaseController {
             @RequestParam(required = false) Long endTime,
             @ApiParam(value = ALARM_QUERY_FETCH_ORIGINATOR_DESCRIPTION)
             @RequestParam(required = false) Boolean fetchOriginator
-    ) throws ThingsboardException {
+    ) throws VizzionnaireException {
         checkParameter("EntityId", strEntityId);
         checkParameter("EntityType", strEntityType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strEntityType, strEntityId);
         AlarmSearchStatus alarmSearchStatus = StringUtils.isEmpty(searchStatus) ? null : AlarmSearchStatus.valueOf(searchStatus);
         AlarmStatus alarmStatus = StringUtils.isEmpty(status) ? null : AlarmStatus.valueOf(status);
         if (alarmSearchStatus != null && alarmStatus != null) {
-            throw new ThingsboardException("Invalid alarms search query: Both parameters 'searchStatus' " +
-                    "and 'status' can't be specified at the same time!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Invalid alarms search query: Both parameters 'searchStatus' " +
+                    "and 'status' can't be specified at the same time!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
         checkEntityId(entityId, Operation.READ);
         TimePageLink pageLink = createTimePageLink(pageSize, page, textSearch, sortProperty, sortOrder, startTime, endTime);
@@ -247,12 +247,12 @@ public class AlarmController extends BaseController {
             @RequestParam(required = false) Long endTime,
             @ApiParam(value = ALARM_QUERY_FETCH_ORIGINATOR_DESCRIPTION)
             @RequestParam(required = false) Boolean fetchOriginator
-    ) throws ThingsboardException {
+    ) throws VizzionnaireException {
         AlarmSearchStatus alarmSearchStatus = StringUtils.isEmpty(searchStatus) ? null : AlarmSearchStatus.valueOf(searchStatus);
         AlarmStatus alarmStatus = StringUtils.isEmpty(status) ? null : AlarmStatus.valueOf(status);
         if (alarmSearchStatus != null && alarmStatus != null) {
-            throw new ThingsboardException("Invalid alarms search query: Both parameters 'searchStatus' " +
-                    "and 'status' can't be specified at the same time!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Invalid alarms search query: Both parameters 'searchStatus' " +
+                    "and 'status' can't be specified at the same time!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
         TimePageLink pageLink = createTimePageLink(pageSize, page, textSearch, sortProperty, sortOrder, startTime, endTime);
 
@@ -283,15 +283,15 @@ public class AlarmController extends BaseController {
             @RequestParam(required = false) String searchStatus,
             @ApiParam(value = ALARM_QUERY_STATUS_DESCRIPTION, allowableValues = ALARM_QUERY_STATUS_ALLOWABLE_VALUES)
             @RequestParam(required = false) String status
-    ) throws ThingsboardException {
+    ) throws VizzionnaireException {
         checkParameter("EntityId", strEntityId);
         checkParameter("EntityType", strEntityType);
         EntityId entityId = EntityIdFactory.getByTypeAndId(strEntityType, strEntityId);
         AlarmSearchStatus alarmSearchStatus = StringUtils.isEmpty(searchStatus) ? null : AlarmSearchStatus.valueOf(searchStatus);
         AlarmStatus alarmStatus = StringUtils.isEmpty(status) ? null : AlarmStatus.valueOf(status);
         if (alarmSearchStatus != null && alarmStatus != null) {
-            throw new ThingsboardException("Invalid alarms search query: Both parameters 'searchStatus' " +
-                    "and 'status' can't be specified at the same time!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Invalid alarms search query: Both parameters 'searchStatus' " +
+                    "and 'status' can't be specified at the same time!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
         checkEntityId(entityId, Operation.READ);
         try {

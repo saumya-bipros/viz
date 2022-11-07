@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vizzionnaire.server.common.data.DeviceProfile;
 import com.vizzionnaire.server.common.data.DeviceProfileInfo;
 import com.vizzionnaire.server.common.data.StringUtils;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.DeviceProfileId;
 import com.vizzionnaire.server.common.data.page.PageData;
 import com.vizzionnaire.server.common.data.page.PageLink;
@@ -71,7 +71,7 @@ public class DeviceProfileController extends BaseController {
     @ResponseBody
     public DeviceProfile getDeviceProfileById(
             @ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws ThingsboardException {
+            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws VizzionnaireException {
         checkParameter(DEVICE_PROFILE_ID, strDeviceProfileId);
         try {
             DeviceProfileId deviceProfileId = new DeviceProfileId(toUUID(strDeviceProfileId));
@@ -90,7 +90,7 @@ public class DeviceProfileController extends BaseController {
     @ResponseBody
     public DeviceProfileInfo getDeviceProfileInfoById(
             @ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws ThingsboardException {
+            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws VizzionnaireException {
         checkParameter(DEVICE_PROFILE_ID, strDeviceProfileId);
         try {
             DeviceProfileId deviceProfileId = new DeviceProfileId(toUUID(strDeviceProfileId));
@@ -107,7 +107,7 @@ public class DeviceProfileController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/deviceProfileInfo/default", method = RequestMethod.GET)
     @ResponseBody
-    public DeviceProfileInfo getDefaultDeviceProfileInfo() throws ThingsboardException {
+    public DeviceProfileInfo getDefaultDeviceProfileInfo() throws VizzionnaireException {
         try {
             return checkNotNull(deviceProfileService.findDefaultDeviceProfileInfo(getTenantId()));
         } catch (Exception e) {
@@ -127,7 +127,7 @@ public class DeviceProfileController extends BaseController {
     @ResponseBody
     public List<String> getTimeseriesKeys(
             @ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
-            @RequestParam(name = DEVICE_PROFILE_ID, required = false) String deviceProfileIdStr) throws ThingsboardException {
+            @RequestParam(name = DEVICE_PROFILE_ID, required = false) String deviceProfileIdStr) throws VizzionnaireException {
         DeviceProfileId deviceProfileId;
         if (StringUtils.isNotEmpty(deviceProfileIdStr)) {
             deviceProfileId = new DeviceProfileId(UUID.fromString(deviceProfileIdStr));
@@ -155,7 +155,7 @@ public class DeviceProfileController extends BaseController {
     @ResponseBody
     public List<String> getAttributesKeys(
             @ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
-            @RequestParam(name = DEVICE_PROFILE_ID, required = false) String deviceProfileIdStr) throws ThingsboardException {
+            @RequestParam(name = DEVICE_PROFILE_ID, required = false) String deviceProfileIdStr) throws VizzionnaireException {
         DeviceProfileId deviceProfileId;
         if (StringUtils.isNotEmpty(deviceProfileIdStr)) {
             deviceProfileId = new DeviceProfileId(UUID.fromString(deviceProfileIdStr));
@@ -201,7 +201,7 @@ public class DeviceProfileController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteDeviceProfile(
             @ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws ThingsboardException {
+            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws VizzionnaireException {
         checkParameter(DEVICE_PROFILE_ID, strDeviceProfileId);
         DeviceProfileId deviceProfileId = new DeviceProfileId(toUUID(strDeviceProfileId));
         DeviceProfile deviceProfile = checkDeviceProfileId(deviceProfileId, Operation.DELETE);
@@ -216,7 +216,7 @@ public class DeviceProfileController extends BaseController {
     @ResponseBody
     public DeviceProfile setDefaultDeviceProfile(
             @ApiParam(value = DEVICE_PROFILE_ID_PARAM_DESCRIPTION)
-            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws ThingsboardException {
+            @PathVariable(DEVICE_PROFILE_ID) String strDeviceProfileId) throws VizzionnaireException {
         checkParameter(DEVICE_PROFILE_ID, strDeviceProfileId);
         DeviceProfileId deviceProfileId = new DeviceProfileId(toUUID(strDeviceProfileId));
         DeviceProfile deviceProfile = checkDeviceProfileId(deviceProfileId, Operation.WRITE);
@@ -241,7 +241,7 @@ public class DeviceProfileController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = DEVICE_PROFILE_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(deviceProfileService.findDeviceProfiles(getTenantId(), pageLink));
@@ -269,7 +269,7 @@ public class DeviceProfileController extends BaseController {
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortOrder,
             @ApiParam(value = "Type of the transport", allowableValues = TRANSPORT_TYPE_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String transportType) throws ThingsboardException {
+            @RequestParam(required = false) String transportType) throws VizzionnaireException {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             return checkNotNull(deviceProfileService.findDeviceProfileInfos(getTenantId(), pageLink, transportType));

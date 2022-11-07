@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import com.vizzionnaire.rule.engine.api.SmsService;
 import com.vizzionnaire.rule.engine.api.util.TbNodeUtils;
 import com.vizzionnaire.server.common.data.User;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.SmsTwoFaAccountConfig;
 import com.vizzionnaire.server.common.data.security.model.mfa.provider.SmsTwoFaProviderConfig;
@@ -35,7 +35,7 @@ public class SmsTwoFaProvider extends OtpBasedTwoFaProvider<SmsTwoFaProviderConf
     }
 
     @Override
-    protected void sendVerificationCode(SecurityUser user, String verificationCode, SmsTwoFaProviderConfig providerConfig, SmsTwoFaAccountConfig accountConfig) throws ThingsboardException {
+    protected void sendVerificationCode(SecurityUser user, String verificationCode, SmsTwoFaProviderConfig providerConfig, SmsTwoFaAccountConfig accountConfig) throws VizzionnaireException {
         Map<String, String> messageData = Map.of(
                 "code", verificationCode,
                 "userEmail", user.getEmail()
@@ -47,9 +47,9 @@ public class SmsTwoFaProvider extends OtpBasedTwoFaProvider<SmsTwoFaProviderConf
     }
 
     @Override
-    public void check(TenantId tenantId) throws ThingsboardException {
+    public void check(TenantId tenantId) throws VizzionnaireException {
         if (!smsService.isConfigured(tenantId)) {
-            throw new ThingsboardException("SMS service is not configured", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("SMS service is not configured", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
     }
 

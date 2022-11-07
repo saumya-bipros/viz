@@ -19,8 +19,8 @@ import com.vizzionnaire.server.common.data.DataConstants;
 import com.vizzionnaire.server.common.data.EventInfo;
 import com.vizzionnaire.server.common.data.event.EventFilter;
 import com.vizzionnaire.server.common.data.event.EventType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.id.EntityIdFactory;
 import com.vizzionnaire.server.common.data.id.TenantId;
@@ -123,7 +123,7 @@ public class EventController extends BaseController {
             @ApiParam(value = EVENT_START_TIME_DESCRIPTION)
             @RequestParam(required = false) Long startTime,
             @ApiParam(value = EVENT_END_TIME_DESCRIPTION)
-            @RequestParam(required = false) Long endTime) throws ThingsboardException {
+            @RequestParam(required = false) Long endTime) throws VizzionnaireException {
         checkParameter("EntityId", strEntityId);
         checkParameter("EntityType", strEntityType);
         TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
@@ -163,7 +163,7 @@ public class EventController extends BaseController {
             @ApiParam(value = EVENT_START_TIME_DESCRIPTION)
             @RequestParam(required = false) Long startTime,
             @ApiParam(value = EVENT_END_TIME_DESCRIPTION)
-            @RequestParam(required = false) Long endTime) throws ThingsboardException {
+            @RequestParam(required = false) Long endTime) throws VizzionnaireException {
         checkParameter("EntityId", strEntityId);
         checkParameter("EntityType", strEntityType);
         TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
@@ -206,7 +206,7 @@ public class EventController extends BaseController {
             @ApiParam(value = EVENT_START_TIME_DESCRIPTION)
             @RequestParam(required = false) Long startTime,
             @ApiParam(value = EVENT_END_TIME_DESCRIPTION)
-            @RequestParam(required = false) Long endTime) throws ThingsboardException {
+            @RequestParam(required = false) Long endTime) throws VizzionnaireException {
         checkParameter("EntityId", strEntityId);
         checkParameter("EntityType", strEntityType);
         TenantId tenantId = TenantId.fromUUID(toUUID(strTenantId));
@@ -231,7 +231,7 @@ public class EventController extends BaseController {
                             @ApiParam(value = EVENT_END_TIME_DESCRIPTION)
                             @RequestParam(required = false) Long endTime,
                             @ApiParam(value = EVENT_FILTER_DEFINITION)
-                            @RequestBody EventFilter eventFilter) throws ThingsboardException {
+                            @RequestBody EventFilter eventFilter) throws VizzionnaireException {
         checkParameter("EntityId", strEntityId);
         checkParameter("EntityType", strEntityType);
         try {
@@ -244,13 +244,13 @@ public class EventController extends BaseController {
         }
     }
 
-    private static EventType resolveEventType(String eventType) throws ThingsboardException {
+    private static EventType resolveEventType(String eventType) throws VizzionnaireException {
         for (var et : EventType.values()) {
             if (et.name().equalsIgnoreCase(eventType) || et.getOldName().equalsIgnoreCase(eventType)) {
                 return et;
             }
         }
-        throw new ThingsboardException("Event type: '" + eventType + "' is not supported!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+        throw new VizzionnaireException("Event type: '" + eventType + "' is not supported!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
     }
 
 }

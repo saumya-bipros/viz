@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.server.common.data.TenantProfile;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.common.data.plugin.ComponentLifecycleEvent;
 import com.vizzionnaire.server.dao.tenant.TbTenantProfileCache;
@@ -28,7 +28,7 @@ public class DefaultTbTenantProfileService extends AbstractTbEntityService imple
     private final TbTenantProfileCache tenantProfileCache;
 
     @Override
-    public TenantProfile save(TenantId tenantId, TenantProfile tenantProfile, TenantProfile oldTenantProfile) throws ThingsboardException {
+    public TenantProfile save(TenantId tenantId, TenantProfile tenantProfile, TenantProfile oldTenantProfile) throws VizzionnaireException {
         TenantProfile savedTenantProfile = checkNotNull(tenantProfileService.saveTenantProfile(tenantId, tenantProfile));
         if (oldTenantProfile != null && savedTenantProfile.isIsolatedTbRuleEngine()) {
             List<TenantId> tenantIds = tenantService.findTenantIdsByTenantProfileId(savedTenantProfile.getId());
@@ -44,7 +44,7 @@ public class DefaultTbTenantProfileService extends AbstractTbEntityService imple
     }
 
     @Override
-    public void delete(TenantId tenantId, TenantProfile tenantProfile) throws ThingsboardException {
+    public void delete(TenantId tenantId, TenantProfile tenantProfile) throws VizzionnaireException {
         tenantProfileService.deleteTenantProfile(tenantId, tenantProfile.getId());
         tbClusterService.onTenantProfileDelete(tenantProfile, null);
     }

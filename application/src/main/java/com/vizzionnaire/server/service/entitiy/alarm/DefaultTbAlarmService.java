@@ -9,7 +9,7 @@ import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.alarm.Alarm;
 import com.vizzionnaire.server.common.data.alarm.AlarmStatus;
 import com.vizzionnaire.server.common.data.audit.ActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.TenantId;
 import com.vizzionnaire.server.dao.alarm.AlarmOperationResult;
@@ -25,7 +25,7 @@ import java.util.List;
 public class DefaultTbAlarmService extends AbstractTbEntityService implements TbAlarmService {
 
     @Override
-    public Alarm save(Alarm alarm, User user) throws ThingsboardException {
+    public Alarm save(Alarm alarm, User user) throws VizzionnaireException {
         ActionType actionType = alarm.getId() == null ? ActionType.ADDED : ActionType.UPDATED;
         TenantId tenantId = alarm.getTenantId();
         try {

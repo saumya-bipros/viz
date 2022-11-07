@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.security.model.mfa.PlatformTwoFaSettings;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.AccountTwoFaSettings;
 import com.vizzionnaire.server.common.data.security.model.mfa.account.TwoFaAccountConfig;
@@ -54,7 +54,7 @@ public class TwoFactorAuthConfigController extends BaseController {
                     ControllerConstants.AVAILABLE_FOR_ANY_AUTHORIZED_USER)
     @GetMapping("/account/settings")
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
-    public AccountTwoFaSettings getAccountTwoFaSettings() throws ThingsboardException {
+    public AccountTwoFaSettings getAccountTwoFaSettings() throws VizzionnaireException {
         SecurityUser user = getCurrentUser();
         return twoFaConfigManager.getAccountTwoFaSettings(user.getTenantId(), user.getId()).orElse(null);
     }
@@ -155,7 +155,7 @@ public class TwoFactorAuthConfigController extends BaseController {
     @PutMapping("/account/config")
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
     public AccountTwoFaSettings updateTwoFaAccountConfig(@RequestParam TwoFaProviderType providerType,
-                                                         @RequestBody TwoFaAccountConfigUpdateRequest updateRequest) throws ThingsboardException {
+                                                         @RequestBody TwoFaAccountConfigUpdateRequest updateRequest) throws VizzionnaireException {
         SecurityUser user = getCurrentUser();
 
         TwoFaAccountConfig accountConfig = twoFaConfigManager.getTwoFaAccountConfig(user.getTenantId(), user.getId(), providerType)
@@ -170,7 +170,7 @@ public class TwoFactorAuthConfigController extends BaseController {
                     ControllerConstants.AVAILABLE_FOR_ANY_AUTHORIZED_USER)
     @DeleteMapping("/account/config")
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
-    public AccountTwoFaSettings deleteTwoFaAccountConfig(@RequestParam TwoFaProviderType providerType) throws ThingsboardException {
+    public AccountTwoFaSettings deleteTwoFaAccountConfig(@RequestParam TwoFaProviderType providerType) throws VizzionnaireException {
         SecurityUser user = getCurrentUser();
         return twoFaConfigManager.deleteTwoFaAccountConfig(user.getTenantId(), user.getId(), providerType);
     }
@@ -184,7 +184,7 @@ public class TwoFactorAuthConfigController extends BaseController {
     )
     @GetMapping("/providers")
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN', 'CUSTOMER_USER')")
-    public List<TwoFaProviderType> getAvailableTwoFaProviders() throws ThingsboardException {
+    public List<TwoFaProviderType> getAvailableTwoFaProviders() throws VizzionnaireException {
         return twoFaConfigManager.getPlatformTwoFaSettings(getTenantId(), true)
                 .map(PlatformTwoFaSettings::getProviders).orElse(Collections.emptyList()).stream()
                 .map(TwoFaProviderConfig::getProviderType)
@@ -198,7 +198,7 @@ public class TwoFactorAuthConfigController extends BaseController {
                     ControllerConstants.SYSTEM_OR_TENANT_AUTHORITY_PARAGRAPH)
     @GetMapping("/settings")
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN')")
-    public PlatformTwoFaSettings getPlatformTwoFaSettings() throws ThingsboardException {
+    public PlatformTwoFaSettings getPlatformTwoFaSettings() throws VizzionnaireException {
         return twoFaConfigManager.getPlatformTwoFaSettings(getTenantId(), false).orElse(null);
     }
 
@@ -246,7 +246,7 @@ public class TwoFactorAuthConfigController extends BaseController {
     @PostMapping("/settings")
     @PreAuthorize("hasAnyAuthority('SYS_ADMIN')")
     public PlatformTwoFaSettings savePlatformTwoFaSettings(@ApiParam(value = "Settings value", required = true)
-                                          @RequestBody PlatformTwoFaSettings twoFaSettings) throws ThingsboardException {
+                                          @RequestBody PlatformTwoFaSettings twoFaSettings) throws VizzionnaireException {
         return twoFaConfigManager.savePlatformTwoFaSettings(getTenantId(), twoFaSettings);
     }
 

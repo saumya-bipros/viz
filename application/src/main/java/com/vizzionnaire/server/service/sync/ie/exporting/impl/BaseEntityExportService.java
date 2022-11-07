@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.vizzionnaire.common.util.JacksonUtil;
 import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.ExportableEntity;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EntityId;
 import com.vizzionnaire.server.common.data.sync.ie.EntityExportData;
 import com.vizzionnaire.server.service.sync.vc.data.EntitiesExportCtx;
@@ -14,7 +14,7 @@ import java.util.Set;
 public abstract class BaseEntityExportService<I extends EntityId, E extends ExportableEntity<I>, D extends EntityExportData<E>> extends DefaultEntityExportService<I, E, D> {
 
     @Override
-    protected void setAdditionalExportData(EntitiesExportCtx<?> ctx, E entity, D exportData) throws ThingsboardException {
+    protected void setAdditionalExportData(EntitiesExportCtx<?> ctx, E entity, D exportData) throws VizzionnaireException {
         setRelatedEntities(ctx, entity, (D) exportData);
         super.setAdditionalExportData(ctx, entity, exportData);
     }

@@ -31,7 +31,7 @@ import com.vizzionnaire.server.common.data.page.PageData;
 import com.vizzionnaire.server.common.data.page.PageLink;
 import com.vizzionnaire.server.common.data.page.TimePageLink;
 import com.vizzionnaire.server.common.data.security.Authority;
-import com.vizzionnaire.server.config.ThingsboardSecurityConfiguration;
+import com.vizzionnaire.server.config.VizzionnaireSecurityConfiguration;
 import com.vizzionnaire.server.dao.tenant.TenantProfileService;
 import com.vizzionnaire.server.service.mail.TestMailService;
 import com.vizzionnaire.server.service.security.auth.jwt.RefreshTokenRequest;
@@ -397,7 +397,7 @@ public abstract class AbstractWebTest extends AbstractInMemoryStorageTest {
 
     protected void setJwtToken(MockHttpServletRequestBuilder request) {
         if (this.token != null) {
-            request.header(ThingsboardSecurityConfiguration.JWT_TOKEN_HEADER_PARAM, "Bearer " + this.token);
+            request.header(VizzionnaireSecurityConfiguration.JWT_TOKEN_HEADER_PARAM, "Bearer " + this.token);
         }
     }
 

@@ -12,7 +12,7 @@ import com.vizzionnaire.server.common.data.EventInfo;
 import com.vizzionnaire.server.common.data.StringUtils;
 import com.vizzionnaire.server.common.data.edge.Edge;
 import com.vizzionnaire.server.common.data.event.EventType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.RuleChainId;
 import com.vizzionnaire.server.common.data.id.RuleNodeId;
@@ -141,7 +141,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public RuleChain getRuleChainById(
             @ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         try {
             RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
@@ -159,7 +159,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public Set<String> getRuleChainOutputLabels(
             @ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         try {
             RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
@@ -178,7 +178,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public List<RuleChainOutputLabelsUsage> getRuleChainOutputLabelsUsage(
             @ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         try {
             RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
@@ -196,7 +196,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public RuleChainMetaData getRuleChainMetaData(
             @ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         try {
             RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
@@ -247,7 +247,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public RuleChain setRootRuleChain(
             @ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
         RuleChain ruleChain = checkRuleChain(ruleChainId, Operation.WRITE);
@@ -295,7 +295,7 @@ public class RuleChainController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = RULE_CHAIN_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
@@ -317,7 +317,7 @@ public class RuleChainController extends BaseController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteRuleChain(
             @ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+            @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
         RuleChain ruleChain = checkRuleChain(ruleChainId, Operation.DELETE);
@@ -332,7 +332,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public JsonNode getLatestRuleNodeDebugInput(
             @ApiParam(value = RULE_NODE_ID_PARAM_DESCRIPTION)
-            @PathVariable(RULE_NODE_ID) String strRuleNodeId) throws ThingsboardException {
+            @PathVariable(RULE_NODE_ID) String strRuleNodeId) throws VizzionnaireException {
         checkParameter(RULE_NODE_ID, strRuleNodeId);
         try {
             RuleNodeId ruleNodeId = new RuleNodeId(toUUID(strRuleNodeId));
@@ -363,7 +363,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public JsonNode testScript(
             @ApiParam(value = "Test JS request. See API call description above.")
-            @RequestBody JsonNode inputParams) throws ThingsboardException {
+            @RequestBody JsonNode inputParams) throws VizzionnaireException {
         try {
             String script = inputParams.get("script").asText();
             String scriptType = inputParams.get("scriptType").asText();
@@ -429,7 +429,7 @@ public class RuleChainController extends BaseController {
     @ResponseBody
     public RuleChainData exportRuleChains(
             @ApiParam(value = "A limit of rule chains to export.", required = true)
-            @RequestParam("limit") int limit) throws ThingsboardException {
+            @RequestParam("limit") int limit) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             PageLink pageLink = new PageLink(limit);
@@ -447,7 +447,7 @@ public class RuleChainController extends BaseController {
             @ApiParam(value = "A JSON value representing the rule chains.")
             @RequestBody RuleChainData ruleChainData,
             @ApiParam(value = "Enables overwrite for existing rule chains with the same name.")
-            @RequestParam(required = false, defaultValue = "false") boolean overwrite) throws ThingsboardException {
+            @RequestParam(required = false, defaultValue = "false") boolean overwrite) throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             List<RuleChainImportResult> importResults = ruleChainService.importTenantRuleChains(tenantId, ruleChainData, overwrite);
@@ -505,7 +505,7 @@ public class RuleChainController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}/ruleChain/{ruleChainId}", method = RequestMethod.POST)
     @ResponseBody
     public RuleChain assignRuleChainToEdge(@PathVariable("edgeId") String strEdgeId,
-                                           @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+                                           @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter("edgeId", strEdgeId);
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
@@ -528,7 +528,7 @@ public class RuleChainController extends BaseController {
     @RequestMapping(value = "/edge/{edgeId}/ruleChain/{ruleChainId}", method = RequestMethod.DELETE)
     @ResponseBody
     public RuleChain unassignRuleChainFromEdge(@PathVariable("edgeId") String strEdgeId,
-                                               @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+                                               @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter("edgeId", strEdgeId);
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         EdgeId edgeId = new EdgeId(toUUID(strEdgeId));
@@ -556,7 +556,7 @@ public class RuleChainController extends BaseController {
             @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = RULE_CHAIN_SORT_PROPERTY_ALLOWABLE_VALUES)
             @RequestParam(required = false) String sortProperty,
             @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+            @RequestParam(required = false) String sortOrder) throws VizzionnaireException {
         checkParameter(EDGE_ID, strEdgeId);
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
@@ -576,7 +576,7 @@ public class RuleChainController extends BaseController {
     @RequestMapping(value = "/ruleChain/{ruleChainId}/edgeTemplateRoot", method = RequestMethod.POST)
     @ResponseBody
     public RuleChain setEdgeTemplateRootRuleChain(@ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-                                                  @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+                                                  @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
         RuleChain ruleChain = checkRuleChain(ruleChainId, Operation.WRITE);
@@ -590,7 +590,7 @@ public class RuleChainController extends BaseController {
     @RequestMapping(value = "/ruleChain/{ruleChainId}/autoAssignToEdge", method = RequestMethod.POST)
     @ResponseBody
     public RuleChain setAutoAssignToEdgeRuleChain(@ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-                                                  @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+                                                  @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
         RuleChain ruleChain = checkRuleChain(ruleChainId, Operation.WRITE);
@@ -604,7 +604,7 @@ public class RuleChainController extends BaseController {
     @RequestMapping(value = "/ruleChain/{ruleChainId}/autoAssignToEdge", method = RequestMethod.DELETE)
     @ResponseBody
     public RuleChain unsetAutoAssignToEdgeRuleChain(@ApiParam(value = RULE_CHAIN_ID_PARAM_DESCRIPTION)
-                                                    @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws ThingsboardException {
+                                                    @PathVariable(RULE_CHAIN_ID) String strRuleChainId) throws VizzionnaireException {
         checkParameter(RULE_CHAIN_ID, strRuleChainId);
         RuleChainId ruleChainId = new RuleChainId(toUUID(strRuleChainId));
         RuleChain ruleChain = checkRuleChain(ruleChainId, Operation.WRITE);
@@ -617,7 +617,7 @@ public class RuleChainController extends BaseController {
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN')")
     @RequestMapping(value = "/ruleChain/autoAssignToEdgeRuleChains", method = RequestMethod.GET)
     @ResponseBody
-    public List<RuleChain> getAutoAssignToEdgeRuleChains() throws ThingsboardException {
+    public List<RuleChain> getAutoAssignToEdgeRuleChains() throws VizzionnaireException {
         try {
             TenantId tenantId = getCurrentUser().getTenantId();
             List<RuleChain> result = new ArrayList<>();

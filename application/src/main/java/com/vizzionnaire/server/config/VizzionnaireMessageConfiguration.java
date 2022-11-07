@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
-public class ThingsboardMessageConfiguration {
+public class VizzionnaireMessageConfiguration {
 
     @Bean
     @Primary

@@ -7,8 +7,8 @@ import com.vizzionnaire.server.common.data.EntityType;
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.alarm.AlarmInfo;
 import com.vizzionnaire.server.common.data.alarm.AlarmQuery;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.AlarmId;
 import com.vizzionnaire.server.common.data.id.EdgeId;
 import com.vizzionnaire.server.common.data.id.EntityId;
@@ -76,26 +76,26 @@ public abstract class AbstractTbEntityService {
         }, dbExecutor);
     }
 
-    protected <T> T checkNotNull(T reference) throws ThingsboardException {
+    protected <T> T checkNotNull(T reference) throws VizzionnaireException {
         return checkNotNull(reference, "Requested item wasn't found!");
     }
 
-    protected <T> T checkNotNull(T reference, String notFoundMessage) throws ThingsboardException {
+    protected <T> T checkNotNull(T reference, String notFoundMessage) throws VizzionnaireException {
         if (reference == null) {
-            throw new ThingsboardException(notFoundMessage, ThingsboardErrorCode.ITEM_NOT_FOUND);
+            throw new VizzionnaireException(notFoundMessage, VizzionnaireErrorCode.ITEM_NOT_FOUND);
         }
         return reference;
     }
 
-    protected <T> T checkNotNull(Optional<T> reference) throws ThingsboardException {
+    protected <T> T checkNotNull(Optional<T> reference) throws VizzionnaireException {
         return checkNotNull(reference, "Requested item wasn't found!");
     }
 
-    protected <T> T checkNotNull(Optional<T> reference, String notFoundMessage) throws ThingsboardException {
+    protected <T> T checkNotNull(Optional<T> reference, String notFoundMessage) throws VizzionnaireException {
         if (reference.isPresent()) {
             return reference.get();
         } else {
-            throw new ThingsboardException(notFoundMessage, ThingsboardErrorCode.ITEM_NOT_FOUND);
+            throw new VizzionnaireException(notFoundMessage, VizzionnaireErrorCode.ITEM_NOT_FOUND);
         }
     }
 

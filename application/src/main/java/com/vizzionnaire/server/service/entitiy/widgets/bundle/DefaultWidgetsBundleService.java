@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.vizzionnaire.server.common.data.User;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.widget.WidgetsBundle;
 import com.vizzionnaire.server.dao.widget.WidgetsBundleService;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
@@ -28,7 +28,7 @@ public class DefaultWidgetsBundleService extends AbstractTbEntityService impleme
     }
 
     @Override
-    public void delete(WidgetsBundle widgetsBundle) throws ThingsboardException {
+    public void delete(WidgetsBundle widgetsBundle) throws VizzionnaireException {
         widgetsBundleService.deleteWidgetsBundle(widgetsBundle.getTenantId(), widgetsBundle.getId());
         notificationEntityService.notifySendMsgToEdgeService(widgetsBundle.getTenantId(), widgetsBundle.getId(),
                 EdgeEventActionType.DELETED);

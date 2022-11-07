@@ -20,7 +20,7 @@ if [ "$INSTALL_TB" == "true" ]; then
 
     echo "Starting Vizzionnaire installation ..."
 
-    exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.ThingsboardInstallApplication \
+    exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.VizzionnaireInstallApplication \
                         -Dinstall.load_demo=${loadDemo} \
                         -Dspring.jpa.hibernate.ddl-auto=none \
                         -Dinstall.upgrade=false \
@@ -38,7 +38,7 @@ elif [ "$UPGRADE_TB" == "true" ]; then
         fromVersion="${FROM_VERSION// }"
     fi
 
-    exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.ThingsboardInstallApplication \
+    exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.VizzionnaireInstallApplication \
                     -Dspring.jpa.hibernate.ddl-auto=none \
                     -Dinstall.upgrade=true \
                     -Dinstall.upgrade.from_version=${fromVersion} \
@@ -49,7 +49,7 @@ else
 
     echo "Starting '${project.name}' ..."
 
-    exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.ThingsboardServerApplication \
+    exec java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.VizzionnaireServerApplication \
                         -Dspring.jpa.hibernate.ddl-auto=none \
                         -Dlogging.config=/config/logback.xml \
                         org.springframework.boot.loader.PropertiesLauncher

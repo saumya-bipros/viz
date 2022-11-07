@@ -2,7 +2,7 @@ package com.vizzionnaire.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vizzionnaire.server.dao.oauth2.OAuth2Configuration;
-import com.vizzionnaire.server.exception.ThingsboardErrorResponseHandler;
+import com.vizzionnaire.server.exception.VizzionnaireErrorResponseHandler;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
 import com.vizzionnaire.server.service.security.auth.jwt.JwtAuthenticationProvider;
 import com.vizzionnaire.server.service.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
@@ -49,7 +49,7 @@ import java.util.List;
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 @TbCoreComponent
-public class ThingsboardSecurityConfiguration {
+public class VizzionnaireSecurityConfiguration {
 
     public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
     public static final String JWT_TOKEN_HEADER_PARAM_V2 = "Authorization";
@@ -64,7 +64,7 @@ public class ThingsboardSecurityConfiguration {
     public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
     public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = "/api/ws/**";
 
-    @Autowired private ThingsboardErrorResponseHandler restAccessDeniedHandler;
+    @Autowired private VizzionnaireErrorResponseHandler restAccessDeniedHandler;
 
     @Autowired(required = false)
     @Qualifier("oauth2AuthenticationSuccessHandler")

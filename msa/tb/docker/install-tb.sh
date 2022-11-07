@@ -32,7 +32,7 @@ echo "Starting Vizzionnaire installation ..."
 
 set -e
 
-java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.ThingsboardInstallApplication \
+java -cp ${jarfile} $JAVA_OPTS -Dloader.main=com.vizzionnaire.server.VizzionnaireInstallApplication \
                     -Dinstall.load_demo=${loadDemo} \
                     -Dspring.jpa.hibernate.ddl-auto=none \
                     -Dinstall.upgrade=false \

@@ -34,8 +34,8 @@ import com.vizzionnaire.server.common.data.edge.Edge;
 import com.vizzionnaire.server.common.data.edge.EdgeEventActionType;
 import com.vizzionnaire.server.common.data.edge.EdgeEventType;
 import com.vizzionnaire.server.common.data.edge.EdgeInfo;
-import com.vizzionnaire.server.common.data.exception.ThingsboardErrorCode;
-import com.vizzionnaire.server.common.data.exception.ThingsboardException;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireErrorCode;
+import com.vizzionnaire.server.common.data.exception.VizzionnaireException;
 import com.vizzionnaire.server.common.data.id.AlarmId;
 import com.vizzionnaire.server.common.data.id.AssetId;
 import com.vizzionnaire.server.common.data.id.CustomerId;
@@ -96,7 +96,7 @@ import com.vizzionnaire.server.dao.tenant.TenantService;
 import com.vizzionnaire.server.dao.user.UserService;
 import com.vizzionnaire.server.dao.widget.WidgetTypeService;
 import com.vizzionnaire.server.dao.widget.WidgetsBundleService;
-import com.vizzionnaire.server.exception.ThingsboardErrorResponseHandler;
+import com.vizzionnaire.server.exception.VizzionnaireErrorResponseHandler;
 import com.vizzionnaire.server.queue.discovery.PartitionService;
 import com.vizzionnaire.server.queue.provider.TbQueueProducerProvider;
 import com.vizzionnaire.server.queue.util.TbCoreComponent;
@@ -150,7 +150,7 @@ public abstract class BaseController {
     private static final ObjectMapper json = new ObjectMapper();
 
     @Autowired
-    private ThingsboardErrorResponseHandler errorResponseHandler;
+    private VizzionnaireErrorResponseHandler errorResponseHandler;
 
     @Autowired
     protected AccessControlService accessControlService;
@@ -279,8 +279,8 @@ public abstract class BaseController {
 
     @ExceptionHandler(Exception.class)
     public void handleControllerException(Exception e, HttpServletResponse response) {
-        ThingsboardException thingsboardException = handleException(e);
-        if (thingsboardException.getErrorCode() == ThingsboardErrorCode.GENERAL && thingsboardException.getCause() instanceof Exception
+        VizzionnaireException thingsboardException = handleException(e);
+        if (thingsboardException.getErrorCode() == VizzionnaireErrorCode.GENERAL && thingsboardException.getCause() instanceof Exception
                 && StringUtils.equals(thingsboardException.getCause().getMessage(), thingsboardException.getMessage())) {
             e = (Exception) thingsboardException.getCause();
         } else {
@@ -289,14 +289,14 @@ public abstract class BaseController {
         errorResponseHandler.handle(e, response);
     }
 
-    @ExceptionHandler(ThingsboardException.class)
-    public void handleThingsboardException(ThingsboardException ex, HttpServletResponse response) {
+    @ExceptionHandler(VizzionnaireException.class)
+    public void handleVizzionnaireException(VizzionnaireException ex, HttpServletResponse response) {
         errorResponseHandler.handle(ex, response);
     }
 
     /**
-     * @deprecated Exceptions that are not of {@link ThingsboardException} type
-     * are now caught and mapped to {@link ThingsboardException} by
+     * @deprecated Exceptions that are not of {@link VizzionnaireException} type
+     * are now caught and mapped to {@link VizzionnaireException} by
      * {@link ExceptionHandler} {@link BaseController#handleControllerException(Exception, HttpServletResponse)}
      * which basically acts like the following boilerplate:
      * {@code
@@ -308,11 +308,11 @@ public abstract class BaseController {
      * }
      * */
     @Deprecated
-    ThingsboardException handleException(Exception exception) {
+    VizzionnaireException handleException(Exception exception) {
         return handleException(exception, true);
     }
 
-    private ThingsboardException handleException(Exception exception, boolean logException) {
+    private VizzionnaireException handleException(Exception exception, boolean logException) {
         if (logException && logControllerErrorStackTrace) {
             log.error("Error [{}]", exception.getMessage(), exception);
         }
@@ -322,17 +322,17 @@ public abstract class BaseController {
             cause = exception.getCause().getClass().getCanonicalName();
         }
 
-        if (exception instanceof ThingsboardException) {
-            return (ThingsboardException) exception;
+        if (exception instanceof VizzionnaireException) {
+            return (VizzionnaireException) exception;
         } else if (exception instanceof IllegalArgumentException || exception instanceof IncorrectParameterException
                 || exception instanceof DataValidationException || cause.contains("IncorrectParameterException")) {
-            return new ThingsboardException(exception.getMessage(), ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            return new VizzionnaireException(exception.getMessage(), VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         } else if (exception instanceof MessagingException) {
-            return new ThingsboardException("Unable to send mail: " + exception.getMessage(), ThingsboardErrorCode.GENERAL);
+            return new VizzionnaireException("Unable to send mail: " + exception.getMessage(), VizzionnaireErrorCode.GENERAL);
         } else if (exception instanceof AsyncRequestTimeoutException) {
-            return new ThingsboardException("Request timeout", ThingsboardErrorCode.GENERAL);
+            return new VizzionnaireException("Request timeout", VizzionnaireErrorCode.GENERAL);
         } else {
-            return new ThingsboardException(exception.getMessage(), exception, ThingsboardErrorCode.GENERAL);
+            return new VizzionnaireException(exception.getMessage(), exception, VizzionnaireErrorCode.GENERAL);
         }
     }
 
@@ -344,42 +344,42 @@ public abstract class BaseController {
         String errorMessage = "Validation error: " + e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(", "));
-        ThingsboardException thingsboardException = new ThingsboardException(errorMessage, ThingsboardErrorCode.BAD_REQUEST_PARAMS);
-        handleThingsboardException(thingsboardException, response);
+        VizzionnaireException thingsboardException = new VizzionnaireException(errorMessage, VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
+        handleVizzionnaireException(thingsboardException, response);
     }
 
-    <T> T checkNotNull(T reference) throws ThingsboardException {
+    <T> T checkNotNull(T reference) throws VizzionnaireException {
         return checkNotNull(reference, "Requested item wasn't found!");
     }
 
-    <T> T checkNotNull(T reference, String notFoundMessage) throws ThingsboardException {
+    <T> T checkNotNull(T reference, String notFoundMessage) throws VizzionnaireException {
         if (reference == null) {
-            throw new ThingsboardException(notFoundMessage, ThingsboardErrorCode.ITEM_NOT_FOUND);
+            throw new VizzionnaireException(notFoundMessage, VizzionnaireErrorCode.ITEM_NOT_FOUND);
         }
         return reference;
     }
 
-    <T> T checkNotNull(Optional<T> reference) throws ThingsboardException {
+    <T> T checkNotNull(Optional<T> reference) throws VizzionnaireException {
         return checkNotNull(reference, "Requested item wasn't found!");
     }
 
-    <T> T checkNotNull(Optional<T> reference, String notFoundMessage) throws ThingsboardException {
+    <T> T checkNotNull(Optional<T> reference, String notFoundMessage) throws VizzionnaireException {
         if (reference.isPresent()) {
             return reference.get();
         } else {
-            throw new ThingsboardException(notFoundMessage, ThingsboardErrorCode.ITEM_NOT_FOUND);
+            throw new VizzionnaireException(notFoundMessage, VizzionnaireErrorCode.ITEM_NOT_FOUND);
         }
     }
 
-    void checkParameter(String name, String param) throws ThingsboardException {
+    void checkParameter(String name, String param) throws VizzionnaireException {
         if (StringUtils.isEmpty(param)) {
-            throw new ThingsboardException("Parameter '" + name + "' can't be empty!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Parameter '" + name + "' can't be empty!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         }
     }
 
-    void checkArrayParameter(String name, String[] params) throws ThingsboardException {
+    void checkArrayParameter(String name, String[] params) throws VizzionnaireException {
         if (params == null || params.length == 0) {
-            throw new ThingsboardException("Parameter '" + name + "' can't be empty!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+            throw new VizzionnaireException("Parameter '" + name + "' can't be empty!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
         } else {
             for (String param : params) {
                 checkParameter(name, param);
@@ -387,7 +387,7 @@ public abstract class BaseController {
         }
     }
 
-    UUID toUUID(String id) throws ThingsboardException {
+    UUID toUUID(String id) throws VizzionnaireException {
         try {
             return UUID.fromString(id);
         } catch (IllegalArgumentException e) {
@@ -395,14 +395,14 @@ public abstract class BaseController {
         }
     }
 
-    PageLink createPageLink(int pageSize, int page, String textSearch, String sortProperty, String sortOrder) throws ThingsboardException {
+    PageLink createPageLink(int pageSize, int page, String textSearch, String sortProperty, String sortOrder) throws VizzionnaireException {
         if (!StringUtils.isEmpty(sortProperty)) {
             SortOrder.Direction direction = SortOrder.Direction.ASC;
             if (!StringUtils.isEmpty(sortOrder)) {
                 try {
                     direction = SortOrder.Direction.valueOf(sortOrder.toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    throw new ThingsboardException("Unsupported sort order '" + sortOrder + "'! Only 'ASC' or 'DESC' types are allowed.", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+                    throw new VizzionnaireException("Unsupported sort order '" + sortOrder + "'! Only 'ASC' or 'DESC' types are allowed.", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
                 }
             }
             SortOrder sort = new SortOrder(sortProperty, direction);
@@ -413,21 +413,21 @@ public abstract class BaseController {
     }
 
     TimePageLink createTimePageLink(int pageSize, int page, String textSearch,
-                                    String sortProperty, String sortOrder, Long startTime, Long endTime) throws ThingsboardException {
+                                    String sortProperty, String sortOrder, Long startTime, Long endTime) throws VizzionnaireException {
         PageLink pageLink = this.createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
         return new TimePageLink(pageLink, startTime, endTime);
     }
 
-    protected SecurityUser getCurrentUser() throws ThingsboardException {
+    protected SecurityUser getCurrentUser() throws VizzionnaireException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
             return (SecurityUser) authentication.getPrincipal();
         } else {
-            throw new ThingsboardException("You aren't authorized to perform this operation!", ThingsboardErrorCode.AUTHENTICATION);
+            throw new VizzionnaireException("You aren't authorized to perform this operation!", VizzionnaireErrorCode.AUTHENTICATION);
         }
     }
 
-    Tenant checkTenantId(TenantId tenantId, Operation operation) throws ThingsboardException {
+    Tenant checkTenantId(TenantId tenantId, Operation operation) throws VizzionnaireException {
         try {
             validateId(tenantId, INCORRECT_TENANT_ID + tenantId);
             Tenant tenant = tenantService.findTenantById(tenantId);
@@ -439,7 +439,7 @@ public abstract class BaseController {
         }
     }
 
-    TenantInfo checkTenantInfoId(TenantId tenantId, Operation operation) throws ThingsboardException {
+    TenantInfo checkTenantInfoId(TenantId tenantId, Operation operation) throws VizzionnaireException {
         try {
             validateId(tenantId, INCORRECT_TENANT_ID + tenantId);
             TenantInfo tenant = tenantService.findTenantInfoById(tenantId);
@@ -451,7 +451,7 @@ public abstract class BaseController {
         }
     }
 
-    TenantProfile checkTenantProfileId(TenantProfileId tenantProfileId, Operation operation) throws ThingsboardException {
+    TenantProfile checkTenantProfileId(TenantProfileId tenantProfileId, Operation operation) throws VizzionnaireException {
         try {
             validateId(tenantProfileId, "Incorrect tenantProfileId " + tenantProfileId);
             TenantProfile tenantProfile = tenantProfileService.findTenantProfileById(getTenantId(), tenantProfileId);
@@ -463,11 +463,11 @@ public abstract class BaseController {
         }
     }
 
-    protected TenantId getTenantId() throws ThingsboardException {
+    protected TenantId getTenantId() throws VizzionnaireException {
         return getCurrentUser().getTenantId();
     }
 
-    Customer checkCustomerId(CustomerId customerId, Operation operation) throws ThingsboardException {
+    Customer checkCustomerId(CustomerId customerId, Operation operation) throws VizzionnaireException {
         try {
             validateId(customerId, "Incorrect customerId " + customerId);
             Customer customer = customerService.findCustomerById(getTenantId(), customerId);
@@ -479,7 +479,7 @@ public abstract class BaseController {
         }
     }
 
-    User checkUserId(UserId userId, Operation operation) throws ThingsboardException {
+    User checkUserId(UserId userId, Operation operation) throws VizzionnaireException {
         try {
             validateId(userId, "Incorrect userId " + userId);
             User user = userService.findUserById(getCurrentUser().getTenantId(), userId);
@@ -491,7 +491,7 @@ public abstract class BaseController {
         }
     }
 
-    protected <I extends EntityId, T extends HasTenantId> void checkEntity(I entityId, T entity, Resource resource) throws ThingsboardException {
+    protected <I extends EntityId, T extends HasTenantId> void checkEntity(I entityId, T entity, Resource resource) throws VizzionnaireException {
         if (entityId == null) {
             accessControlService
                     .checkPermission(getCurrentUser(), resource, Operation.CREATE, null, entity);
@@ -500,10 +500,10 @@ public abstract class BaseController {
         }
     }
 
-    protected void checkEntityId(EntityId entityId, Operation operation) throws ThingsboardException {
+    protected void checkEntityId(EntityId entityId, Operation operation) throws VizzionnaireException {
         try {
             if (entityId == null) {
-                throw new ThingsboardException("Parameter entityId can't be empty!", ThingsboardErrorCode.BAD_REQUEST_PARAMS);
+                throw new VizzionnaireException("Parameter entityId can't be empty!", VizzionnaireErrorCode.BAD_REQUEST_PARAMS);
             }
             validateId(entityId.getId(), "Incorrect entityId " + entityId);
             switch (entityId.getEntityType()) {
@@ -569,7 +569,7 @@ public abstract class BaseController {
         }
     }
 
-    Device checkDeviceId(DeviceId deviceId, Operation operation) throws ThingsboardException {
+    Device checkDeviceId(DeviceId deviceId, Operation operation) throws VizzionnaireException {
         try {
             validateId(deviceId, "Incorrect deviceId " + deviceId);
             Device device = deviceService.findDeviceById(getCurrentUser().getTenantId(), deviceId);
@@ -581,7 +581,7 @@ public abstract class BaseController {
         }
     }
 
-    DeviceInfo checkDeviceInfoId(DeviceId deviceId, Operation operation) throws ThingsboardException {
+    DeviceInfo checkDeviceInfoId(DeviceId deviceId, Operation operation) throws VizzionnaireException {
         try {
             validateId(deviceId, "Incorrect deviceId " + deviceId);
             DeviceInfo device = deviceService.findDeviceInfoById(getCurrentUser().getTenantId(), deviceId);
@@ -593,7 +593,7 @@ public abstract class BaseController {
         }
     }
 
-    DeviceProfile checkDeviceProfileId(DeviceProfileId deviceProfileId, Operation operation) throws ThingsboardException {
+    DeviceProfile checkDeviceProfileId(DeviceProfileId deviceProfileId, Operation operation) throws VizzionnaireException {
         try {
             validateId(deviceProfileId, "Incorrect deviceProfileId " + deviceProfileId);
             DeviceProfile deviceProfile = deviceProfileService.findDeviceProfileById(getCurrentUser().getTenantId(), deviceProfileId);
@@ -605,7 +605,7 @@ public abstract class BaseController {
         }
     }
 
-    protected EntityView checkEntityViewId(EntityViewId entityViewId, Operation operation) throws ThingsboardException {
+    protected EntityView checkEntityViewId(EntityViewId entityViewId, Operation operation) throws VizzionnaireException {
         try {
             validateId(entityViewId, "Incorrect entityViewId " + entityViewId);
             EntityView entityView = entityViewService.findEntityViewById(getCurrentUser().getTenantId(), entityViewId);
@@ -617,7 +617,7 @@ public abstract class BaseController {
         }
     }
 
-    EntityViewInfo checkEntityViewInfoId(EntityViewId entityViewId, Operation operation) throws ThingsboardException {
+    EntityViewInfo checkEntityViewInfoId(EntityViewId entityViewId, Operation operation) throws VizzionnaireException {
         try {
             validateId(entityViewId, "Incorrect entityViewId " + entityViewId);
             EntityViewInfo entityView = entityViewService.findEntityViewInfoById(getCurrentUser().getTenantId(), entityViewId);
@@ -629,7 +629,7 @@ public abstract class BaseController {
         }
     }
 
-    Asset checkAssetId(AssetId assetId, Operation operation) throws ThingsboardException {
+    Asset checkAssetId(AssetId assetId, Operation operation) throws VizzionnaireException {
         try {
             validateId(assetId, "Incorrect assetId " + assetId);
             Asset asset = assetService.findAssetById(getCurrentUser().getTenantId(), assetId);
@@ -641,7 +641,7 @@ public abstract class BaseController {
         }
     }
 
-    AssetInfo checkAssetInfoId(AssetId assetId, Operation operation) throws ThingsboardException {
+    AssetInfo checkAssetInfoId(AssetId assetId, Operation operation) throws VizzionnaireException {
         try {
             validateId(assetId, "Incorrect assetId " + assetId);
             AssetInfo asset = assetService.findAssetInfoById(getCurrentUser().getTenantId(), assetId);
@@ -653,7 +653,7 @@ public abstract class BaseController {
         }
     }
 
-    Alarm checkAlarmId(AlarmId alarmId, Operation operation) throws ThingsboardException {
+    Alarm checkAlarmId(AlarmId alarmId, Operation operation) throws VizzionnaireException {
         try {
             validateId(alarmId, "Incorrect alarmId " + alarmId);
             Alarm alarm = alarmService.findAlarmByIdAsync(getCurrentUser().getTenantId(), alarmId).get();
@@ -665,7 +665,7 @@ public abstract class BaseController {
         }
     }
 
-    AlarmInfo checkAlarmInfoId(AlarmId alarmId, Operation operation) throws ThingsboardException {
+    AlarmInfo checkAlarmInfoId(AlarmId alarmId, Operation operation) throws VizzionnaireException {
         try {
             validateId(alarmId, "Incorrect alarmId " + alarmId);
             AlarmInfo alarmInfo = alarmService.findAlarmInfoByIdAsync(getCurrentUser().getTenantId(), alarmId).get();
@@ -677,7 +677,7 @@ public abstract class BaseController {
         }
     }
 
-    WidgetsBundle checkWidgetsBundleId(WidgetsBundleId widgetsBundleId, Operation operation) throws ThingsboardException {
+    WidgetsBundle checkWidgetsBundleId(WidgetsBundleId widgetsBundleId, Operation operation) throws VizzionnaireException {
         try {
             validateId(widgetsBundleId, "Incorrect widgetsBundleId " + widgetsBundleId);
             WidgetsBundle widgetsBundle = widgetsBundleService.findWidgetsBundleById(getCurrentUser().getTenantId(), widgetsBundleId);
@@ -689,7 +689,7 @@ public abstract class BaseController {
         }
     }
 
-    WidgetTypeDetails checkWidgetTypeId(WidgetTypeId widgetTypeId, Operation operation) throws ThingsboardException {
+    WidgetTypeDetails checkWidgetTypeId(WidgetTypeId widgetTypeId, Operation operation) throws VizzionnaireException {
         try {
             validateId(widgetTypeId, "Incorrect widgetTypeId " + widgetTypeId);
             WidgetTypeDetails widgetTypeDetails = widgetTypeService.findWidgetTypeDetailsById(getCurrentUser().getTenantId(), widgetTypeId);
@@ -701,7 +701,7 @@ public abstract class BaseController {
         }
     }
 
-    Dashboard checkDashboardId(DashboardId dashboardId, Operation operation) throws ThingsboardException {
+    Dashboard checkDashboardId(DashboardId dashboardId, Operation operation) throws VizzionnaireException {
         try {
             validateId(dashboardId, "Incorrect dashboardId " + dashboardId);
             Dashboard dashboard = dashboardService.findDashboardById(getCurrentUser().getTenantId(), dashboardId);
@@ -713,7 +713,7 @@ public abstract class BaseController {
         }
     }
 
-    Edge checkEdgeId(EdgeId edgeId, Operation operation) throws ThingsboardException {
+    Edge checkEdgeId(EdgeId edgeId, Operation operation) throws VizzionnaireException {
         try {
             validateId(edgeId, "Incorrect edgeId " + edgeId);
             Edge edge = edgeService.findEdgeById(getTenantId(), edgeId);
@@ -725,7 +725,7 @@ public abstract class BaseController {
         }
     }
 
-    EdgeInfo checkEdgeInfoId(EdgeId edgeId, Operation operation) throws ThingsboardException {
+    EdgeInfo checkEdgeInfoId(EdgeId edgeId, Operation operation) throws VizzionnaireException {
         try {
             validateId(edgeId, "Incorrect edgeId " + edgeId);
             EdgeInfo edge = edgeService.findEdgeInfoById(getCurrentUser().getTenantId(), edgeId);
@@ -737,7 +737,7 @@ public abstract class BaseController {
         }
     }
 
-    DashboardInfo checkDashboardInfoId(DashboardId dashboardId, Operation operation) throws ThingsboardException {
+    DashboardInfo checkDashboardInfoId(DashboardId dashboardId, Operation operation) throws VizzionnaireException {
         try {
             validateId(dashboardId, "Incorrect dashboardId " + dashboardId);
             DashboardInfo dashboardInfo = dashboardService.findDashboardInfoById(getCurrentUser().getTenantId(), dashboardId);
@@ -749,7 +749,7 @@ public abstract class BaseController {
         }
     }
 
-    ComponentDescriptor checkComponentDescriptorByClazz(String clazz) throws ThingsboardException {
+    ComponentDescriptor checkComponentDescriptorByClazz(String clazz) throws VizzionnaireException {
         try {
             log.debug("[{}] Lookup component descriptor", clazz);
             return checkNotNull(componentDescriptorService.getComponent(clazz));
@@ -758,7 +758,7 @@ public abstract class BaseController {
         }
     }
 
-    List<ComponentDescriptor> checkComponentDescriptorsByType(ComponentType type, RuleChainType ruleChainType) throws ThingsboardException {
+    List<ComponentDescriptor> checkComponentDescriptorsByType(ComponentType type, RuleChainType ruleChainType) throws VizzionnaireException {
         try {
             log.debug("[{}] Lookup component descriptors", type);
             return componentDescriptorService.getComponents(type, ruleChainType);
@@ -767,7 +767,7 @@ public abstract class BaseController {
         }
     }
 
-    List<ComponentDescriptor> checkComponentDescriptorsByTypes(Set<ComponentType> types, RuleChainType ruleChainType) throws ThingsboardException {
+    List<ComponentDescriptor> checkComponentDescriptorsByTypes(Set<ComponentType> types, RuleChainType ruleChainType) throws VizzionnaireException {
         try {
             log.debug("[{}] Lookup component descriptors", types);
             return componentDescriptorService.getComponents(types, ruleChainType);
@@ -776,7 +776,7 @@ public abstract class BaseController {
         }
     }
 
-    protected RuleChain checkRuleChain(RuleChainId ruleChainId, Operation operation) throws ThingsboardException {
+    protected RuleChain checkRuleChain(RuleChainId ruleChainId, Operation operation) throws VizzionnaireException {
         validateId(ruleChainId, "Incorrect ruleChainId " + ruleChainId);
         RuleChain ruleChain = ruleChainService.findRuleChainById(getCurrentUser().getTenantId(), ruleChainId);
         checkNotNull(ruleChain, "Rule chain with id [" + ruleChainId + "] is not found");
@@ -784,7 +784,7 @@ public abstract class BaseController {
         return ruleChain;
     }
 
-    protected RuleNode checkRuleNode(RuleNodeId ruleNodeId, Operation operation) throws ThingsboardException {
+    protected RuleNode checkRuleNode(RuleNodeId ruleNodeId, Operation operation) throws VizzionnaireException {
         validateId(ruleNodeId, "Incorrect ruleNodeId " + ruleNodeId);
         RuleNode ruleNode = ruleChainService.findRuleNodeById(getTenantId(), ruleNodeId);
         checkNotNull(ruleNode, "Rule node with id [" + ruleNodeId + "] is not found");
@@ -792,7 +792,7 @@ public abstract class BaseController {
         return ruleNode;
     }
 
-    TbResource checkResourceId(TbResourceId resourceId, Operation operation) throws ThingsboardException {
+    TbResource checkResourceId(TbResourceId resourceId, Operation operation) throws VizzionnaireException {
         try {
             validateId(resourceId, "Incorrect resourceId " + resourceId);
             TbResource resource = resourceService.findResourceById(getCurrentUser().getTenantId(), resourceId);
@@ -804,7 +804,7 @@ public abstract class BaseController {
         }
     }
 
-    TbResourceInfo checkResourceInfoId(TbResourceId resourceId, Operation operation) throws ThingsboardException {
+    TbResourceInfo checkResourceInfoId(TbResourceId resourceId, Operation operation) throws VizzionnaireException {
         try {
             validateId(resourceId, "Incorrect resourceId " + resourceId);
             TbResourceInfo resourceInfo = resourceService.findResourceInfoById(getCurrentUser().getTenantId(), resourceId);
@@ -816,7 +816,7 @@ public abstract class BaseController {
         }
     }
 
-    OtaPackage checkOtaPackageId(OtaPackageId otaPackageId, Operation operation) throws ThingsboardException {
+    OtaPackage checkOtaPackageId(OtaPackageId otaPackageId, Operation operation) throws VizzionnaireException {
         try {
             validateId(otaPackageId, "Incorrect otaPackageId " + otaPackageId);
             OtaPackage otaPackage = otaPackageService.findOtaPackageById(getCurrentUser().getTenantId(), otaPackageId);
@@ -828,7 +828,7 @@ public abstract class BaseController {
         }
     }
 
-    OtaPackageInfo checkOtaPackageInfoId(OtaPackageId otaPackageId, Operation operation) throws ThingsboardException {
+    OtaPackageInfo checkOtaPackageInfoId(OtaPackageId otaPackageId, Operation operation) throws VizzionnaireException {
         try {
             validateId(otaPackageId, "Incorrect otaPackageId " + otaPackageId);
             OtaPackageInfo otaPackageIn = otaPackageService.findOtaPackageInfoById(getCurrentUser().getTenantId(), otaPackageId);
@@ -840,7 +840,7 @@ public abstract class BaseController {
         }
     }
 
-    Rpc checkRpcId(RpcId rpcId, Operation operation) throws ThingsboardException {
+    Rpc checkRpcId(RpcId rpcId, Operation operation) throws VizzionnaireException {
         try {
             validateId(rpcId, "Incorrect rpcId " + rpcId);
             Rpc rpc = rpcService.findById(getCurrentUser().getTenantId(), rpcId);
@@ -852,7 +852,7 @@ public abstract class BaseController {
         }
     }
 
-    protected Queue checkQueueId(QueueId queueId, Operation operation) throws ThingsboardException {
+    protected Queue checkQueueId(QueueId queueId, Operation operation) throws VizzionnaireException {
         validateId(queueId, "Incorrect queueId " + queueId);
         Queue queue = queueService.findQueueById(getCurrentUser().getTenantId(), queueId);
         checkNotNull(queue);
@@ -861,8 +861,8 @@ public abstract class BaseController {
         if (queue.getTenantId().isNullUid() && !tenantId.isNullUid()) {
             TenantProfile tenantProfile = tenantProfileCache.get(tenantId);
             if (tenantProfile.isIsolatedTbRuleEngine()) {
-                throw new ThingsboardException(YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION,
-                        ThingsboardErrorCode.PERMISSION_DENIED);
+                throw new VizzionnaireException(YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION,
+                        VizzionnaireErrorCode.PERMISSION_DENIED);
             }
         }
         return queue;
@@ -888,7 +888,7 @@ public abstract class BaseController {
         tbClusterService.sendNotificationMsgToEdge(tenantId, edgeId, entityId, body, type, action);
     }
 
-    protected void processDashboardIdFromAdditionalInfo(ObjectNode additionalInfo, String requiredFields) throws ThingsboardException {
+    protected void processDashboardIdFromAdditionalInfo(ObjectNode additionalInfo, String requiredFields) throws VizzionnaireException {
         String dashboardId = additionalInfo.has(requiredFields) ? additionalInfo.get(requiredFields).asText() : null;
         if (dashboardId != null && !dashboardId.equals("null")) {
             if (dashboardService.findDashboardById(getTenantId(), new DashboardId(UUID.fromString(dashboardId))) == null) {
