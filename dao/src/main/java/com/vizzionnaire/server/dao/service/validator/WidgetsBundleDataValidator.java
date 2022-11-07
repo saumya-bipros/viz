@@ -1,0 +1,66 @@
+package com.vizzionnaire.server.dao.service.validator;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import com.vizzionnaire.server.common.data.StringUtils;
+import com.vizzionnaire.server.common.data.id.TenantId;
+import com.vizzionnaire.server.common.data.widget.WidgetsBundle;
+import com.vizzionnaire.server.dao.exception.DataValidationException;
+import com.vizzionnaire.server.dao.model.ModelConstants;
+import com.vizzionnaire.server.dao.service.DataValidator;
+import com.vizzionnaire.server.dao.tenant.TenantService;
+import com.vizzionnaire.server.dao.widget.WidgetsBundleDao;
+
+@Component
+@AllArgsConstructor
+public class WidgetsBundleDataValidator extends DataValidator<WidgetsBundle> {
+
+    private final WidgetsBundleDao widgetsBundleDao;
+    private final TenantService tenantService;
+
+    @Override
+    protected void validateDataImpl(TenantId tenantId, WidgetsBundle widgetsBundle) {
+        if (StringUtils.isEmpty(widgetsBundle.getTitle())) {
+            throw new DataValidationException("Widgets bundle title should be specified!");
+        }
+        if (widgetsBundle.getTenantId() == null) {
+            widgetsBundle.setTenantId(TenantId.fromUUID(ModelConstants.NULL_UUID));
+        }
+        if (!widgetsBundle.getTenantId().getId().equals(ModelConstants.NULL_UUID)) {
+            if (!tenantService.tenantExists(widgetsBundle.getTenantId())) {
+                throw new DataValidationException("Widgets bundle is referencing to non-existent tenant!");
+            }
+        }
+    }
+
+    @Override
+    protected void validateCreate(TenantId tenantId, WidgetsBundle widgetsBundle) {
+        String alias = widgetsBundle.getAlias();
+        if (alias == null || alias.trim().isEmpty()) {
+            alias = widgetsBundle.getTitle().toLowerCase().replaceAll("\\W+", "_");
+        }
+        String originalAlias = alias;
+        int c = 1;
+        WidgetsBundle withSameAlias;
+        do {
+            withSameAlias = widgetsBundleDao.findWidgetsBundleByTenantIdAndAlias(widgetsBundle.getTenantId().getId(), alias);
+            if (withSameAlias != null) {
+                alias = originalAlias + (++c);
+            }
+        } while (withSameAlias != null);
+        widgetsBundle.setAlias(alias);
+    }
+
+    @Override
+    protected WidgetsBundle validateUpdate(TenantId tenantId, WidgetsBundle widgetsBundle) {
+        WidgetsBundle storedWidgetsBundle = widgetsBundleDao.findById(tenantId, widgetsBundle.getId().getId());
+        if (!storedWidgetsBundle.getTenantId().getId().equals(widgetsBundle.getTenantId().getId())) {
+            throw new DataValidationException("Can't move existing widgets bundle to different tenant!");
+        }
+        if (!storedWidgetsBundle.getAlias().equals(widgetsBundle.getAlias())) {
+            throw new DataValidationException("Update of widgets bundle alias is prohibited!");
+        }
+        return storedWidgetsBundle;
+    }
+}
